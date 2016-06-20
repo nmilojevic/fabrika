@@ -28,6 +28,15 @@
   white-space: pre;
 }
 
+.dhtmlx_button, .dhtmlx_popup_button {
+    height: 32px!importnat;
+    line-height: 32px!important;
+    display: inline-block;
+    margin: 0 5px;
+    border-radius: 6px;
+    color: #FFF;
+}
+
 .dhx_cal_qi_content {
   border: 1px solid #888;
   background-color: #fefefe;
