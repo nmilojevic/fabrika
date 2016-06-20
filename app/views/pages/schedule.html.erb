@@ -1,0 +1,194 @@
+<div class="container">
+
+    <div class="row">
+        <div class="box">
+            
+  <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:1000px'>
+    <div class="dhx_cal_navline">
+      <div class="dhx_cal_prev_button">&nbsp;</div>
+      <div class="dhx_cal_next_button">&nbsp;</div>
+      <div class="dhx_cal_today_button"></div>
+      <div class="dhx_cal_date"></div>
+      <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+      <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+      <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+    </div>
+    <div class="dhx_cal_header">
+    </div>
+    <div class="dhx_cal_data">
+    </div>
+  </div>
+        </div>
+    </div>
+
+</div>
+<script>
+  scheduler.config.xml_date="%Y-%m-%d %H:%i";
+  // scheduler.form_blocks["my_editor"] = {
+  //               render:function(sns) {
+  //                   return "<div class='dhx_cal_ltext' style='height:60px;'><input type='text'></div>";
+  //               },
+  //               set_value:function(node, value, ev) {
+  //                   node.childNodes[0].value = value || "";
+  //               },
+  //               get_value:function(node, ev) {
+                    
+  //                   return node.childNodes[0].value;
+  //               },
+  //               focus:function(node) {
+  //                   var a = node.childNodes[0];
+  //                   a.select();
+  //                   a.focus();
+  //               }
+  //           };
+
+var opts = [
+    { key: 1, label: '1' },
+    { key: 2, label: '2' },
+    { key: 3, label: '3' },
+    { key: 4, label: '4' },
+    { key: 5, label: '5' },
+    { key: 6, label: '6' },
+    { key: 7, label: '7' },
+    { key: 8, label: '8' },
+    { key: 9, label: '9' },
+    { key: 10, label: '10' },
+    { key: 11, label: '11' },
+    { key: 12, label: '12' },
+    { key: 13, label: '13' },
+    { key: 14, label: '14' },
+    { key: 15, label: '15' },
+    { key: 16, label: '16' },
+    { key: 17, label: '17' },
+    { key: 18, label: '18' },
+    { key: 19, label: '19' },
+    { key: 20, label: '20' },
+   
+];
+    scheduler.config.lightbox.sections = [
+    {name:"description", map_to:"text", type:"textarea" , focus:true},
+    {name:"Type", map_to:"event_type", type:"select",options:scheduler.serverList("type")},
+    {name:"Max users", map_to:"max_users", type:"select", options:opts},
+    {name:"recurring", type:"recurring", map_to:"rec_type", button:"recurring"},
+    {name:"time", height:72, type:"time", map_to:"auto"}
+    ];
+    scheduler.templates.quick_info_title = function(start, end, ev){ return ev.event_type.substr(0,50); };
+    scheduler.attachEvent("onTemplatesReady", function(){
+    scheduler.templates.event_text=function(start,end,event){
+        return "<div class='center'>" + (event.event_type  !== undefined ? event.event_type.toUpperCase() : "") + "<br/>("+ (event.users  !== undefined ? (event.users + "/" + event.max_users) : "") + ")</div> ";
+    }
+}); 
+     scheduler.config.details_on_dblclick = true;
+     
+    
+    var csrf_token = $('meta[name=csrf-token]').attr('content');
+     <% if current_user.try(:admin?) %>
+    var dp = new dataProcessor("<%= db_action_path %>");
+    dp.attachEvent("onBeforeUpdate", function(id, state, data){
+    //add auth token
+     data["authenticity_token"] = csrf_token;
+     return true;
+    });
+    dp.attachEvent("onAfterUpdate", function(){
+      scheduler.load("<%= data_path %>", "json");
+    });
+
+
+    dp.init(scheduler);
+    dp.setTransactionMode("POST", false);
+
+   // scheduler.config.readonly_form = true;
+   //  scheduler.config.readonly = true; 
+    <% else %>
+    scheduler.locale.labels.icon_cancel_event = "Can't go"
+    scheduler.locale.labels.icon_reserve_event = "Going"
+    // scheduler.templates.event_class = function(start, end, ev){
+    //  class_name = ""
+    //  if (ev.past){
+    //     class_name = "past"
+    //  }
+    //  return class_name;
+    // }
+    scheduler._click.buttons.cancel_event = function(id){
+       dhtmlx.message({
+        title: "Cancel",
+        type: "confirm-warning",
+        text: "Are you sure that you want to cancel this event?",
+        callback: function() {
+            jQuery.ajax({
+        type: "POST",
+        dataType: 'json',
+        data: "authenticity_token=" + csrf_token,
+        url:  "../events/"+id+"/cancel_event",
+        success: function(data) {
+          scheduler.hideQuickInfo(true);
+          scheduler.load("<%= data_path %>", "json");
+        }.bind(this),
+        error: function() {
+            alert(error);
+        }.bind(this),
+        timeout: 30000
+      });
+        }
+        });
+   };
+
+    scheduler._click.buttons.reserve_event = function(id){
+        
+            jQuery.ajax({
+        type: "POST",
+        dataType: 'json',
+        data: "authenticity_token=" + csrf_token,
+        url:  "../events/"+id+"/reserve_event",
+        success: function(data) {
+          scheduler.hideQuickInfo(true);
+          scheduler.load("<%= data_path %>", "json");
+        }.bind(this),
+        error: function(error) {
+            alert(error);
+        }.bind(this),
+        timeout: 30000
+      });
+
+    };
+
+    scheduler._click.buttons.cancel = function(id){
+        scheduler.hideQuickInfo(true); 
+    };
+
+    scheduler.attachEvent("onClick", function(id) {  
+            scheduler.hideQuickInfo(true);          
+            var objEvent = scheduler.getEvent(id);   
+            if (objEvent.past === true) {
+                scheduler.config.icons_select = ["icon_cancel"];
+                dhtmlx.message({
+                    title: "Warning",
+                    type: "alert-warning",
+                    text: "You can't make reservations for past events."
+                });
+            } else if (objEvent.reserved === true) {
+              scheduler.config.icons_select = ["icon_cancel_event","icon_cancel"];
+            } else if (objEvent.full === true) {
+                scheduler.config.icons_select = ["icon_cancel"];
+                dhtmlx.message({
+                    title: "Close",
+                    type: "alert-warning",
+                    text: "This termin is full. Please try again later."
+                });
+            } else {
+              scheduler.config.icons_select = ["icon_reserve_event", "icon_cancel"];
+            }
+            scheduler.showQuickInfo(id);
+            return true;
+        }.bind(this)); 
+    jQuery('.dhx_event_resize.dhx_footer').hide();
+    scheduler.config.readonly_form = true;
+    scheduler.config.drag_resize = 0;
+    scheduler.config.readonly = true;
+    <% end %>
+     scheduler.init("scheduler_here");
+       scheduler.load("<%= data_path %>", "json");
+   
+
+</script>
+<!-- /.container -->
