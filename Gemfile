@@ -8,7 +8,6 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'mailgun_rails'
 gem 'jbuilder', '~> 2.0'
-gem 'sprockets_better_errors'
 group :development, :test do
   gem 'byebug'
 end
