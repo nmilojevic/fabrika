@@ -2,11 +2,11 @@ module EventsHelper
   def event_color(event)
      color = "#1796b0"
     if event.past?
-      color = "#FF5733"
+      color = "#B3B1B0"
     elsif event.reserved_for?(current_user)
-      color = "#6EFF33"
+      color = "#1FC364"
     elsif event.full? 
-      color = "#FF5733"
+      color = "#D40909"
     end 
     color
   end
