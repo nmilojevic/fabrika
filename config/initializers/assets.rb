@@ -3,7 +3,6 @@
 # Version of your assets, change this if you want to expire all your assets.
 Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( dhtmlxscheduler.css )
-Rails.application.config.assets.precompile += %w( business-casual.css )
 Rails.application.config.assets.precompile += %w( dhtmlxscheduler.js )
 Rails.application.config.assets.precompile += %w( ext/dhtmlxscheduler_recurring.js )
 Rails.application.config.assets.precompile += %w( ext/dhtmlxscheduler_quick_info.js )
