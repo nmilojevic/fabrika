@@ -35,13 +35,13 @@ Rails.application.configure do
   #   user_name: Rails.application.secrets.email_provider_username,
   #   password: Rails.application.secrets.email_provider_password
   # }
-    config.action_mailer.smtp_settings = {
+  config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
     port: 587,
     domain: "gmail.com",
     authentication: "plain",
-    user_name: "nmilojevic@gmail.com",
-    password: "brigatewlan"
+    user_name: "fabrika.crossfit@gmail.com",
+    password: "fabrikarules"
   }
   # ActionMailer Config
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }

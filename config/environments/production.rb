@@ -82,11 +82,11 @@ Rails.application.configure do
     port: 587,
     domain: "gmail.com",
     authentication: "plain",
-    user_name: "fabrika-crossfit@gmail.com",
+    user_name: "fabrika.crossfit@gmail.com",
     password: "fabrikarules"
   }
   # ActionMailer Config
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.default_url_options = { :host => 'fabrika-crossfit.heroku.com' }
   #config.action_mailer.default_url_options = { :host => Rails.application.secrets.domain_name }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
