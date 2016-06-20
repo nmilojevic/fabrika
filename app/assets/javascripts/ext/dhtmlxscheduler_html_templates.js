@@ -6,18 +6,5 @@ This software is covered by GPL license. You also can obtain Commercial or Enter
 
 (c) Dinamenta, UAB.
 */
-scheduler.attachEvent("onTemplatesReady",function(){
-	var els = document.body.getElementsByTagName("DIV");
-	for (var i=0; i < els.length; i++) {
-		var cs = els[i].className||"";
-		cs = cs.split(":");
-		if (cs.length == 2 && cs[0] == "template"){
-			var code = "return \""+(els[i].innerHTML||"").replace(/\"/g,"\\\"").replace(/[\n\r]+/g,"")+"\";";
-			code = unescape(code).replace(/\{event\.([a-z]+)\}/g,function(all,mask){
-				return '"+ev.'+mask+'+"';
-			});
-			scheduler.templates[cs[1]]=Function("start","end","ev",code);
-			els[i].style.display='none';
-		}
-	}
-});
+scheduler.attachEvent("onTemplatesReady",function(){for(var e=document.body.getElementsByTagName("DIV"),t=0;t<e.length;t++){var a=e[t].className||"";if(a=a.split(":"),2==a.length&&"template"==a[0]){var i='return "'+(e[t].innerHTML||"").replace(/\"/g,'\\"').replace(/[\n\r]+/g,"")+'";';i=unescape(i).replace(/\{event\.([a-z]+)\}/g,function(e,t){return'"+ev.'+t+'+"'}),scheduler.templates[a[1]]=Function("start","end","ev",i),e[t].style.display="none"}}});
+//# sourceMappingURL=../sources/ext/dhtmlxscheduler_html_templates.js.map

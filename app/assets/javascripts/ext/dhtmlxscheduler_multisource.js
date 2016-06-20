@@ -6,25 +6,5 @@ This software is covered by GPL license. You also can obtain Commercial or Enter
 
 (c) Dinamenta, UAB.
 */
-(function(){
-
-	function backup(obj){
-		var t = function(){};
-		t.prototype = obj;
-		return t;
-	}
-
-	var old = scheduler._load;
-	scheduler._load=function(url,from){
-		url=url||this._load_url;
-		if (typeof url == "object"){
-			var t = backup(this._loaded);
-			for (var i=0; i < url.length; i++) {
-				this._loaded=new t();
-				old.call(this,url[i],from);
-			}
-		} else 
-			old.apply(this,arguments);
-	};
-	
-})();
+!function(){function e(e){var t=function(){};return t.prototype=e,t}var t=scheduler._load;scheduler._load=function(a,r){if(a=a||this._load_url,"object"==typeof a)for(var n=e(this._loaded),i=0;i<a.length;i++)this._loaded=new n,t.call(this,a[i],r);else t.apply(this,arguments)}}();
+//# sourceMappingURL=../sources/ext/dhtmlxscheduler_multisource.js.map

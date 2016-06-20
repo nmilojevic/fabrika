@@ -6,79 +6,11 @@ This software is covered by GPL license. You also can obtain Commercial or Enter
 
 (c) Dinamenta, UAB.
 */
-scheduler.load=function(url,call){
-	var type;
-	if (typeof call == "string"){
-		this._process=call;
-		type = call;
-		call = arguments[2];
-	}
+scheduler.load=function(e,t){var a;return"string"==typeof t&&(this._process=t,a=t,t=arguments[2]),this._load_url=e,this._after_call=t,e.$proxy?void e.load(this,"string"==typeof a?a:null):void this._load(e,this._date)},scheduler._dp_init_backup=scheduler._dp_init,scheduler._dp_init=function(e){e._sendData=function(e,t){if(e){if(!this.callEvent("onBeforeDataSending",t?[t,this.getState(t),e]:[null,null,e]))return!1;if(t&&(this._in_progress[t]=(new Date).valueOf()),this.serverProcessor.$proxy){var a="POST"!=this._tMode?"get":"post",r=[];
 
-	this._load_url=url;
-	this._after_call=call;
-	if (url.$proxy) {
-		url.load(this, typeof type == "string" ? type : null);
-		return;
-	}
+for(var n in e)r.push({id:n,data:e[n],operation:this.getState(n)});return void this.serverProcessor._send(r,a,this)}var i=new dtmlXMLLoaderObject(this.afterUpdate,this,!0),d=this.serverProcessor+(this._user?getUrlSymbol(this.serverProcessor)+["dhx_user="+this._user,"dhx_version="+this.obj.getUserData(0,"version")].join("&"):"");"POST"!=this._tMode?i.loadXML(d+(-1!=d.indexOf("?")?"&":"?")+this.serialize(e,t)):i.loadXML(d,!0,this.serialize(e,t)),this._waitMode++}},e._updatesToParams=function(e){for(var t={},a=0;a<e.length;a++)t[e[a].id]=e[a].data;
 
-	this._load(url,this._date);
-};
+return this.serialize(t)},e._processResult=function(e,t,a){if(200==a.status)t=new dtmlXMLLoaderObject(function(){},this,!0),t.loadXMLString(e),t.xmlDoc=a,this.afterUpdate(this,null,null,null,t);else for(var r in this._in_progress){var n=this.getState(r);this.afterUpdateCallback(r,r,n,null)}},this._dp_init_backup(e)},window.dataProcessor&&(dataProcessor.prototype.init=function(e){this.init_original(e),e._dataprocessor=this,this.setTransactionMode("POST",!0),this.serverProcessor.$proxy||(this.serverProcessor+=(-1!=this.serverProcessor.indexOf("?")?"&":"?")+"editing=true");
 
-scheduler._dp_init_backup = scheduler._dp_init;
-scheduler._dp_init = function(dp) {
-	dp._sendData = function(a1,rowId){
-    	if (!a1) return; //nothing to send
-		if (!this.callEvent("onBeforeDataSending",rowId?[rowId,this.getState(rowId),a1]:[null, null, a1])) return false;				
-    	if (rowId)
-			this._in_progress[rowId]=(new Date()).valueOf();
-		if (this.serverProcessor.$proxy) {
-			var mode = this._tMode!="POST" ? 'get' : 'post';
-			var to_send = [];
-			for (var i in a1)
-				to_send.push({ id: i, data: a1[i], operation: this.getState(i)});
-			this.serverProcessor._send(to_send, mode, this);
-			return;
-		}
-
-		var a2=new dtmlXMLLoaderObject(this.afterUpdate,this,true);
-		var a3 = this.serverProcessor+(this._user?(getUrlSymbol(this.serverProcessor)+["dhx_user="+this._user,"dhx_version="+this.obj.getUserData(0,"version")].join("&")):"");
-		if (this._tMode!="POST")
-        	a2.loadXML(a3+((a3.indexOf("?")!=-1)?"&":"?")+this.serialize(a1,rowId));
-		else
-        	a2.loadXML(a3,true,this.serialize(a1,rowId));
-		this._waitMode++;
-    };
-	
-	dp._updatesToParams = function(items) {
-		var stack = {};
-		for (var i = 0; i < items.length; i++)
-			stack[items[i].id] = items[i].data;
-		return this.serialize(stack);
-	};
-
-	dp._processResult = function(text, xml, loader) {
-		if (loader.status != 200) {
-			for (var i in this._in_progress) {
-				var state = this.getState(i);
-				this.afterUpdateCallback(i, i, state, null);
-			}
-			return;
-		}
-		xml = new dtmlXMLLoaderObject(function() {},this,true);
-		xml.loadXMLString(text);
-		xml.xmlDoc = loader;
-
-		this.afterUpdate(this, null, null, null, xml);
-	};
-	this._dp_init_backup(dp);
-};
-
-if (window.dataProcessor)
-	dataProcessor.prototype.init=function(obj){
-		this.init_original(obj);
-		obj._dataprocessor=this;
-		
-		this.setTransactionMode("POST",true);
-		if (!this.serverProcessor.$proxy)
-			this.serverProcessor+=(this.serverProcessor.indexOf("?")!=-1?"&":"?")+"editing=true";
-	};
+});
+//# sourceMappingURL=../sources/ext/dhtmlxscheduler_offline.js.map

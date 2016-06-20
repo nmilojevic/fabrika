@@ -6,30 +6,6 @@ This software is covered by GPL license. You also can obtain Commercial or Enter
 
 (c) Dinamenta, UAB.
 */
-scheduler.attachEvent("onTemplatesReady",function(){
-	scheduler.xy.scroll_width = 0;
-	
-	var old = scheduler.render_view_data;
-	scheduler.render_view_data=function(){
-		var data = this._els["dhx_cal_data"][0];
-		data.firstChild._h_fix = true;
-		
-		old.apply(scheduler,arguments);
-		
-		
-		
-		var height = parseInt(data.style.height);
-		data.style.height="1px";
-		data.style.height=data.scrollHeight+"px";
-		
-		this._obj.style.height = this._obj.clientHeight + data.scrollHeight - height + "px";
-	};
-	
-	var old_s=scheduler._reset_month_scale;
-	scheduler._reset_month_scale=function(a,b,c){
-		var dummy = {clientHeight:100};
-		old_s.apply(scheduler,[dummy,b,c]);
-		a.innerHTML = dummy.innerHTML;
-	};
-	
-});
+scheduler.attachEvent("onTemplatesReady",function(){scheduler.xy.scroll_width=0;var e=scheduler.render_view_data;scheduler.render_view_data=function(){var t=this._els.dhx_cal_data[0];t.firstChild._h_fix=!0,e.apply(scheduler,arguments);var a=parseInt(t.style.height);t.style.height="1px",t.style.height=t.scrollHeight+"px",this._obj.style.height=this._obj.clientHeight+t.scrollHeight-a+"px"};var t=scheduler._reset_month_scale;scheduler._reset_month_scale=function(e,a,r){var n={clientHeight:100};t.apply(scheduler,[n,a,r]),
+e.innerHTML=n.innerHTML}});
+//# sourceMappingURL=../sources/ext/dhtmlxscheduler_monthheight.js.map
