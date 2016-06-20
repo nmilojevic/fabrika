@@ -39,6 +39,18 @@
   overflow: hidden;
 }
 
+.dhx_cal_ltext textarea {
+  background-color: #FFFFFF;
+  /* #FFF4B5; should be the same for dhx_cal_larea, was transperent */
+  overflow: auto;
+  border: none;
+  color: #887A2E;
+  height: 300px;
+  width: 100%;
+  outline: none !important;
+  resize: none;
+}
+
 .dhx_cal_ltext {
   padding: 2px  0px 2px 10px;
   overflow: hidden;
