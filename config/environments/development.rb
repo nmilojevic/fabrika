@@ -35,20 +35,18 @@ Rails.application.configure do
   #   user_name: Rails.application.secrets.email_provider_username,
   #   password: Rails.application.secrets.email_provider_password
   # }
-  config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: "gmail.com",
-    authentication: "plain",
-    user_name: "fabrika.crossfit@gmail.com",
-    password: "fabrikarules"
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+    api_key: 'key-099ce7267c368430b15c18f0d8fc4d29',
+    domain: 'appa951cf36378a468aafaf3bd7103d4571.mailgun.org'
   }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.default :charset => "utf-8"
+  config.action_mailer.smtp_settings = {}
   # ActionMailer Config
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.raise_delivery_errors = true
-  # Send email in development mode?
-  config.action_mailer.perform_deliveries = true
+  
 
   config.assets.raise_production_errors = true
 
