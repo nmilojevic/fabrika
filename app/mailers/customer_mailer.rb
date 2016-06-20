@@ -1,6 +1,6 @@
 class CustomerMailer < ApplicationMailer
 
-  default from: 'nmilojevic@gmail.com'
+  default from: 'fabrika-crossfit@gmail.com'
  
   def account_approved_email(user)
     @user = user

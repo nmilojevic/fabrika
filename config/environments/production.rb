@@ -71,7 +71,7 @@ Rails.application.configure do
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
-  
+
   config.assets.raise_production_errors = true
 
   # Send deprecation notices to registered listeners.
@@ -82,8 +82,8 @@ Rails.application.configure do
     port: 587,
     domain: "gmail.com",
     authentication: "plain",
-    user_name: "nmilojevic@mainframe2.com",
-    password: "brigatewlan"
+    user_name: "fabrika-crossfit@gmail.com",
+    password: "fabrikarules"
   }
   # ActionMailer Config
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
