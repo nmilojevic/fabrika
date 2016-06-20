@@ -4,7 +4,7 @@ module EventsHelper
     if event.past?
       color = "#B3B1B0"
     elsif event.reserved_for?(current_user)
-      color = "#dff0d8"
+      color = "#1FC364"
     elsif event.full? 
       color = "#D40909"
     end 
