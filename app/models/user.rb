@@ -24,7 +24,9 @@ class User < ActiveRecord::Base
   def inactive_message 
     if !approved? 
       :not_approved 
-    else 
+    elsif membership_expired
+      :membership_expired
+    else
       super # Use whatever other message 
     end 
   end
