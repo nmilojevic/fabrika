@@ -28,3 +28,19 @@
   </div>
 
 </div>
+<script type="text/javascript">
+  $('select.checkbox').multiselect({multiple: true, onChange: function(element, checked) {
+        var select_val = $(element).closest("td").find('input#user_subscribed_event_types');
+        $(select_val).val($(element).parent().val())
+      }
+    });
+    $('select.role').multiselect({onChange: function(element, checked) {
+        var select_val = $(element).closest("td").find('input#user_role');
+        $(select_val).val($(element).parent().val())
+      }
+    });
+
+</script>
+
+
+

@@ -20,7 +20,10 @@ module Projects
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
 
-    config.fabrika_url = ENV['FABRIKA_URL']
+    config.fabrika_url = ENV['FABRIKA_URL'] || "http://fabrika-crossfit.herokuapp.com/"
+    config.enabled_long_tasks = ENV['ENABLED_LONG_TASKS'] || "expire_members warn_members"
+
+    config.active_job.queue_adapter = :delayed_job
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

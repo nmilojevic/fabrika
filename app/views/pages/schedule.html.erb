@@ -159,7 +159,14 @@ var opts = [
     scheduler.attachEvent("onClick", function(id) {  
             scheduler.hideQuickInfo(true);          
             var objEvent = scheduler.getEvent(id);   
-            if (objEvent.past === true) {
+            if (objEvent.past === false) {
+                scheduler.config.icons_select = ["icon_cancel"];
+                dhtmlx.message({
+                    title: "Not allowed",
+                    type: "alert-warning",
+                    text: "Your membership does not include this type of training. Please extend your membership, or contact support."
+                });
+            } else if (objEvent.past === true) {
                 scheduler.config.icons_select = ["icon_cancel"];
                 dhtmlx.message({
                     title: "Warning",

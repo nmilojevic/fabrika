@@ -1,14 +1,26 @@
 <td>
   <%= link_to user.email, user %>
 </td>
-<td>
   <%= form_for(user) do |f| %>
-    <%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
-    <%= f.submit 'Change Role', :class => 'button-xs' %>
-  <% end %>
+<td>
+    <%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]},{}, html_options = {class:'checkbox', style:"display:none"}) %>
+    <%= f.hidden_field :role  %>
 </td>
 <td>
+    <%= f.select(:subscribed_event_types, 
+    Event.event_types.keys.map {|event| "<option value='#{event}' #{user.subscribed_event_types.to_s.include?(event) ? 'selected' : ''}>#{event}</option>"}.join().html_safe, {}, html_options = {class:'checkbox', multiple:"multiple", style:"display:none"}) %>
+    <%= f.hidden_field :subscribed_event_types%>
+</td>
+<td>
+    <%= f.submit 'Update', :class => 'button-xs' %>
+    </td>
+  <% end %>
+
+<td>
   <%= link_to("Approve user", approve_user_path(user), :class => 'button-xs') unless user.approved? %>
+</td>
+<td>
+  <%= link_to("Renew membership", renew_membership_path(user), :class => 'button-xs') if user.membership_expired? %>
 </td>
 <td>
   <%= link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button-xs') unless user == current_user %>

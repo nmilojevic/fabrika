@@ -18,7 +18,8 @@ class EventsController < ApplicationController
               :reserved => event.reserved_for?(current_user),
               :full => event.full?,
               :past => event.past?,
-              :color => event_color(event)
+              :color => event_color(event),
+              :allowed => current_user.subscribed_event_types.include?(event.event_type)
           }}
     types_json =  Event.event_types.map{|type|  {key:type[0], label:type[0].humanize, value: type[0]}}
     render :json => {"data": event_json, "collections": {"type":types_json}}

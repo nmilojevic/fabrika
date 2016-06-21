@@ -29,8 +29,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def renew_membership
+    @user = User.find(params[:id])
+     if @user.update_attributes(membership_expired: false, membership_updated: Time.current)
+      redirect_to users_path, :notice => "User membership renewed."
+    else
+      redirect_to users_path, :alert => "Unable to renew membership subscription."
+    end
+  end
+
   def update
     @user = User.find(params[:id])
+    p "nikola"*1000
+    p params[:user]
     if @user.update_attributes(secure_params)
       redirect_to users_path, :notice => "User updated."
     else
@@ -53,7 +64,7 @@ class UsersController < ApplicationController
   end
 
   def secure_params
-    params.require(:user).permit(:role)
+    params.require(:user).permit(:role, :subscribed_event_types)
   end
 
 end

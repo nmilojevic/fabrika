@@ -11,4 +11,15 @@ class CustomerMailer < ApplicationMailer
     @user = user
     mail(to: @user.email, subject: 'Welcome to Fabrika!')
   end
+
+  def membership_expires_soon_email(user)
+    @user = user
+    mail(to: @user.email, subject: 'Your membership will expire in 5 days')
+  end
+
+  def membership_expired(user)
+    @user = user
+    mail(to: @user.email, subject: 'Your membership has expired')
+  end
+
 end
