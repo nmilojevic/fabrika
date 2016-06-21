@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  enum role: [:user, :vip, :admin]
+  enum role: [:user, :admin]
   after_initialize :set_default_role, :if => :new_record?
   after_create :send_admin_mail
   has_and_belongs_to_many :events
