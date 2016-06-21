@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   def active_for_authentication? 
-    super && approved? 
+    super && approved? && !membership_expired
   end 
 
   def send_admin_mail
