@@ -159,7 +159,7 @@ var opts = [
     scheduler.attachEvent("onClick", function(id) {  
             scheduler.hideQuickInfo(true);          
             var objEvent = scheduler.getEvent(id);   
-            if (objEvent.past === false) {
+            if (objEvent.allowed === false) {
                 scheduler.config.icons_select = ["icon_cancel"];
                 dhtmlx.message({
                     title: "Not allowed",
