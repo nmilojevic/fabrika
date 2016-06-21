@@ -31,7 +31,7 @@ class UsersController < ApplicationController
 
   def renew_membership
     @user = User.find(params[:id])
-     if @user.update_attributes(membership_expired: false, membership_updated: Time.current)
+     if @user.update_attributes(membership_expired: false, membership_updated_at: Time.current)
       redirect_to users_path, :notice => "User membership renewed."
     else
       redirect_to users_path, :alert => "Unable to renew membership subscription."
