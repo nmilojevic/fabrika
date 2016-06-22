@@ -4,9 +4,9 @@ class UsersController < ApplicationController
 
   def index
     if params[:approved] == "false"
-      @users = User.where(approved:false)
+      @users = User.where(approved:false).order(:created_at)
     else
-      @users = User.all
+      @users = User.all.order(:created_at)
     end
   end
 
@@ -40,12 +40,11 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    p "nikola"*1000
     p params[:user]
     if @user.update_attributes(secure_params)
-      redirect_to users_path, :notice => "User updated."
+      render json:{success:true}
     else
-      redirect_to users_path, :alert => "Unable to update user."
+      render json:{error:@user.errors.full_messages}
     end 
   end
 
@@ -64,7 +63,7 @@ class UsersController < ApplicationController
   end
 
   def secure_params
-    params.require(:user).permit(:role, :subscribed_event_types)
+    params.require(:user).permit(:role, :subscribed_event_types => [])
   end
 
 end

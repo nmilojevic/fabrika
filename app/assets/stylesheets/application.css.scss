@@ -13,6 +13,9 @@
  *= require 1st_load_framework
  * bootstrap-multiselect
  */
+ .check,.loading {
+   display:inline-block;
+ }
 .dropdown-menu>li>a>label {
     display: block;
     padding: 3px 20px;

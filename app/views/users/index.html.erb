@@ -29,16 +29,35 @@
 
 </div>
 <script type="text/javascript">
-  $('select.checkbox').multiselect({multiple: true, onChange: function(element, checked) {
-        var select_val = $(element).closest("td").find('input#user_subscribed_event_types');
-        $(select_val).val($(element).parent().val())
+ 
+  $('select.checkbox').multiselect({buttonWidth:200, numberDisplayed: 2, multiple: true, onChange: function(element, checked) {
+        var form = $(element).closest("form");
+        update_user(form);
       }
     });
-    $('select.role').multiselect({onChange: function(element, checked) {
-        var select_val = $(element).closest("td").find('input#user_role');
-        $(select_val).val($(element).parent().val())
+    $('select.role').multiselect( { buttonWidth:80, onChange: function(element, checked) {
+        var form = $(element).closest("form"); 
+       update_user(form);
       }
     });
+
+    function update_user(form){
+       $(form).find(".loading").show();
+      jQuery.ajax({
+        type: "POST",
+        dataType: 'json',
+        data: $(form).serialize(),
+        url:  $(form).attr('action'),
+        success: function(data) {
+          $(form).find(".loading").hide();
+          $(form).find(".check").show();
+        }.bind(this),
+        error: function(error) {
+            alert(error);
+        }.bind(this),
+        timeout: 30000
+      });
+    }
 
 </script>
 
