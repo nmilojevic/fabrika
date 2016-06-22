@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   enum role: [:user, :admin]
+  enum status: [:active, :pending, :expired]
   after_initialize :set_default_role, :if => :new_record?
   after_create :send_admin_mail
   has_and_belongs_to_many :events
@@ -13,7 +14,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   def active_for_authentication? 
-    super && approved? && !membership_expired
+    super && active?
   end 
 
   def send_admin_mail
@@ -22,9 +23,9 @@ class User < ActiveRecord::Base
   end
 
   def inactive_message 
-    if !approved? 
+    if pending? 
       :not_approved 
-    elsif membership_expired
+    elsif expired?
       :membership_expired
     else
       super # Use whatever other message 

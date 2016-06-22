@@ -3,10 +3,11 @@ class UsersController < ApplicationController
   before_action :admin_only, :except => :show
 
   def index
-    if params[:approved] == "false"
-      @users = User.where(approved:false).order(:created_at)
-    else
-      @users = User.all.order(:created_at)
+    respond_to do |format|
+      format.html
+      format.json{ render json: UsersDatatable.new(view_context)}
+    
+      #@users = User.all.order(:created_at)
     end
   end
 
@@ -21,7 +22,7 @@ class UsersController < ApplicationController
 
   def approve
     @user = User.find(params[:id])
-     if @user.update_attributes(approved: true)
+    if @user.active!
       CustomerMailer.account_approved_email(@user).deliver
       redirect_to users_path, :notice => "User approved."
     else
@@ -31,7 +32,8 @@ class UsersController < ApplicationController
 
   def renew_membership
     @user = User.find(params[:id])
-     if @user.update_attributes(membership_expired: false, membership_updated_at: Time.current)
+    if @user.update_attributes(membership_updated_at: Time.current)
+      @user.active!
       redirect_to users_path, :notice => "User membership renewed."
     else
       redirect_to users_path, :alert => "Unable to renew membership subscription."
@@ -40,7 +42,6 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    p params[:user]
     if @user.update_attributes(secure_params)
       render json:{success:true}
     else

@@ -1,7 +1,4 @@
-<td>
-  <%= link_to user.email, user %>
-</td>
-<td>
+
   <%= form_for(user) do |f| %>
     <%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]},{}, html_options = {class:'checkbox', style:"display:none"}) %>
     <% if user.admin? %>
@@ -14,14 +11,15 @@
     <%= image_tag "check.png", style:"display:none", class:"check" %>
     <% end %>
   <% end %>
-
+<!-- 
 </td>
 <td>
-  <%= link_to("Approve user", approve_user_path(user), :class => 'button-xs') unless user.approved? %>
+  <%= link_to("Approve user", approve_user_path(user), :class => 'button-xs') if user.pending? %>
 </td>
 <td>
-  <%= link_to("Renew membership", renew_membership_path(user), :class => 'button-xs') if user.membership_expired? %>
+  <%= link_to("Renew membership", renew_membership_path(user), :class => 'button-xs') if user.expired? %>
 </td>
 <td>
   <%= link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button-xs') unless user == current_user %>
 </td>
+ -->
