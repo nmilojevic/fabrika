@@ -61,6 +61,7 @@ class EventsController < ApplicationController
 
      when 'deleted'
        if rec_type != ''
+        p "1"*100
          Event.where(event_pid: id).destroy_all
        end
 
@@ -69,7 +70,10 @@ class EventsController < ApplicationController
          event.rec_type = 'none'
          event.save
        else
+        p "aaaa"
+        p Event.find(id)
          Event.find(id).destroy
+         p Event.find(id)
        end
 
      when 'updated'

@@ -20,6 +20,14 @@
   </div>
         </div>
     </div>
+    <div id="menuData" style="display: none;">
+            <div id="menu_cb_copy" text="Copy" ></div>
+            <div id="menu_cb_cut" text="Cut" ></div>
+            <div id="menu_cb_paste" text="Paste" ></div>
+            <div id="file_sep_3" type="separator"></div>
+            <div id="menu_cb_delete" text="Delete" ></div>
+    </div>
+      
 
 </div>
 <script>
@@ -83,6 +91,100 @@ var opts = [
     
     var csrf_token = $('meta[name=csrf-token]').attr('content');
      <% if current_user.try(:admin?) %>
+     scheduler.config.icons_select = ["icon_details", "icon_delete", "icon_copy_event"];
+     scheduler.locale.labels.icon_copy_event = "Copy"
+     scheduler._click.buttons.copy_event = function(id){
+        cb_isCopy = true;
+        scheduler.hideQuickInfo(true);
+        scheduler.callEvent("onEventCopied", [scheduler.getEvent(id)]);  
+     }
+     var menu = new dhtmlXMenuObject();
+        // menu.setIconsPath("../assets/img/font-awesome/");
+        menu.renderAsContextMenu();
+       menu.loadFromHTML("menuData", true);
+        var event_id, cb_date, cb_isCopy, cb_section = null;
+
+        menu.attachEvent("onClick", function(id) {
+           eval(id)();
+        });
+
+        scheduler.attachEvent("onContextMenu", function(event_id_loc, native_event_object) {
+           event_id = event_id_loc;
+           cb_date = scheduler.getActionData(native_event_object).date;
+           cb_section = scheduler.getActionData(native_event_object).section;
+           /* Menu position */
+           var posx = 0;
+           var posy = 0;
+           if (native_event_object.pageX || native_event_object.pageY) {
+              posx = native_event_object.pageX;
+              posy = native_event_object.pageY;
+           } else if (native_event_object.clientX || native_event_object.clientY) {
+              posx = native_event_object.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+              posy = native_event_object.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+           }
+
+           /* Menu items */
+           if (event_id) {
+              menu.showItem("menu_cb_copy");
+              menu.showItem("menu_cb_cut");
+              menu.hideItem("menu_cb_paste");
+              menu.showItem("menu_cb_delete");
+              menu.showContextMenu(posx, posy);
+           }
+           else {
+              menu.hideItem("menu_cb_copy");
+              menu.hideItem("menu_cb_cut");
+              menu.hideItem("menu_cb_delete");
+              menu.showItem("menu_cb_paste");
+              menu.showContextMenu(posx, posy);
+           }
+           return false; // prevent default action and propagation
+        });
+
+        function menu_cb_copy() {
+           scheduler._buffer_id = event_id;
+           cb_isCopy = true;
+           scheduler.callEvent("onEventCopied", [scheduler.getEvent(event_id)]);  
+        }
+        function menu_cb_cut() {
+           scheduler._buffer_id = event_id;
+           cb_isCopy = false;
+           scheduler.callEvent("onEventCut", [scheduler.getEvent(event_id)]);  
+        }
+         function menu_cb_delete() {
+           scheduler._buffer_id = event_id;
+           scheduler.deleteEvent(event_id);  
+        }
+        function menu_cb_paste() {
+           var ev = scheduler.getEvent(scheduler._buffer_id);
+           if (ev) {
+              if (cb_isCopy) { // copy-paste
+                 new_ev = _cb_make_paste_event(ev);
+                 new_ev.id = scheduler.uid();
+                 
+                 scheduler.addEvent(new_ev);
+                 scheduler.callEvent("onEventPasted", [cb_isCopy, new_ev, ev]);
+              } else { // cut-paste
+                 new_ev = _cb_make_paste_event(ev);
+
+                 var a = scheduler.callEvent("onBeforeEventChanged", [new_ev, null, !1, ev]);
+                 a && (scheduler.addEvent(new_ev), scheduler.callEvent("onEventPasted", [cb_isCopy, new_ev, ev]));
+              }
+           }
+        }
+        function _cb_make_paste_event(ev) {
+           var event_duration = ev.end_date-ev.start_date;
+           var new_ev = scheduler._lame_copy({}, ev);
+           new_ev.start_date = new Date(cb_date);
+           new_ev.end_date = new Date(new_ev.start_date.valueOf() + event_duration);
+           
+           if (cb_section) {
+              var a = scheduler.getState().mode, d = null;
+              scheduler.matrix[a] ? d = scheduler.matrix[a].y_property : scheduler._props[a] && (d = scheduler._props[a].property), new_ev[d] = cb_section;
+           }
+           
+           return new_ev;
+        }
     var dp = new dataProcessor("<%= db_action_path %>");
     dp.attachEvent("onBeforeUpdate", function(id, state, data){
     //add auth token
