@@ -3,7 +3,7 @@
     <div class="row">
         <div class="box">
             
-  <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:1000px'>
+  <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:700px'>
     <div class="dhx_cal_navline">
       <div class="dhx_cal_prev_button">&nbsp;</div>
       <div class="dhx_cal_next_button">&nbsp;</div>
@@ -24,7 +24,7 @@
             <div id="menu_cb_copy" text="Copy" ></div>
             <div id="menu_cb_cut" text="Cut" ></div>
             <div id="menu_cb_paste" text="Paste" ></div>
-            <div id="file_sep_3" type="separator"></div>
+            <div id="manu_sep_3" type="separator"></div>
             <div id="menu_cb_delete" text="Delete" ></div>
     </div>
       
@@ -83,13 +83,17 @@ var opts = [
     scheduler.templates.quick_info_title = function(start, end, ev){ return ev.event_type.substr(0,50); };
     scheduler.attachEvent("onTemplatesReady", function(){
     scheduler.templates.event_text=function(start,end,event){
-        return "<div class='center'>" + (event.event_type  !== undefined ? event.event_type.toUpperCase().replace("_"," ") : "") + "<br/>("+ (event.users  !== undefined ? (event.users + "/" + event.max_users) : "") + ")</div> ";
+        return "<div class='center'>" + (event.event_type  !== undefined ? event.event_type.toUpperCase().replace("_"," ") : "") + "<br> ("+ (event.users  !== undefined ? (event.users + "/" + event.max_users) : "") + ")</div> ";
     }
 }); 
      scheduler.config.details_on_dblclick = true;
      
     
     var csrf_token = $('meta[name=csrf-token]').attr('content');
+    scheduler.config.first_hour = 8;
+    scheduler.config.last_hour = 22;
+    scheduler.config.hour_size_px = 50;
+    scheduler.config.separate_short_events = true;
      <% if current_user.try(:admin?) %>
      scheduler.config.icons_select = ["icon_details", "icon_delete", "icon_copy_event"];
      scheduler.locale.labels.icon_copy_event = "Copy"
@@ -128,6 +132,7 @@ var opts = [
               menu.showItem("menu_cb_copy");
               menu.showItem("menu_cb_cut");
               menu.hideItem("menu_cb_paste");
+              menu.showItem("manu_sep_3");
               menu.showItem("menu_cb_delete");
               menu.showContextMenu(posx, posy);
            }
@@ -135,6 +140,7 @@ var opts = [
               menu.hideItem("menu_cb_copy");
               menu.hideItem("menu_cb_cut");
               menu.hideItem("menu_cb_delete");
+              menu.hideItem("manu_sep_3");
               menu.showItem("menu_cb_paste");
               menu.showContextMenu(posx, posy);
            }
@@ -177,7 +183,8 @@ var opts = [
            var new_ev = scheduler._lame_copy({}, ev);
            new_ev.start_date = new Date(cb_date);
            new_ev.end_date = new Date(new_ev.start_date.valueOf() + event_duration);
-           
+           new_ev.event_type = ev.event_type;
+           new_ev.max_users = ev.max_users;
            if (cb_section) {
               var a = scheduler.getState().mode, d = null;
               scheduler.matrix[a] ? d = scheduler.matrix[a].y_property : scheduler._props[a] && (d = scheduler._props[a].property), new_ev[d] = cb_section;
@@ -188,6 +195,8 @@ var opts = [
     var dp = new dataProcessor("<%= db_action_path %>");
     dp.attachEvent("onBeforeUpdate", function(id, state, data){
     //add auth token
+     if (data.rec_type === null)
+        data.rec_type = "";
      data["authenticity_token"] = csrf_token;
      return true;
     });

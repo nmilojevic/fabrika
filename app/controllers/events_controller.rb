@@ -43,7 +43,7 @@ class EventsController < ApplicationController
    start_date = params['start_date']
    end_date = params['end_date']
    text = params['text']
-   rec_type = params['rec_type']
+   rec_type = params['rec_type'] == nil ? "" : params['rec_type']
    max_users = params['max_users']
    event_type = params['event_type']
    event_length = params['event_length']
@@ -61,7 +61,6 @@ class EventsController < ApplicationController
 
      when 'deleted'
        if rec_type != ''
-        p "1"*100
          Event.where(event_pid: id).destroy_all
        end
 
@@ -70,10 +69,7 @@ class EventsController < ApplicationController
          event.rec_type = 'none'
          event.save
        else
-        p "aaaa"
-        p Event.find(id)
          Event.find(id).destroy
-         p Event.find(id)
        end
 
      when 'updated'

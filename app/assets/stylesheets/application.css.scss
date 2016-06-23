@@ -256,6 +256,14 @@ body{
     margin-right: -0.25em;
 }
 
+.dhx_cal_event .dhx_body, .dhx_cal_event_line {
+    font-size: 11px!important;
+    font-family: Arial,sans-serif;
+}
+.dhx_cal_event .dhx_title{
+   font-size: 11px!important;
+}
+
   /* TABLE RESPONSIVENESS
   *********************************************************************************/
 .table-responsive {
