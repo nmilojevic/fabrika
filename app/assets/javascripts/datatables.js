@@ -170,7 +170,7 @@ function createTableOptions(table_selector) {
                 }
             },
    // "ajax":  $('.table').data('source'),
-    "sDom" : "<'admin-page-header clear'<'manage_user-id left'><'right'f>r>t<'row table-footer'<'col4'l><'col4' <'text-center'i>><'col4'p>>",
+    "sDom" : "<'admin-page-header clear'<'manage_user-id left'><'right'f>r>t<'row table-footer'<'col-md-4'l><'col-md-4' <'text-center'i>><'col-md-4'p>>",
     "sPaginationType": "bootstrap",
     "fnDrawCallback" : function(sSearch) {
         var search = sSearch.oPreviousSearch.sSearch;
@@ -184,11 +184,9 @@ function createTableOptions(table_selector) {
         }
     }
 
-  
-
 }
 
-var DELAYED_LOADING_MS = 1500;
+var DELAYED_LOADING_MS = 100;
 var DataTableDefaultHandler = {}
 
 DataTableDefaultHandler.processing = function( e, settings, processing ) {

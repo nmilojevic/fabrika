@@ -8,12 +8,13 @@
       </h2>
       <hr>
   </div>
+<div class="filter-container" style="display:none">
+   <label>Show: 
+   <%=select_tag("users-filter", options_for_select([["All users", "all"]] + User.statuses.keys.collect {|status| [status.titleize,status]}) {}, html_options = {style:"display:none", class:"filter"})%> users.
+  </label>
+</div>
 
-
-<%= link_to "All Users", :action => "index" %>
-|
-<%= link_to "Users awaiting approval", :action => "index", :approved => "false" %>
-<br/><br/>
+<div class="table-responsive" style="position: relative">
 <table class="admin-table table" data-source="<%= users_path(format: :json) %>" style="display:none">
       <thead>
         <tr>
@@ -27,11 +28,11 @@
       <tbody>
       </tbody>
     </table>
-    </div>
     <div id="table-loading" style="display: none">
-        <div id="loading-background" class="loading-overlay"><%= image_tag "ajax-loader.gif", :class => "loader spin center" %></div>
+        <div id="loading-background" class="loading-overlay"><%= image_tag "table-loader.gif", :class => "loader spin center" %></div>
     </div>
-  </main>
+  </div>
+  </div>
 </div>
 <% content_for :extra_js do %>
   <%= javascript_include_tag "datatables" %>
@@ -39,13 +40,51 @@
    
   $(document).ready(function() { 
     var tableOptions = createTableOptions(); 
+    tableOptions.sDom = "<'admin-page-header clear'<'manage_user-id left'><'right'f>r>t<'row table-footer'<'col-md-4'l><'col-md-4' <'text-center'i>><'col-md-4'p>>",
     
+    tableOptions.bStateSave = true;
+    //Send filter as param to server
+   
+    tableOptions.fnServerParams = function (aoData) {
+      oControls = $('.filter-container').find('.filter');
+      oControls.each(function() {
+        if ( $(this).attr('id') ){
+            var filter_text = $(this).val().replace('"', '"').trim();
+            aoData[$(this).attr('id')] =  filter_text.indexOf("all") == 0 ? "" : $(this).val().replace('"', '"').trim();
+        }
+      });
+    };
+    tableOptions.fnStateSaveParams = function ( oSettings, sValue ) {
+      oControls = $('.filter-container').find('.filter');
+      oControls.each(function() {
+          if ($(this).attr('id')){
+            sValue[ $(this).attr('id') ] = $(this).val().replace('"', '"').trim();
+            
+          }
+      });
+      return sValue;
+    };
+    //Restore applied custom filter values when page reloads
+    tableOptions.fnStateLoadParams = function ( oSettings, oData ) {
+      oControls = $('.filter-container').find('.filter');
+      //Load custom filters
+      oControls.each(function() {
+        var oControl = $(this);
+        //    alert(oControl.get(0).tagName);
+        $.each(oData, function(index, value) {
+          if ( index == oControl.attr('id')){
+              oControl.val( value );
+          }
+        });
+      });
+      return true;
+    }
+
 
     createDataTable(tableOptions);
-    $('.manage_user-id').append('<h1 class="admin-page-title">Invitation codes</h1>'
-              +'<span class="table-info">Manage invitation codes. <a href=' + $('#add_new_link').val() + '>'
-              +'Add new</a></span>');
-
+    var filter_container = $('.filter-container');
+    $('.manage_user-id').append(filter_container);
+    filter_container.show();
     $('.table').on( 'draw.dt', function () {
         $("[rel=tooltip]").tooltip({ placement: 'top'});
           $('select.checkbox').multiselect({buttonWidth:200, numberDisplayed: 2, multiple: true, onChange: function(element, checked) {
@@ -53,6 +92,12 @@
             update_user(form);
           }
         });
+        $('select#users-filter').multiselect({ onChange: function(element, checked) {
+          $('.admin-table').DataTable().draw();
+            // $('.table').DataTable().columns(2).search($(element).val().toLowerCase()).draw();
+          }
+        });
+        $('select.breathe').multiselect();
         $('select.role').multiselect( { buttonWidth:80, onChange: function(element, checked) {
             var form = $(element).closest("form"); 
            update_user(form);

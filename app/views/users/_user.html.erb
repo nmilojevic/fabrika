@@ -10,16 +10,4 @@
     <%= image_tag "ajax-loader.gif",  style:"display:none", class:"loading" %>
     <%= image_tag "check.png", style:"display:none", class:"check" %>
     <% end %>
-  <% end %>
-<!-- 
-</td>
-<td>
-  <%= link_to("Approve user", approve_user_path(user), :class => 'button-xs') if user.pending? %>
-</td>
-<td>
-  <%= link_to("Renew membership", renew_membership_path(user), :class => 'button-xs') if user.expired? %>
-</td>
-<td>
-  <%= link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button-xs') unless user == current_user %>
-</td>
- -->
+  <% end %> 

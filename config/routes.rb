@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     resources :users
     root to: "users#index"
   end
-  root to: 'visitors#index'
+  root to: 'visitors#index', :ad => "home_root"
   devise_for :users
   resources :users
   match "events/:id/reserve_event", :to => "events#reserve_event", :as => "reserve_event", :via => "post"

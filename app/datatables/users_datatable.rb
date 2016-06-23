@@ -15,19 +15,27 @@ class UsersDatatable < AjaxDatatablesRails::Base
 private
 
   def data
+    p 'recordssize', records.size
     records.map do |user|
       [
         user.email,
         view.render(:partial => "users/user", :formats => "html", :locals => { :user => user}),
         user.status,
-        (I18n.l user.created_at),
-        ''#view.render(:partial => "users/links", :formats => "html", :locals => { :user => user})
+        (I18n.l user.created_at.to_date),
+        view.render(:partial => "users/links", :formats => "html", :locals => { :user => user})
       ]
     end
   end
 
   def get_raw_records
-    User.all
+    filter_user_status = params["users-filter"]
+    if filter_user_status.present?
+      users = User.where(status: User.statuses[filter_user_status])
+    else 
+      users = User.all
+    end
+    p "SIZE",users.size
+    users
   end
   
   private 

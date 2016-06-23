@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html
       format.json{ render json: UsersDatatable.new(view_context)}
-    
+
       #@users = User.all.order(:created_at)
     end
   end
