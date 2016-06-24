@@ -36,7 +36,6 @@
   </div>
 </div>
 <% content_for :extra_js do %>
- <%= javascript_include_tag "datatables", 'data-turbolinks-track' => true %>
    <script>
    
   $(document).ready(function() { 
@@ -82,8 +81,8 @@
     }
 
 
-    createDataTable(tableOptions);
     var filter_container = $('.filter-container');
+    createDataTable(tableOptions);
     $('.manage_user-id').append(filter_container);
     filter_container.show();
     $('.table').on( 'draw.dt', function () {
