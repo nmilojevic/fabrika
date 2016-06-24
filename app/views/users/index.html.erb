@@ -36,7 +36,7 @@
   </div>
 </div>
 <% content_for :extra_js do %>
-  <%= javascript_include_tag "datatables" %>
+ <%= javascript_include_tag "datatables", 'data-turbolinks-track' => true %>
    <script>
    
   $(document).ready(function() { 
