@@ -91,7 +91,7 @@ var opts = [
     {name:"recurring", type:"recurring", map_to:"rec_type", button:"recurring"},
     {name:"time", height:72, type:"time", map_to:"auto"}
     ];
-    scheduler.templates.quick_info_title = function(start, end, ev){ return ev.event_type.substr(0,50); };
+    scheduler.templates.quick_info_title = function(start, end, ev){ return ev.event_type.toUpperCase().replace("_", " ").substr(0,50); };
     scheduler.attachEvent("onTemplatesReady", function(){
     scheduler.templates.event_text=function(start,end,event){
         return "<div class='center'>" + (event.event_type  !== undefined ? event.event_type.toUpperCase().replace("_"," ") : "") + "<br> ("+ (event.users  !== undefined ? (event.users + "/" + event.max_users) : "") + ")</div> ";
