@@ -18,7 +18,8 @@ class UserDashboard < Administrate::BaseDashboard
     sign_in_count: Field::Number,
     current_sign_in_at: Field::DateTime,
     last_sign_in_at: Field::DateTime,
-    approved: Field::Boolean,
+    status: Field::Number,
+    membership_updated_at: Field::DateTime,
     current_sign_in_ip: Field::String.with_options(searchable: false),
     last_sign_in_ip: Field::String.with_options(searchable: false),
     created_at: Field::DateTime,
@@ -36,7 +37,9 @@ class UserDashboard < Administrate::BaseDashboard
     :id,
     :email,
     :role,
-    :approved,
+    :status,
+    :membership_updated_at,
+    :created_at,
     :name,
   ].freeze
 
@@ -46,13 +49,14 @@ class UserDashboard < Administrate::BaseDashboard
     :id,
     :email,
     :role,
-    :approved,
+    :status,
     :sign_in_count,
     :current_sign_in_at,
     :last_sign_in_at,
     :current_sign_in_ip,
     :last_sign_in_ip,
     :created_at,
+    :membership_updated_at,
     :updated_at,
     :name,
   ].freeze
@@ -66,6 +70,7 @@ class UserDashboard < Administrate::BaseDashboard
     :password_confirmation,
     :role,
     :approved,
+    :membership_updated_at,
     :name,
   ].freeze
 
