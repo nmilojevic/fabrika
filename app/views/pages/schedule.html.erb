@@ -184,7 +184,7 @@ var opts = [
          function menu_cb_delete() {
            scheduler._buffer_id = event_id;
            var c = scheduler.locale.labels.confirm_deleting;
-           scheduler._dhtmlx_confirm(c, scheduler.locale.labels.title_confirm_deleting, function(){ scheduler.deleteEvent(id); }); 
+           scheduler._dhtmlx_confirm(c, scheduler.locale.labels.title_confirm_deleting, function(){ scheduler.deleteEvent(event_id); }); 
         }
         function menu_cb_paste() {
            var ev = scheduler.getEvent(scheduler._buffer_id);
