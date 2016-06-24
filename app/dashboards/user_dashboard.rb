@@ -18,7 +18,7 @@ class UserDashboard < Administrate::BaseDashboard
     sign_in_count: Field::Number,
     current_sign_in_at: Field::DateTime,
     last_sign_in_at: Field::DateTime,
-    status: Field::Number,
+    status: Field::String,
     membership_updated_at: Field::DateTime,
     current_sign_in_ip: Field::String.with_options(searchable: false),
     last_sign_in_ip: Field::String.with_options(searchable: false),
@@ -69,7 +69,7 @@ class UserDashboard < Administrate::BaseDashboard
     :password,
     :password_confirmation,
     :role,
-    :approved,
+    :status,
     :membership_updated_at,
     :name,
   ].freeze
