@@ -3,7 +3,7 @@
     <div class="row">
         <div class="box">
             
-  <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:700px'>
+  <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:800px;z-index:1'>
     <div class="dhx_cal_navline">
       <div class="dhx_cal_prev_button">&nbsp;</div>
       <div class="dhx_cal_next_button">&nbsp;</div>
@@ -31,6 +31,17 @@
 
 </div>
 <script>
+
+ this._show_tooltips = true;
+(function(){
+    var events = ["onEmptyClick", "onViewChange", "onLightbox", "onBeforeEventDelete", "onBeforeDrag"];
+    var hiding_function = function(){
+        this._show_tooltips = true;
+        return true;
+    }.bind(this);
+    for (var i=0; i<events.length; i++)
+        scheduler.attachEvent(events[i], hiding_function);
+})();
   scheduler.config.xml_date="%Y-%m-%d %H:%i";
   // scheduler.form_blocks["my_editor"] = {
   //               render:function(sns) {
@@ -94,7 +105,19 @@ var opts = [
     scheduler.config.last_hour = 22;
     scheduler.config.hour_size_px = 50;
     scheduler.config.separate_short_events = true;
+    var format=scheduler.date.date_to_str("%Y-%m-%d %H:%i");
+    scheduler.templates.tooltip_text = function(start,end,event) {
+        if (this._show_tooltips === true)
+    return "<b>"+event.event_type.toUpperCase().replace("_"," ") +":</b><br>"+event.text+"<br/><b>Start date:</b> "+
+    format(start)+"<br/><b>End date:</b> "+format(end);
+    else 
+        return ""
+}.bind(this);
      <% if current_user.try(:admin?) %>
+        scheduler.attachEvent("onClick", function(id) {  
+            this._show_tooltips = false;
+            dhtmlXTooltip.hide();
+        }.bind(this));
      scheduler.config.icons_select = ["icon_details", "icon_delete", "icon_copy_event"];
      scheduler.locale.labels.icon_copy_event = "Copy"
      scheduler._click.buttons.copy_event = function(id){
@@ -113,6 +136,7 @@ var opts = [
         });
 
         scheduler.attachEvent("onContextMenu", function(event_id_loc, native_event_object) {
+           dhtmlXTooltip.hide();
            event_id = event_id_loc;
            cb_date = scheduler.getActionData(native_event_object).date;
            cb_section = scheduler.getActionData(native_event_object).section;
@@ -207,7 +231,6 @@ var opts = [
 
     dp.init(scheduler);
     dp.setTransactionMode("POST", false);
-
    // scheduler.config.readonly_form = true;
    //  scheduler.config.readonly = true; 
     <% else %>
@@ -268,7 +291,9 @@ var opts = [
     };
 
     scheduler.attachEvent("onClick", function(id) {  
-            scheduler.hideQuickInfo(true);          
+            scheduler.hideQuickInfo(true);
+            this._show_tooltips = false;
+            dhtmlXTooltip.hide();
             var objEvent = scheduler.getEvent(id);   
             if (objEvent.allowed === false) {
                 scheduler.config.icons_select = ["icon_cancel"];

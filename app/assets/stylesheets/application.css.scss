@@ -263,6 +263,12 @@ body{
 .dhx_cal_event .dhx_title{
    font-size: 11px!important;
 }
+.dhtmlXTooltip.tooltip{
+  white-space: pre-wrap;
+}
+.dhtmlXTooltip.tooltip.display{
+  display: 'none'!important;
+}
 
   /* TABLE RESPONSIVENESS
   *********************************************************************************/
