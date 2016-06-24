@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
     CustomerMailer.signup_confirmation_email(self).deliver
   end
 
-  def inactive_message 
+  def inactive_message
     if pending? 
       :not_approved 
     elsif expired?
