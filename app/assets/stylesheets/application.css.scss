@@ -12,6 +12,8 @@
  *= require business-casual
  *= require 1st_load_framework
  * bootstrap-multiselect
+ *= responsive.dataTables.css
+ *= responsive.bootstrap.css
  */
  .check,.loading {
    display:inline-block;
@@ -278,6 +280,9 @@ body{
   overflow-y: hidden;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
+
+
+
 @media screen and (max-width: 870px) {
 .table-responsive {
   width: 82.94573643410853%;

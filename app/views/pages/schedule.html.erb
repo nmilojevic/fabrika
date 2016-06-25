@@ -330,6 +330,8 @@ var opts = [
     scheduler.config.drag_resize = 0;
     scheduler.config.readonly = true;
     <% end %>
+ //   scheduler.BeforeInit.Add(string.Format("initResponsive({0})", scheduler.Name));
+     initResponsive(scheduler);
      scheduler.init("scheduler_here");
        scheduler.load("<%= data_path %>", "json");
    

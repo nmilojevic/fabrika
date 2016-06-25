@@ -1,8 +1,11 @@
 //= require jquery.dataTables
 //= require dataTables.buttons
+//= require dataTables.buttons
+//= require dataTables.responsive
+//= require responsive.bootstrap
 //= require dataTables.colVis
 //= require buttons.colVis
-// require buttons.bootstrap
+//  require buttons.bootstrap
 //= require DT_bootstrap
 //= require jquery.highlight
 //
