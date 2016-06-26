@@ -197,6 +197,9 @@ tr.dhx_grid_event td {
         -moz-box-sizing: border-box;
         box-sizing: border-box;
     }
+    .dhx_cal_ltext textarea {
+        height: 120px !important;
+    }
     .dhx_btn_set {
         position: relative !important;
         display: inline-block !important;

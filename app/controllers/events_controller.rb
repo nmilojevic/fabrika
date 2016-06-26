@@ -1,6 +1,8 @@
 class EventsController < ApplicationController
  include EventsHelper
  before_action :authenticate_user!
+ before_action :admin_only, only: [:db_action]
+
 
  def data
    events = Event.all
@@ -19,6 +21,7 @@ class EventsController < ApplicationController
               :full => event.full?,
               :past => event.past?,
               :color => event_color(event),
+              :reserved_by => current_user.admin? ? event.users.map{|user| "#{user.name.to_s} (#{user.email})"} : [],
               :allowed => current_user.admin? || current_user.subscribed_event_types.try(:include?, event.event_type)
           }}
     types_json =  Event.event_types.map{|type|  {key:type[0], label:type[0].humanize, value: type[0]}}
@@ -94,5 +97,13 @@ class EventsController < ApplicationController
               :tid => tid,
           }
  end
+
+ private
+
+  def admin_only
+    unless current_user.admin?
+      redirect_to :back, :alert => "Access denied."
+    end
+  end
 
 end

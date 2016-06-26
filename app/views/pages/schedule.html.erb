@@ -43,23 +43,21 @@
         scheduler.attachEvent(events[i], hiding_function);
 })();
   scheduler.config.xml_date="%Y-%m-%d %H:%i";
-  // scheduler.form_blocks["my_editor"] = {
-  //               render:function(sns) {
-  //                   return "<div class='dhx_cal_ltext' style='height:60px;'><input type='text'></div>";
-  //               },
-  //               set_value:function(node, value, ev) {
-  //                   node.childNodes[0].value = value || "";
-  //               },
-  //               get_value:function(node, ev) {
-                    
-  //                   return node.childNodes[0].value;
-  //               },
-  //               focus:function(node) {
-  //                   var a = node.childNodes[0];
-  //                   a.select();
-  //                   a.focus();
-  //               }
-  //           };
+  scheduler.form_blocks["my_editor"] = {
+                render:function(sns) {
+                    return "<div class='dhx_cal_ltext' style='height:auto;'><ol class='reserved-by'></ol></div>";
+                },
+                set_value:function(node, value, ev) {
+                    $.each( ev.reserved_by, function( index, value ){
+                       $(node.childNodes[0]).append('<li>'+value+'</li>');
+            
+                    });
+                },
+                get_value:function(node, ev) {
+                },
+                focus:function(node) {
+                }
+            };
 
 var opts = [
     { key: 1, label: '1' },
@@ -88,6 +86,7 @@ var opts = [
     {name:"description", map_to:"text", type:"textarea" , focus:true},
     {name:"Type", map_to:"event_type", type:"select",options:scheduler.serverList("type")},
     {name:"Max users", map_to:"max_users", type:"select", options:opts},
+    {name:"Reserved by", map_to:"reserved_by", type:"my_editor"},
     {name:"recurring", type:"recurring", map_to:"rec_type", button:"recurring"},
     {name:"time", height:72, type:"time", map_to:"auto"}
     ];
