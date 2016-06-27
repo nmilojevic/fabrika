@@ -118,8 +118,9 @@ var opts = [
             dhtmlXTooltip.hide();
         }.bind(this));
      scheduler.config.icons_select = ["icon_details", "icon_delete", "icon_copy_event"];
-     scheduler.locale.labels.icon_copy_event = "Copy"
+     //scheduler.locale.labels.icon_copy_event = "Copy"
      scheduler._click.buttons.copy_event = function(id){
+         scheduler._buffer_id = id;
         cb_isCopy = true;
         scheduler.hideQuickInfo(true);
         scheduler.callEvent("onEventCopied", [scheduler.getEvent(id)]);  
@@ -207,6 +208,7 @@ var opts = [
            var new_ev = scheduler._lame_copy({}, ev);
            new_ev.start_date = new Date(cb_date);
            new_ev.end_date = new Date(new_ev.start_date.valueOf() + event_duration);
+           new_ev.event_pid = null;
            new_ev.event_type = ev.event_type;
            new_ev.max_users = ev.max_users;
            if (cb_section) {
@@ -234,8 +236,8 @@ var opts = [
    // scheduler.config.readonly_form = true;
    //  scheduler.config.readonly = true; 
     <% else %>
-    scheduler.locale.labels.icon_cancel_event = "Can't go"
-    scheduler.locale.labels.icon_reserve_event = "Going"
+  //  scheduler.locale.labels.icon_cancel_event = "Can't go"
+ //   scheduler.locale.labels.icon_reserve_event = "Going"
     // scheduler.templates.event_class = function(start, end, ev){
     //  class_name = ""
     //  if (ev.past){
@@ -268,11 +270,19 @@ var opts = [
    };
 
     scheduler._click.buttons.reserve_event = function(id){
-        
-            jQuery.ajax({
+        var recurring_event = false;
+        var start_date = ""
+        if (id.toString().indexOf("#") != -1){
+            pid = id.split("#");
+            id = pid[0]
+            event_length = pid[1]
+            recurring_event = true;
+        } 
+        jQuery.ajax({
         type: "POST",
         dataType: 'json',
-        data: "authenticity_token=" + csrf_token,
+        data: "authenticity_token=" + csrf_token + 
+         "&recurring_event="+recurring_event + "&event_length="+ event_length,
         url:  "../events/"+id+"/reserve_event",
         success: function(data) {
           scheduler.hideQuickInfo(true);

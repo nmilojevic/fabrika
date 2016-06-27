@@ -29,7 +29,20 @@ class EventsController < ApplicationController
  end
  
  def reserve_event
-  event = Event.find(params['id'])
+  recurring_event = params['recurring_event']
+  start_date = Time.at(params['event_length'].to_i).strftime('%Y-%m-%d %H:%M:%S')
+  origin_event = Event.find(params['id'])
+  end_date= start_date.to_datetime + origin_event.event_length.seconds
+  event_length= params['event_length']
+  if recurring_event == "true"
+    p "recurring_event"
+     event = Event.create :start_date => start_date, :end_date => end_date, :text => origin_event.text,
+                          :rec_type => '', :max_users => origin_event.max_users, :event_type => origin_event.event_type, :event_length => event_length, :event_pid => origin_event.id
+
+                          p event
+  else 
+     event = origin_event  
+  end
   event.users << current_user
   render :json => {"success":true}
  end
@@ -52,7 +65,7 @@ class EventsController < ApplicationController
    event_length = params['event_length']
    event_pid = params['event_pid']
    tid = id
-
+ 
    case mode
      when 'inserted'
        event = Event.create :start_date => start_date, :end_date => end_date, :text => text,
@@ -61,17 +74,19 @@ class EventsController < ApplicationController
        if rec_type == 'none'
          mode = 'deleted'
        end
-
+       p event
      when 'deleted'
        if rec_type != ''
          Event.where(event_pid: id).destroy_all
        end
 
        if event_pid != 0 and event_pid != ''
+          p "2"*100
          event = Event.find(id)
          event.rec_type = 'none'
          event.save
        else
+          p "3"*100
          Event.find(id).destroy
        end
 
