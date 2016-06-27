@@ -118,7 +118,7 @@ var opts = [
             dhtmlXTooltip.hide();
         }.bind(this));
      scheduler.config.icons_select = ["icon_details", "icon_delete", "icon_copy_event"];
-     //scheduler.locale.labels.icon_copy_event = "Copy"
+     scheduler.locale.labels.icon_copy_event = "Copy"
      scheduler._click.buttons.copy_event = function(id){
          scheduler._buffer_id = id;
         cb_isCopy = true;
@@ -236,8 +236,8 @@ var opts = [
    // scheduler.config.readonly_form = true;
    //  scheduler.config.readonly = true; 
     <% else %>
-  //  scheduler.locale.labels.icon_cancel_event = "Can't go"
- //   scheduler.locale.labels.icon_reserve_event = "Going"
+    scheduler.locale.labels.icon_cancel_event = "Can't go"
+    scheduler.locale.labels.icon_reserve_event = "Going"
     // scheduler.templates.event_class = function(start, end, ev){
     //  class_name = ""
     //  if (ev.past){
