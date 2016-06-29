@@ -1,3 +1,3 @@
 class VisitorsController < ApplicationController
-
+ 
 end
