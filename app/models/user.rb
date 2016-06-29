@@ -1,9 +1,9 @@
-class User < Refinery::Authentication::Devise::User
+class User < ActiveRecord::Base
   enum role: [:user, :admin]
   enum status: [:active, :pending, :expired]
-  after_initialize :set_default_role, :if => :new_record?
-  after_create :send_admin_mail
-  has_and_belongs_to_many :events
+   after_initialize :set_default_role, :if => :new_record?
+   after_create :send_admin_mail
+   has_and_belongs_to_many :events
   
   def set_default_role
     self.role ||= :user

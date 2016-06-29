@@ -5,7 +5,7 @@ Refinery::Core.configure do |config|
 
   # When true this will force SSL redirection in all Refinery backend controllers.
   # config.force_ssl = false
-#config.mounted_path = "/cms"
+  config.mounted_path = "/cms"
   # Set the S3 options using means other than securely by environment variables.
   # If you have to.
   # config.s3_bucket_name = ENV['S3_BUCKET']
