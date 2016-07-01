@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.2.4'
 gem 'rails', '4.2.4'
 gem 'sass-rails', '~> 5.0'
+gem 'fog'
 gem 'refinerycms', '~> 3.0.0'
 gem 'refinerycms-blog', git: 'https://github.com/refinery/refinerycms-blog', branch: 'master'
 gem 'refinerycms-news', git: 'https://github.com/refinery/refinerycms-news', branch: 'master'
@@ -16,7 +17,6 @@ gem 'mail_form'
 gem 'delayed_job_active_record'
 gem 'jquery-datatables-rails'
 gem 'ajax-datatables-rails', git: 'git://github.com/antillas21/ajax-datatables-rails.git', branch: 'master'
-
 group :development, :test do
   gem 'byebug'
 end
@@ -47,7 +47,6 @@ group :development, :test do
 end
 group :production do
   gem 'rails_12factor'
-  gem 'fog'
 end
 group :test do
   gem 'capybara'
