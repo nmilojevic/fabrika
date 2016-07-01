@@ -1,14 +1,12 @@
-<p>Dear <%= @user.name %>,</p>
-
-<p>Thanks for signing up!</p>
-
-<p>We’ll have you up and running soon — usually within 24 hours. Once we activate your account, you’ll recieve another email from us, with your login credentials.</p>
-
-<p>If you have any questions in the meantime, please contact us at <a href="mailto:support@fabrika.com">support@fabrika.me</a>.</p>
-
-<p>We’ll be back in touch soon.
-</p>
+<p>Dragi/draga <%= @user.name %>,</p>
+<p>Hvala ti što si se registrovao/la!<br>
+Tvoj nalog na Factory Niš aplikaciji će biti aktiviran najkasnije u roku od 24h od trenutka registracije.<br> Čim ga budemo aktivirali, poslaćemo ti email nakon čega se možeš prijaviti na svoji nalog sa svojim korisničkim imenom i lozinkom, . 
+U međuvremenu, ukoliko budeš imao/la bilo kakvih pitanja, sugestija, žalbi ili pohvala, slobodno nas kontaktiraj na <a href="mailto:<%= @email %>"><%= @email %></a>. Biće nam drago da čujemo tvoje mišljenje i odgovorimo na sva tvoja pitanja. </p>
 <p>
-Thanks,<br>
-Fabrika
-</p> 
+Čujemo se za par sati! </p>
+<p>Veliki pozdrav, <br>
+Factory Niš <br>
+Email: <a href="mailto:<%= @email %>"><%= @email %></a><br>
+Facebook: https://www.facebook.com/CfFabrika/<br>
+Instagram: @fabrika_018<br>
+</p>

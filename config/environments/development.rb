@@ -41,8 +41,8 @@ Rails.application.configure do
       port: 587,
       domain: "gmail.com",
       authentication: "plain",
-      user_name: "fabrika.crossfit@gmail.com",
-      password: "gwmdzwtqdkzctjjg"
+      user_name: ENV['FABRIKA_EMAIL'] || "fabrika.crossfit@gmail.com",
+      password: ENV['FABRIKA_EMAIL_PASS'] || "gwmdzwtqdkzctjjg"
     }
     # ActionMailer Config
     config.action_mailer.default_url_options = { :host => 'localhost:3000' }

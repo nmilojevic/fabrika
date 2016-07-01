@@ -2,6 +2,7 @@ rs:
   schedule: "Raspored"
   edit_account: "Podesi nalog"
   sign_out: "Izloguj se"
+  sign_in_out: "Prijava/Registracija"
   cms: "CMS"
   contact:
     name: "Ime"

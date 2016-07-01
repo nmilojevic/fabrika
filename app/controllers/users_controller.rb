@@ -34,6 +34,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update_attributes(membership_updated_at: Time.current)
       @user.active!
+      CustomerMailer.account_approved_email(@user).deliver
       redirect_to users_path, :notice => "User membership renewed."
     else
       redirect_to users_path, :alert => "Unable to renew membership subscription."
