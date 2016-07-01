@@ -20,9 +20,8 @@ scheduler.locale = {
 		month_tab: "Mesec",
 		new_event: "Novi trening",
 		icon_save: "Snimi",
-		icon_cancel: "Odustani",
+    icon_cancel: "Odustani",
 		icon_details: "Detalji",
-		icon_edit: "Edituj",
 		icon_delete: "Obriši",
 		confirm_closing: "Vaše izmene neće biti snimljene. Da li ste sigurni da želite da nastavite?", //Vaše změny budou ztraceny, opravdu ?
 		confirm_deleting: "Trening će biti trajno obrisan. Da li ste sigurni da želite da nastavite?",

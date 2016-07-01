@@ -14,7 +14,10 @@ Rails.application.config.assets.precompile += %w( ext/dhtmlxscheduler_readonly.j
 Rails.application.config.assets.precompile += %w( ext/dhtmlxscheduler_key_nav.js )
 Rails.application.config.assets.precompile += %w( ext/dhtmlxscheduler_expand.js )
 Rails.application.config.assets.precompile += %w( ext/dhtmlxscheduler_tooltip.js )
-Rails.application.config.assets.precompile += %w( locale/locale_sr.js )
+Rails.application.config.assets.precompile += %w( locale/locale_rs.js )
+Rails.application.config.assets.precompile += %w( locale/recurring/locale_recurring_rs.js )
+Rails.application.config.assets.precompile += %w( locale/locale_en.js )
+Rails.application.config.assets.precompile += %w( locale/recurring/locale_recurring_en.js )
 Rails.application.config.assets.precompile += %w( datatables.js )
 # Add additional assets to the asset load path
 # Rails.application.config.assets.paths << Emoji.images_path

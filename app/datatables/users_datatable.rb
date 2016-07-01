@@ -20,7 +20,7 @@ private
       [
         user.email,
         view.render(:partial => "users/user", :formats => "html", :locals => { :user => user}),
-        user.status,
+        I18n.t("users.status.#{user.status}"),
         (I18n.l user.created_at.to_date),
         view.render(:partial => "users/links", :formats => "html", :locals => { :user => user})
       ]

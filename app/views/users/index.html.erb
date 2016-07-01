@@ -5,13 +5,13 @@
   <div class="col-lg-12">
       <hr>
       <h2 class="intro-text text-center">
-          <strong>Users</strong>
+          <strong><%=t 'users.title'%></strong>
       </h2>
       <hr>
   </div>
 <div class="filter-container" style="display:none">
-   <label>Show: 
-   <%=select_tag("users-filter", options_for_select([["All users", "all"]] + User.statuses.keys.collect {|status| [status.titleize,status]}) {}, html_options = {style:"display:none", class:"filter"})%> users.
+   <label><%=t 'users.show'%>: 
+   <%=select_tag("users-filter", options_for_select([[t("users.filters.all_users"), "all"]] + User.statuses.keys.collect {|status| [t("users.filters.#{status}"),status]}), html_options = {style:"display:none", class:"filter"})%> <%=t 'users.filter_users'%>.
   </label>
 </div>
 
@@ -19,11 +19,11 @@
 <table class="admin-table table display responsive no-wrap" data-source="<%= users_path(format: :json) %>" style="display:none">
       <thead>
         <tr>
-          <th>Email<div class="img-sorting"></div></th>
-          <th>Role<div class="img-sorting"></div></th>
-          <th>Status<div class="img-sorting"></div></th>
-          <th>Created at<div class="img-sorting"></div></th>
-          <th><%=t '.actions', :default => t("helpers.actions") %><div class="img-sorting"></div></th>
+          <th><%=t 'users.email_header'%><div class="img-sorting"></div></th>
+          <th><%=t 'users.role_header'%><div class="img-sorting"></div></th>
+          <th><%=t 'users.status_header'%><div class="img-sorting"></div></th>
+          <th><%=t 'users.created_at_header'%><div class="img-sorting"></div></th>
+          <th><%=t 'users.actions_header', :default => t("helpers.actions") %><div class="img-sorting"></div></th>
         </tr>
       </thead>
       <tbody>
@@ -44,7 +44,26 @@
     
     tableOptions.bStateSave = true;
     //Send filter as param to server
-   
+    tableOptions.oLanguage =
+
+    {
+        sProcessing:   "Procesiranje u toku...",
+        sLengthMenu:   "Prikaži _MENU_ elemenata",
+        sZeroRecords:  "Nije pronađen nijedan rezultat",
+        sInfo:         "Prikaz _START_ do _END_ od ukupno _TOTAL_ elemenata",
+        sInfoEmpty:    "Prikaz 0 do 0 od ukupno 0 elemenata",
+        sInfoFiltered: "(filtrirano od ukupno _MAX_ elemenata)",
+        sInfoPostFix:  "",
+        sSearchPlaceholder:"Pretraga:",
+        sSearch:       "Pretraga:",
+        sUrl:          "",
+        oPaginate: {
+            sFirst:    "Početna",
+            sPrevious: "Prethodna",
+            sNext:     "Sledeća",
+            sLast:     "Poslednja"
+        }
+    }
     tableOptions.fnServerParams = function (aoData) {
       oControls = $('.filter-container').find('.filter');
       oControls.each(function() {
@@ -85,12 +104,15 @@
     createDataTable(tableOptions);
     $('.manage_user-id').append(filter_container);
     filter_container.show();
+  
     $('.table').on( 'draw.dt', function () {
         $("[rel=tooltip]").tooltip({ placement: 'top'});
           $('select.checkbox').multiselect({buttonWidth:200, numberDisplayed: 2, multiple: true, onChange: function(element, checked) {
             var form = $(element).closest("form");
             update_user(form);
-          }
+          }, nonSelectedText: 'Nije izabran nijedan',
+            nSelectedText: 'izabrana',
+            allSelectedText: 'Svi treninzi'
         });
         $('select#users-filter').multiselect({ onChange: function(element, checked) {
           $('.admin-table').DataTable().draw();

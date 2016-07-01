@@ -259,7 +259,6 @@ function setupTableVisuals() {
       return this.nodeType == 3; //Node.TEXT_NODE
     }).remove();
 
-  $('.dataTables_filter input').attr('placeholder', 'Search');
   $('.dataTables_filter input').addClass("m-wrap medium"); // modify table search input
   $('.table-footer select').addClass('breathe');
 }

@@ -27,6 +27,10 @@ module Projects
     config.enabled_long_tasks = ENV['ENABLED_LONG_TASKS'] || "expire_members warn_members"
 
     config.active_job.queue_adapter = :delayed_job
+    config.before_initialize do
+      require 'refinery_patch'
+      require 'restrict_refinery_to_refinery_users'
+    end
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -38,9 +42,17 @@ module Projects
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
+     config.i18n.default_locale = :rs
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    include Refinery::Engine
+      after_inclusion do
+        ::Refinery::ApplicationController.send :include, ::RefineryPatch
+        ::Refinery::AdminController.send :include, ::RefineryPatch   
+        ::Refinery::AdminController.send :include, ::RestrictRefineryToRefineryUsers
+        ::Refinery::AdminController.send :before_filter, :restrict_refinery_to_refinery_users
+    end
   end
 end

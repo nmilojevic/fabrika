@@ -21,14 +21,12 @@
         </div>
     </div>
     <div id="menuData" style="display: none;">
-            <div id="menu_cb_copy" text="Copy" ></div>
-            <div id="menu_cb_cut" text="Cut" ></div>
-            <div id="menu_cb_paste" text="Paste" ></div>
-            <div id="manu_sep_3" type="separator"></div>
-            <div id="menu_cb_delete" text="Delete" ></div>
+      <div id="menu_cb_copy" text="<%=t("scheduler.copy")%>" ></div>
+      <div id="menu_cb_cut" text="<%=t("scheduler.cut")%>" ></div>
+      <div id="menu_cb_paste" text="<%=t("scheduler.paste")%>" ></div>
+      <div id="manu_sep_3" type="separator"></div>
+      <div id="menu_cb_delete" text="<%=t("scheduler.delete")%>" ></div>
     </div>
-      
-
 </div>
 <script>
 
@@ -118,7 +116,6 @@ var opts = [
             dhtmlXTooltip.hide();
         }.bind(this));
      scheduler.config.icons_select = ["icon_details", "icon_delete", "icon_copy_event"];
-     scheduler.locale.labels.icon_copy_event = "Copy"
      scheduler._click.buttons.copy_event = function(id){
          scheduler._buffer_id = id;
         cb_isCopy = true;
@@ -236,8 +233,6 @@ var opts = [
    // scheduler.config.readonly_form = true;
    //  scheduler.config.readonly = true; 
     <% else %>
-    scheduler.locale.labels.icon_cancel_event = "Can't go"
-    scheduler.locale.labels.icon_reserve_event = "Going"
     // scheduler.templates.event_class = function(start, end, ev){
     //  class_name = ""
     //  if (ev.past){
