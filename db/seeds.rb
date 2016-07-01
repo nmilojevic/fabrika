@@ -16,3 +16,4 @@ Refinery::Blog::Engine.load_seed
 
 # Added by Refinery CMS News engine
 Refinery::News::Engine.load_seed
+
