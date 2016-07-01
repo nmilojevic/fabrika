@@ -4,6 +4,24 @@ rs:
   sign_out: "Izloguj se"
   sign_in_out: "Prijava/Registracija"
   cms: "CMS"
+  mail_form:
+    attributes:
+      contact:
+        name: "Ime"
+        email: "Email adresa"
+        phone: "Telefon"
+        message: "Poruka"
+    errors:
+      models:
+        contact:
+          attributes:
+            name: 
+              blank: "Ime mora biti popunjeno"
+            email:
+              blank:  "Email adresa mora biti popunjena"
+              invalid: "Unesite validnu email adresu"
+            message:
+              blank: "Poruka mora biti popunjena"
   contact:
     name: "Ime"
     message: "Poruka"
