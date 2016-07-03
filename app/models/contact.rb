@@ -10,7 +10,7 @@ class Contact < MailForm::Base
   def headers
     {
       :subject => "Factory Contact Form",
-      :to => ENV['FABRIKA_EMAIL'] || "fabrika.crossfit@gmail.com",
+      :to => ENV['FABRIKA_CONTACT_EMAIL'] || "fabrika.crossfit@gmail.com",
       :from => %("#{name}" <#{email}>)
     }
   end
