@@ -14,7 +14,7 @@ class CustomerMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Welcome to Fabrika!')
   end
 
-  def new_web_site_email
+  def new_web_site_email(user)
     @user = user
     @email = ENV['FABRIKA_CONTACT_EMAIL'] || "fabrika.crossfit@gmail.com"
     mail(to: @user.email, subject: 'Fabrika ima novu aplikaciju!')
