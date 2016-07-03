@@ -1,10 +1,31 @@
+ <!-- Blog Categories Well -->
 <% if @categories.any? %>
-  <h2><%= t('.title') %></h2>
-  <ul id='categories'>
-    <% @categories.each do |category| %>
-      <li<%= " class='selected'" if @category.present? and @category.id == category.id %>>
-        <%= link_to "#{category.title} (#{category.post_count})", refinery.blog_category_path(category) %>
-      </li>
-    <% end %>
-  </ul>
+<% (categories_first, categories_second = @categories.in_groups_of(2, false))%>
+    <div class="well">
+        <h4><%= t('.title') %></h4>
+        <div class="row">
+            <% if categories_first.present? %>
+            <div class="col-lg-6">
+                <ul class="list-unstyled">
+                    <% categories_first.each_with_index do |category, index| %>
+                        <li> <%= link_to category.title, refinery.blog_category_path(category) -%><%= ',' if index < ((categories_first.length) - 1) %>
+                        </li>
+                  <% end %>
+                </ul>
+            </div>
+            <% end %>
+          <% if categories_second.present? %>
+         
+            <div class="col-lg-6">
+                <ul class="list-unstyled">
+                     <% categories_second.each_with_index do |category, index| %>
+                        <li> <%= link_to category.title, refinery.blog_category_path(category) -%><%= ',' if index < ((categories_second.length) - 1) %>
+                        </li>
+                    <%end%>
+                </ul>
+            </div>
+          <% end %>
+        </div>
+        <!-- /.row -->
+    </div>
 <% end %>

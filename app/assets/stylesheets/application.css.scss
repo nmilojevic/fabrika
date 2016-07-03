@@ -33,6 +33,9 @@
     transform: translateY(-50%);
     text-align: center;
 }
+.brand-before{
+  text-transform: none;
+}
 
 .dhx_resize_denied .dhx_event_resize{
   display: none;
@@ -213,9 +216,7 @@ select.breathe {
   color: #7a8087;
 }
 
-body{
-    padding:50px;
-}
+
 .btn-group {  
     white-space: nowrap;              
 }

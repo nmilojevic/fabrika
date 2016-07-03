@@ -4,10 +4,3 @@
     <%= link_to page.title, refinery.url_for(page.url) %>
 </li>
 <% end %>
- <!-- 
-  <% ::Refinery::I18n.frontend_locales.each do |locale| %>
-<li>
-      <%= link_to_if Globalize.locale.to_s != locale.to_s, locale, {:locale => locale} %>
-      </li>
-    <% end %> 
-    -->

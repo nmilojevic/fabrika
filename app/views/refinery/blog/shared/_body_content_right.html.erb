@@ -1,4 +1,3 @@
-<% content_for :side_body do %>
   <%= yield(:side_body_prepend) %>
   <%= render "/refinery/blog/shared/rss_feed" %>
   <%= render "/refinery/blog/shared/categories" %>
@@ -6,4 +5,3 @@
   <%= render "/refinery/blog/shared/posts" %>
   <%= blog_archive_widget %>
   <%= yield(:side_body_append) %>
-<% end %>

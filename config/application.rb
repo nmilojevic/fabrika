@@ -22,8 +22,8 @@ module Projects
         request_specs: false
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
-
     config.fabrika_url = ENV['FABRIKA_URL'] || "http://fabrika-crossfit.herokuapp.com/"
+    config.action_controller.asset_host = ENV['FABRIKA_URL'] || "http://fabrika-crossfit.herokuapp.com/"
     config.enabled_long_tasks = ENV['ENABLED_LONG_TASKS'] || "expire_members warn_members"
 
     config.active_job.queue_adapter = :delayed_job
@@ -50,6 +50,7 @@ module Projects
     include Refinery::Engine
       after_inclusion do
         ::Refinery::ApplicationController.send :include, ::RefineryPatch
+        ::Refinery::Blog::Admin::PostsController.send :include, ::RefineryPatch
         ::Refinery::AdminController.send :include, ::RefineryPatch   
         ::Refinery::AdminController.send :include, ::RestrictRefineryToRefineryUsers
         ::Refinery::AdminController.send :before_filter, :restrict_refinery_to_refinery_users

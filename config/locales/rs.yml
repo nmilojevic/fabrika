@@ -3,7 +3,16 @@ rs:
   edit_account: "Podesi nalog"
   sign_out: "Izloguj se"
   sign_in_out: "Prijava/Registracija"
+  blog:
+    email: "Email adresa"
+    name: "Ime"
+    message: "Poruka"
   cms: "CMS"
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: 'pre 1 sat'
+        other: 'pre %{count} sata'
   mail_form:
     attributes:
       contact:
@@ -57,11 +66,74 @@ rs:
     created_at_header: "Kreiran"
 
   date:
+    abbr_day_names:
+    - Sun
+    - Mon
+    - Tue
+    - Wed
+    - Thu
+    - Fri
+    - Sat
+    abbr_month_names:
+    -
+    - Jan
+    - Feb
+    - Mar
+    - Apr
+    - May
+    - Jun
+    - Jul
+    - Aug
+    - Sep
+    - Oct
+    - Nov
+    - Dec
+    day_names:
+    - Sunday
+    - Monday
+    - Tuesday
+    - Wednesday
+    - Thursday
+    - Friday
+    - Saturday
+    month_names:
+    -
+    - January
+    - February
+    - March
+    - April
+    - May
+    - June
+    - July
+    - August
+    - September
+    - October
+    - November
+    - December
+    order:
+    - :month
+    - :day
+    - :year
     formats:
       default: "%d/%m/%Y"
+      long: "%B %d, %Y"
+      short: "%b %d"
+ 
   time:
     formats:
       default: "%d/%m/%Y %H:%M"
+  activerecord:
+    errors:
+      models:
+        refinery/blog/comment:
+          attributes:
+            name:
+              blank: "mora biti popunjeno."
+            message:
+              blank: "mora biti popunjena."
+            email:
+              blank: "mora biti popunjen"
+              invalid: "mora imati validan format"
   refinery:
     plugins:
       refinerycms_blog:
@@ -161,9 +233,9 @@ rs:
           comment_starts: --- comment starts ---
           comment_ends: --- comment ends ---
           from: From
-          email: Email
-          message: Message
-          approve: Approve
+          email: Email adresa
+          message: Poruka
+          approve: Odobri
           or: " or "
           reject: reject
           this_comment: " this comment."
@@ -171,73 +243,73 @@ rs:
           ps: 'P.S. All your comments are stored in the "Blog" section of Refinery under the "Comments" submenu should you ever want to view it there later.'
       shared:
         categories:
-          title: Categories
+          title: Kategorije
         rss_feed:
-          title: RSS Feed
-          subscribe: Subscribe
+          title: RSS
+          subscribe: Prijavi se
         posts:
-          other: Latest Posts
+          other: Najnoviji postovi
           created_at: 'Posted on %{when}'
-          read_more: Read more
+          read_more: Opširnije
         comments:
-          singular: comment
-          none: no comments
+          singular: komentar
+          none: bez komentara
         archives: Archives
         tags:
-          title: "Tags"
+          title: "Tagovi"
       categories:
         show:
           no_posts: There are no posts here yet.
       posts:
         post:
-          filled_in: Filed in
-        comment: comment
+          filled_in: Sadržana u
+        comment: komentar
         comments:
-          by: 'Posted by %{who}'
-          time_ago: '%{time} ago'
-          thank_you: 'Thank you for commenting.'
-          thank_you_moderated: 'Thank you for commenting. Your message has been placed in the moderation queue and will appear shortly.'
+          by: '%{who}'
+          time_ago: '%{time}'
+          thank_you: 'Hvala vam na ostavljenom komentaru.'
+          thank_you_moderated: 'Hvala vam na ostavljenom komentaru. Vaš komentar će se uskoro pojaviti na stranici.'
         index:
-          no_blog_articles_yet: There are no blog articles posted yet. Stay tuned.
+          no_blog_articles_yet: Trenutno nema nijednog okačenog blog artikala.
         show:
-          blog_home: Blog Home
+          blog_home: Blog
           comments:
-            title: Comments
-            add: Make a Comment
-          other: Latest Blog Posts
+            title: Komentari
+            add: Ostavi komentar
+          other: Poslednji Blog Artikal
           filled_in: Filed in
-          tagged: Tagged
-          submit: Send comment
-          name: Name
-          email: Email
-          message: Message
-          by: By
-          source: Source
+          tagged: Tagovani
+          submit: Ostavi komentar
+          name: Ime i prezime
+          email: Email adresa
+          message: Poruka
+          by: ''
+          source: Izvor
         tagged:
-          no_blog_articles_yet: There are no blog articles posted yet. Stay tuned.
-          posts_tagged: Posts tagged
+          no_blog_articles_yet: Trenutno nema nijednog okačenog blog artikala.
+          posts_tagged: Tagovani artikli
         archive:
           blog_archive_for: 'Archive for %{date}'
           no_blog_articles_posted: 'There are no blog articles posted for %{date}. Stay tuned.'
     activerecord:
       models:
-        refinery/blog/category: Category
-        refinery/blog/comment: Comment
+        refinery/blog/category: Kategorija
+        refinery/blog/comment: Komentar
         refinery/blog/post: Blog post
       attributes:
         refinery/blog/category:
-          title: Title
+          title: Naslov
         refinery/blog/comment:
-          name: Name
-          email: Email
-          message: Message
+          name: Ime
+          email: Email adresa
+          message: Poruka
         refinery/blog/post:
-          title: Title
-          body: Body
-          teaser: Teaser
+          title: Naslov
+          body: Telo
+          teaser: Tizer
         plugins:
       refinerycms_news:
-        title: News
+        title: Novosti
         description: Provides a simple news section
     news:
       admin:

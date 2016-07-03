@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160630133563) do
+ActiveRecord::Schema.define(version: 20160702020054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 20160630133563) do
     t.string   "source_url_title"
     t.integer  "access_count",     default: 0
     t.string   "slug"
+    t.integer  "image_id"
   end
 
   add_index "refinery_blog_posts", ["access_count"], name: "index_refinery_blog_posts_on_access_count", using: :btree

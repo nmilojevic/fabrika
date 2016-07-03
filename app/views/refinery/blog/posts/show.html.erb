@@ -1,19 +1,8 @@
 <% content_for :body do %>
-<div class="container">
-
-    <div class="row">
-        <div class="box">
   <div id="show_blog_post">
     <%= render 'post' %>
   </div>
-
-  <%= render 'comments' %>
-  </div>
-  </div>
-  </div>
 <% end %>
-
-<%= render '/refinery/blog/shared/body_content_right' %>
 
 <%= render "/refinery/content_page", :remove_automatic_sections => true %>
 
