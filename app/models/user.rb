@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   enum role: [:user, :admin]
   enum status: [:active, :pending, :expired]
-  has_many :plugins,-> { order 'position ASC'}, :class_name => "Refinery::UserPlugin", :dependent => :destroy
+  has_many :plugins,-> { order 'position ASC'}, :class_name => "Refinery::UserPlugin"
   accepts_nested_attributes_for :plugins
   after_initialize :set_default_role, :if => :new_record?
   after_create :send_admin_mail
@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   def authorized_plugins
     plugins.collect { |p| p.name } | ::Refinery::Plugins.always_allowed.names
   end
-  
+
   def has_plugin?(name)
     active_plugins.names.include?(name)
   end
