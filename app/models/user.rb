@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   has_many :plugins,-> { order 'position ASC'}, :class_name => "Refinery::UserPlugin"
   accepts_nested_attributes_for :plugins
   after_initialize :set_default_role, :if => :new_record?
-  after_create :send_admin_mail
+  #after_create :send_admin_mail
   has_and_belongs_to_many :events
   
   def set_default_role
@@ -61,8 +61,8 @@ class User < ActiveRecord::Base
   end
 
   def send_admin_mail
-    #self.update(membership_updated_at: Time.current)
-    #CustomerMailer.signup_confirmation_email(self).deliver
+    self.update(membership_updated_at: Time.current)
+    CustomerMailer.signup_confirmation_email(self).deliver
   end
 
   def landing_url
