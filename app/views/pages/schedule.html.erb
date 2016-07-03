@@ -267,17 +267,18 @@ var opts = [
     scheduler._click.buttons.reserve_event = function(id){
         var recurring_event = false;
         var start_date = ""
+        var data_param = ""
         if (id.toString().indexOf("#") != -1){
             pid = id.split("#");
             id = pid[0]
             event_length = pid[1]
             recurring_event = true;
+            data_param = "&recurring_event="+recurring_event + "&event_length="+ event_length;
         } 
         jQuery.ajax({
         type: "POST",
         dataType: 'json',
-        data: "authenticity_token=" + csrf_token + 
-         "&recurring_event="+recurring_event + "&event_length="+ event_length,
+        data: "authenticity_token=" + csrf_token + data_param,
         url:  "../events/"+id+"/reserve_event",
         success: function(data) {
           scheduler.hideQuickInfo(true);
