@@ -11,6 +11,7 @@ gem 'refinerycms-i18n'
 gem 'refinerycms-wymeditor', ['~> 1.0', '>= 1.0.6']
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
+gem 'devise-i18n-views'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'

@@ -1,0 +1,71 @@
+rs:
+  devise:
+    confirmations:
+      new:
+        resend_confirmation_instructions: "Resend confirmation instructions"
+    mailer:
+      confirmation_instructions:
+        action: "Confirm my account"
+        greeting: "Welcome %{recipient}!"
+        instruction: "You can confirm your account email through the link below:"
+      reset_password_instructions:
+        action: "Promeni moju lozinkud"
+        greeting: "Dobrodošli %{recipient}!"
+        instruction: "Neko je zatražio link za promenu vaše lozinke, i vi je možete promeniti prateći link ispod."
+        instruction_2: "Ukoliko niste zatražili promenu lozinke, molim vas da ignorišete ovaj email."
+        instruction_3: "Vaša lozinka neće biti promenjena sve dok ne kliknete na link ispod i kreirate novu lozinku.."
+      unlock_instructions:
+        action: "Unlock my account"
+        greeting: "Hello %{recipient}!"
+        instruction: "Click the link below to unlock your account:"
+        message: "Your account has been locked due to an excessive amount of unsuccessful sign in attempts."
+    passwords:
+      new:
+        forgot_your_password: "Zaboravili ste šifru?"
+        send_me_reset_password_instructions: "Resetuj"
+        password_instructions: "Poslaćemo vam instrukcije na email."
+      edit:
+        change_your_password: "Promenite lozinku"
+        new_password: "Nova lozinka"
+        confirm_new_password: "Potvrdite novu lozinku"
+        change_my_password: "Promeni lozinku"
+    registrations:
+      edit:
+        are_you_sure: "Da li ste sigrni?"
+        cancel_my_account: "Ugasi moj nalog"
+        leave_blank_if_you_don_t_want_to_change_it: "Ostavite prazno ukoliko ne želite da promenite šifru."
+        currently_waiting_confirmation_for_email: "Currently waiting confirmation for: %{email}"
+        title: "Ažurirajte nalog"
+        we_need_your_current_password_to_confirm_your_changes: "Unesti trenutnu lozinku da potvrdite važe izmene"
+        update: "Ažuriraj"
+        unhappy: "Nezadovoljni? Biće nam žao ako odete."
+      new:
+        sign_up: "Registrujte se"
+    sessions:
+      new:
+        sign_in: "Prijavite se"
+        sign_up: "Registrujte se"
+        forgot_your_password: "Zaboravili ste šifru?"
+        remember_me: "Zapamti me"
+    shared:
+      links:
+        back: "Back"
+        didn_t_receive_confirmation_instructions: "Didn't receive confirmation instructions?"
+        didn_t_receive_unlock_instructions: "Didn't receive unlock instructions?"
+        forgot_your_password: "Zaboravili ste šifru?"
+        sign_in: "Prijavite se"
+        sign_in_with_provider: "Sign in with %{provider}"
+        sign_up: "Registrujte se"
+    unlocks:
+      new:
+        resend_unlock_instructions: "Resend unlock instructions"
+  activerecord:
+    models:
+      user: "Korisnik"
+    attributes:
+      user:
+        email: "Email adresa"
+        password: "Lozinka"
+        password_confirmation: "Potvrdite lozinku"
+        current_password: "Trenutna lozinka"
+        remember_me: "Zapamti me"

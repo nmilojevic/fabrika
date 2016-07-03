@@ -2,7 +2,11 @@ rs:
   schedule: "Raspored"
   edit_account: "Podesi nalog"
   sign_out: "Izloguj se"
-  sign_in_out: "Prijava/Registracija"
+  sign_in_up: "Prijava/Registracija"
+  forgot_your_password: "Zaboravili ste lozinku?"
+  sign_up: "Registracija"
+ 
+  no_blog_articles_yet: "Trenutno nema ni jednog artikla."
   blog:
     email: "Email adresa"
     name: "Ime"

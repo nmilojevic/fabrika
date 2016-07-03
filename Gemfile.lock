@@ -145,6 +145,7 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise-i18n-views (0.3.7)
     diff-lcs (1.2.5)
     dragonfly (1.0.12)
       addressable (~> 2.3)
@@ -542,6 +543,7 @@ DEPENDENCIES
   database_cleaner
   delayed_job_active_record
   devise
+  devise-i18n-views
   dragonfly-s3_data_store
   factory_girl_rails
   faker
