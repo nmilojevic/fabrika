@@ -61,8 +61,8 @@ class User < ActiveRecord::Base
   end
 
   def send_admin_mail
-    self.update(membership_updated_at: Time.current)
-    CustomerMailer.signup_confirmation_email(self).deliver
+    #self.update(membership_updated_at: Time.current)
+    #CustomerMailer.signup_confirmation_email(self).deliver
   end
 
   def landing_url
