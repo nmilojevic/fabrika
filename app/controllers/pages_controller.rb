@@ -1,6 +1,5 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!
-  before_action :admin_only, :except => :show
   def show
     render template: "pages/#{params[:page]}"
   end
@@ -11,9 +10,4 @@ class PagesController < ApplicationController
 
   private
 
-  def admin_only
-    unless current_user.admin?
-      redirect_to :back, :alert => "Access denied."
-    end
-  end
 end
