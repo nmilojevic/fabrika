@@ -30,16 +30,14 @@ class EventsController < ApplicationController
  
  def reserve_event
   recurring_event = params['recurring_event']
-  start_date = Time.at(params['event_length'].to_i).strftime('%Y-%m-%d %H:%M:%S')
   origin_event = Event.find(params['id'])
-  end_date= start_date.to_datetime + origin_event.event_length.seconds
-  event_length= params['event_length']
   if recurring_event == "true"
+    start_date = Time.at(params['event_length'].to_i).strftime('%Y-%m-%d %H:%M:%S')
+    end_date= start_date.to_datetime + origin_event.event_length.seconds
+    event_length= params['event_length']
     p "recurring_event"
-     event = Event.create :start_date => start_date, :end_date => end_date, :text => origin_event.text,
+    event = Event.create :start_date => start_date, :end_date => end_date, :text => origin_event.text,
                           :rec_type => '', :max_users => origin_event.max_users, :event_type => origin_event.event_type, :event_length => event_length, :event_pid => origin_event.id
-
-                          p event
   else 
      event = origin_event  
   end
