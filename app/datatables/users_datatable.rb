@@ -3,13 +3,13 @@ class UsersDatatable < AjaxDatatablesRails::Base
   def sortable_columns
     # list columns inside the Array in string dot notation.
     # Example: 'users.email'
-    @sortable_columns ||= %w(User.email User.role User.status User.created_at)
+    @sortable_columns ||= %w(User.name User.role User.status User.created_at)
   end
 
   def searchable_columns
     # list columns inside the Array in string dot notation.
     # Example: 'users.email'
-    @searchable_columns ||= %w(User.email User.role User.status User.created_at)
+    @searchable_columns ||= %w(User.email User.name User.role User.status)
   end
 
 private
@@ -18,7 +18,7 @@ private
     p 'recordssize', records.size
     records.map do |user|
       [
-        user.email,
+        "#{user.name}<br><small>#{user.email}</small>".html_safe,
         view.render(:partial => "users/user", :formats => "html", :locals => { :user => user}),
         I18n.t("users.status.#{user.status}"),
         (I18n.l user.created_at.to_date),
@@ -34,7 +34,6 @@ private
     else 
       users = User.all
     end
-    p "SIZE",users.size
     users
   end
   

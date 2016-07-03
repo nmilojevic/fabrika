@@ -64,7 +64,7 @@ rs:
     delete: "Obriši"
     approve: "Odobri"
     renew: "Obnovi pretplatu"
-    email_header: "Email"
+    name_header: "Ime i prezime"
     status_header: "Status"
     role_header: "Rola"
     created_at_header: "Kreiran"
