@@ -10,7 +10,7 @@ rs:
       already_authenticated: "Već ste prijavljeni."
       inactive: "Vaš nalog još uvek nije aktiviran."
       membership_expired: "Vaša članarina je istekla."
-      invalid: "Nevalidan %{authentication_keys} ili šifra."
+      invalid: "Nevalidan %{authentication_keys} ili lozinka."
       locked: "Your account is locked."
       last_attempt: "You have one more attempt before your account is locked."
       not_found_in_database: "Netačan %{authentication_keys} ili šifra."
@@ -26,7 +26,7 @@ rs:
       unlock_instructions:
         subject: "Unlock instructions"
       password_change:
-        subject: "Vaša šifra je promenjena"
+        subject: "Vaša lozinka je promenjena"
     omniauth_callbacks:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
       success: "Successfully authenticated from %{kind} account."
@@ -35,7 +35,7 @@ rs:
       send_instructions: "Uskoro ćete dobiti email sa uputstvom kako da resetujete vašu šifru."
       send_paranoid_instructions: "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes."
       updated: "Your password has been changed successfully. You are now signed in."
-      updated_not_active: "Vaša šifra je uspešno promenjena."
+      updated_not_active: "Vaša lozinka je uspešno promenjena."
     registrations:
       user:
         signed_up_but_not_approved: 'Uspešno ste se prijavili, ali vaš nalog nije još uvek odobren od strane administratora.'
@@ -63,5 +63,5 @@ rs:
       not_found: "nije pronađen"
       not_locked: "was not locked"
       not_saved:
-        one: "1 error prohibited this %{resource} from being saved:"
-        other: "%{count} errors prohibited this %{resource} from being saved:"
+        one: "Došlo je do greške zbog koje ažurirate korsinika nije uspelo:"
+        other: "Došlo je do %{count} greške zbog kojih ažuriranje korisnika nije uspelo:"
