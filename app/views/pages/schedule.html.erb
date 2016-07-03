@@ -241,25 +241,32 @@ var opts = [
     //  return class_name;
     // }
     scheduler._click.buttons.cancel_event = function(id){
-       dhtmlx.message({
-        title: "Cancel",
+       dhtmlx.confirm({
+        title: "Otkazivanje",
         type: "confirm-warning",
-        text: "Are you sure that you want to cancel this event?",
-        callback: function() {
+        text: "<%= t('schedule_cancel')%>",
+        ok: "Da",
+        cancel: "Nikada ne odustajem",
+        callback: function(response) {
+          if (response) {
             jQuery.ajax({
-        type: "POST",
-        dataType: 'json',
-        data: "authenticity_token=" + csrf_token,
-        url:  "../events/"+id+"/cancel_event",
-        success: function(data) {
-          scheduler.hideQuickInfo(true);
-          scheduler.load("<%= data_path %>", "json");
-        }.bind(this),
-        error: function() {
-            alert(error);
-        }.bind(this),
-        timeout: 30000
-      });
+              type: "POST",
+              dataType: 'json',
+              data: "authenticity_token=" + csrf_token,
+              url:  "../events/"+id+"/cancel_event",
+              success: function(data) {
+                scheduler.hideQuickInfo(true);
+                scheduler.load("<%= data_path %>", "json");
+              }.bind(this),
+              error: function() {
+                  alert(error);
+              }.bind(this),
+              timeout: 30000
+            });
+          } else {
+            scheduler.hideQuickInfo(true);
+          }
+
         }
         });
    };
@@ -304,25 +311,25 @@ var opts = [
             if (objEvent.allowed === false) {
                 scheduler.config.icons_select = ["icon_cancel"];
                 dhtmlx.message({
-                    title: "Not allowed",
+                    title: "Obaveštenje",
                     type: "alert-warning",
-                    text: "Your membership does not include this type of training. Please extend your membership, or contact support."
+                    text: "<%=t('training_not_allowed')%>"
                 });
             } else if (objEvent.past === true) {
                 scheduler.config.icons_select = ["icon_cancel"];
                 dhtmlx.message({
-                    title: "Warning",
+                    title: "Obaveštenje",
                     type: "alert-warning",
-                    text: "You can't make reservations for past events."
+                    text: "<%=t('past_event')%>"
                 });
             } else if (objEvent.reserved === true) {
               scheduler.config.icons_select = ["icon_cancel_event","icon_cancel"];
             } else if (objEvent.full === true) {
                 scheduler.config.icons_select = ["icon_cancel"];
                 dhtmlx.message({
-                    title: "Close",
+                    title: "Obaveštenje",
                     type: "alert-warning",
-                    text: "This termin is full. Please try again later."
+                    text: "<%=t('termin_full')%>"
                 });
             } else {
               scheduler.config.icons_select = ["icon_reserve_event", "icon_cancel"];

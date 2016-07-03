@@ -5,8 +5,11 @@ rs:
   sign_in_up: "Prijava/Registracija"
   forgot_your_password: "Zaboravili ste lozinku?"
   sign_up: "Registracija"
- 
+  schedule_cancel: "Da li stvarno želite da odustanete od treninga?"
   no_blog_articles_yet: "Trenutno nema ni jednog artikla."
+  training_not_allowed: "Važeći/izabrani program tvoje mesečne članarine ne uključuje ovu vrstu treninga. Molimo te da, prilikom uplate sledeće članarine, umesto samo jednog izabereš kombinaciju dva ili više programa koje želiš da treniraš. Za više informacija, piši nam na: (crossfit.fabrika@gmail.com)."
+  past_event: "Nije moguće izvršiti rezervaciju. Ovaj termin je prošao."
+  termin_full: "Nije moguće izvršiti rezervaciju. Ovaj termin je pun."
   blog:
     email: "Email adresa"
     name: "Ime"
