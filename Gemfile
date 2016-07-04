@@ -16,7 +16,6 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'mail_form'
-gem 'delayed_job_active_record'
 gem 'jquery-datatables-rails'
 gem 'ajax-datatables-rails', git: 'git://github.com/antillas21/ajax-datatables-rails.git', branch: 'master'
 group :development, :test do
