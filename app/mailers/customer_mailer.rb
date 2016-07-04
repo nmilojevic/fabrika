@@ -26,7 +26,7 @@ class CustomerMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Your membership will expire in 5 days')
   end
 
-  def membership_expired(user)
+  def membership_expired_email(user)
     @user = user
     @email = ENV['FABRIKA_CONTACT_EMAIL'] || "fabrika.crossfit@gmail.com"
     mail(to: @user.email, subject: 'Your membership has expired')
