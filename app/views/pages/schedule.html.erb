@@ -91,6 +91,16 @@ var opts = [
     scheduler.templates.quick_info_title = function(start, end, ev){ return ev.event_type.toUpperCase().replace("_", " ").substr(0,50); };
     scheduler.attachEvent("onTemplatesReady", function(){
     scheduler.templates.event_text=function(start,end,event){
+        if (event.event_pid !== null && event.rec_type == null && event.allowed === true){
+          if (event.start_date < Date.now()){
+            event.color = "#B3B1B0";
+            event.past = true;
+          } else {
+            event.color = "#1796b0"
+            event.past = false;
+          }
+          scheduler.updateEvent(event.event_id);
+        }
         return "<div class='center'>" + (event.event_type  !== undefined ? event.event_type.toUpperCase().replace("_"," ") : "") + "<br> ("+ (event.users  !== undefined ? (event.users + "/" + event.max_users) : "") + ")</div> ";
     }
 }); 
