@@ -136,9 +136,11 @@
           approve_user($(this).attr('data-user-id'));
         });
         $('.delete').click(function(){
-          if (getConfirm('Da li ste sigurni da želite da obrišete korisnika?')) {
-          delete_user($(this).attr('data-user-id'));
-          }
+          getConfirm('Da li ste sigurni da želite da obrišete korisnika?', function(){
+            if (data === true) {
+             delete_user($(this).attr('data-user-id'));
+            }
+          }.bind(this));
         });
 
         $('.renew').click(function(){
@@ -146,9 +148,11 @@
         });
 
         $('.input-group.date').on("dp.change", function (e) {
-          if (getConfirm('Da li st sigurni da želite da izvršite promenu?')) {
-            update_membership(e.date, $(this).find("input").attr("data-user-id"));
-          }
+          getConfirm('Da li st sigurni da želite da izvršite promenu?', function(data){
+            if (data === true) {
+             update_membership(e.date, $(this).find("input").attr("data-user-id"));
+            }
+          }.bind(this));
         });
         $("[rel=tooltip]").tooltip({ placement: 'top'});
           $('select.checkbox').multiselect({buttonWidth:190, numberDisplayed: 2, multiple: true, onChange: function(element, checked) {
