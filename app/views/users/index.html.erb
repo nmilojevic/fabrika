@@ -9,6 +9,9 @@
       </h2>
       <hr>
   </div>
+  <div class="col-lg-12">
+    <div data-alerts="alerts" data-titles="{'warning': '<em>Warning!</em>'}" data-ids="myid" data-fade="3000"></div>
+  </div>
 <div class="filter-container" style="display:none">
    <label><%=t 'users.show'%>: 
    <%=select_tag("users-filter", options_for_select([[t("users.filters.all_users"), "all"]] + User.statuses.keys.collect {|status| [t("users.filters.#{status}"),status]}), html_options = {style:"display:none", class:"filter"})%> <%=t 'users.filter_users'%>.
@@ -40,6 +43,16 @@
    <script>
    
   $(document).ready(function() { 
+      $(document).trigger("add-alerts", [
+      <% flash.each do |name, msg| %>
+      <% if msg.is_a?(String) %>
+            {
+              'message': "<%=msg%>",
+              'priority': "<%=name.to_s == 'notice' ? 'success' : 'danger'%>"
+            },
+      <% end %>
+    <% end %>
+          ]);
     var tableOptions = createTableOptions(); 
     tableOptions.sDom = "<'admin-page-header clear'<'manage_user-id left'><'right'f>r>t<'row table-footer'<'col-md-4'l><'col-md-3' <'text-center'i>><'col-md-5'p>>",
     
@@ -118,6 +131,19 @@
           locale: 'rs',
           format: 'DD/MM/YYYY'
         });
+        $('.approve').click(function(){
+          approve_user($(this).attr('data-user-id'));
+        });
+        $('.delete').click(function(){
+          if (confirm('Are you sure ?')) {
+          delete_user($(this).attr('data-user-id'));
+          }
+        });
+
+        $('.renew').click(function(){
+          renew_user($(this).attr('data-user-id'));
+        });
+
         $('.input-group.date').on("dp.change", function (e) {
            update_membership(e.date, $(this).find("input").attr("data-user-id"));
         });
@@ -144,7 +170,77 @@
       });
 
    });
+
     
+    function delete_user(user_id){
+      jQuery.ajax({
+        type: "POST",
+        dataType: 'json',
+        url:  "users/" + user_id + "/destroy",
+        success: function(data) {
+          if (!data.error){
+          $('.admin-table').DataTable().draw();
+           $(document).trigger("add-alerts", [
+            {
+              'message': data.message,
+              'priority': 'success'
+            }
+          ]);
+         }
+        }.bind(this),
+        error: function(error) {
+            alert(error);
+        }.bind(this),
+        timeout: 30000
+      });
+    } 
+
+     function approve_user(user_id){
+      jQuery.ajax({
+        type: "GET",
+        dataType: 'json',
+        url:  "users/" + user_id + "/approve",
+        success: function(data) {
+          if (!data.error){
+          $('.admin-table').DataTable().draw();
+           $(document).trigger("add-alerts", [
+            {
+              'message': data.message,
+              'priority': 'success'
+            }
+          ]);
+         }
+        }.bind(this),
+        error: function(error) {
+            alert(error);
+        }.bind(this),
+        timeout: 30000
+      });
+    } 
+
+    function renew_user(user_id){
+      jQuery.ajax({
+        type: "GET",
+        dataType: 'json',
+        url:  "users/" + user_id + "/renew_membership",
+        success: function(data) {
+          if (!data.error){
+          $('.admin-table').DataTable().draw();
+           $(document).trigger("add-alerts", [
+            {
+              'message': data.message,
+              'priority': 'success'
+            }
+          ]);
+         }
+        }.bind(this),
+        error: function(error) {
+            alert(error);
+        }.bind(this),
+        timeout: 30000
+      });
+    } 
+
     function update_membership( date, user_id){
       jQuery.ajax({
         type: "POST",
@@ -152,7 +248,15 @@
         data: {user:{membership_updated_at: date.format('YYYY-MM-DD')}},
         url:  "users/" + user_id + "/update_membership",
         success: function(data) {
+          if (!data.error){
           $('.admin-table').DataTable().draw();
+           $(document).trigger("add-alerts", [
+            {
+              'message': data.message,
+              'priority': 'success'
+            }
+          ]);
+         }
         }.bind(this),
         error: function(error) {
             alert(error);
@@ -170,7 +274,15 @@
         data: $(form).serialize(),
         url:  $(form).attr('action'),
         success: function(data) {
+          if (!data.error){
           $('.admin-table').DataTable().draw();
+           $(document).trigger("add-alerts", [
+            {
+              'message': data.message,
+              'priority': 'success'
+            }
+          ]);
+         }
         }.bind(this),
         error: function(error) {
             alert(error);

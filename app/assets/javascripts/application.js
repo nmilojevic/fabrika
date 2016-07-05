@@ -18,3 +18,4 @@
 //= require momentjs-rs
 //= require bootstrap-datetimepicker
 //= require bootstrap-multiselect
+//= require jquery.bsAlerts.min

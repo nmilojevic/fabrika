@@ -24,9 +24,9 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.active!
       CustomerMailer.account_approved_email(@user).deliver
-      redirect_to users_path, :notice => "User approved."
+      render json:{success:true, message:t("user_approved")}
     else
-      redirect_to users_path, :alert => "Unable to approve user."
+      render json:{error:@user.errors.full_messages}
     end
   end
 
@@ -38,9 +38,9 @@ class UsersController < ApplicationController
       else
         @user.active!
       end
-      redirect_to users_path, :notice => "User membership updated."
+      render json:{success:true, message:t("user_membership_updated")}
     else
-      redirect_to users_path, :alert => "Unable to update membership subscription."
+      render json:{error:@user.errors.full_messages}
     end
   end
 
@@ -49,25 +49,25 @@ class UsersController < ApplicationController
     if @user.update_attributes(membership_updated_at: Time.current)
       @user.active!
       CustomerMailer.account_approved_email(@user).deliver
-      redirect_to users_path, :notice => "User membership renewed."
+      render json:{success:true, message:t("user_membership_renewed")}
     else
-      redirect_to users_path, :alert => "Unable to renew membership subscription."
+      render json:{error:@user.errors.full_messages}
     end
   end
 
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(secure_params)
-      redirect_to users_path, :notice => "User role and allowed trainings updated."
+      render json:{success:true, message:t("user_role_updated")}
     else
-      redirect_to users_path, :alert => "Unable to update role."
+      render json:{error:@user.errors.full_messages}
     end 
   end
 
   def destroy
     user = User.find(params[:id])
     user.destroy
-    redirect_to users_path, :notice => "User deleted."
+    render json:{success:true, message:t("user_deleted")}
   end
 
   private
