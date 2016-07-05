@@ -124,7 +124,7 @@
            update_membership(loading, check, e.date, $(this).find("input").attr("data-user-id"));
         });
         $("[rel=tooltip]").tooltip({ placement: 'top'});
-          $('select.checkbox').multiselect({buttonWidth:200, numberDisplayed: 2, multiple: true, onChange: function(element, checked) {
+          $('select.checkbox').multiselect({buttonWidth:190, numberDisplayed: 2, multiple: true, onChange: function(element, checked) {
             var form = $(element).closest("form");
             update_user(form);
           }, nonSelectedText: 'Nije izabran nijedan',
@@ -138,7 +138,7 @@
         });
         $('.m-wrap.medium').addClass("form-control");
         $('select.breathe').multiselect();
-        $('select.role').multiselect( { buttonWidth:80, onChange: function(element, checked) {
+        $('select.role').multiselect( { buttonWidth:60, onChange: function(element, checked) {
             var form = $(element).closest("form"); 
            update_user(form);
           }
