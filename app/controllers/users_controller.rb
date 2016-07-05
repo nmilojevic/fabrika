@@ -33,7 +33,9 @@ class UsersController < ApplicationController
   def update_membership
     @user = User.find(params[:id])
     if @user.update_attributes(membership_updated_at: params[:user][:membership_updated_at].to_date.in_time_zone)
-      if @user.expired? && @user.membership_updated_at > (Time.current - 30.days)
+      if @user.membership_updated_at <= (Time.current - 35.days)
+        @user.expire!
+      else
         @user.active!
       end
       redirect_to users_path, :notice => "User membership updated."

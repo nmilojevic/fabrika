@@ -147,16 +147,14 @@
 
    });
     
-    function update_membership(loading, check, date, user_id){
-      $(loading).show();
+    function update_membership( date, user_id){
       jQuery.ajax({
         type: "POST",
         dataType: 'json',
         data: {user:{membership_updated_at: date.format('YYYY-MM-DD')}},
         url:  "users/" + user_id + "/update_membership",
         success: function(data) {
-         $(loading).hide();
-          $(check).show();
+          $('.admin-table').DataTable().draw();
         }.bind(this),
         error: function(error) {
             alert(error);
@@ -174,8 +172,7 @@
         data: $(form).serialize(),
         url:  $(form).attr('action'),
         success: function(data) {
-          $(form).find(".loading").hide();
-          $(form).find(".check").show();
+          $('.admin-table').DataTable().draw();
         }.bind(this),
         error: function(error) {
             alert(error);

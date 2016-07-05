@@ -7,7 +7,5 @@
     <% else %>
     <%= f.select(:subscribed_event_types, 
     Event.event_types.keys.map {|event| "<option value='#{event}' #{user.subscribed_event_types.to_s.include?(event) ? 'selected' : ''}>#{event.titleize}</option>"}.join().html_safe, {}, html_options = {class:'checkbox', multiple:"multiple", style:"display:none"}) %>
-    <%= image_tag "ajax-loader.gif",  style:"display:none", class:"loading" %>
-    <%= image_tag "check.png", style:"display:none", class:"check" %>
     <% end %>
   <% end %> 
