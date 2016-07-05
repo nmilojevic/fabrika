@@ -119,9 +119,7 @@
           format: 'DD/MM/YYYY'
         });
         $('.input-group.date').on("dp.change", function (e) {
-          var loading = $(this).closest("td").find(".loading");
-          var check = $(this).closest("td").find(".check");
-           update_membership(loading, check, e.date, $(this).find("input").attr("data-user-id"));
+           update_membership(e.date, $(this).find("input").attr("data-user-id"));
         });
         $("[rel=tooltip]").tooltip({ placement: 'top'});
           $('select.checkbox').multiselect({buttonWidth:190, numberDisplayed: 2, multiple: true, onChange: function(element, checked) {
