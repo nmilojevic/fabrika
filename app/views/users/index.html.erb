@@ -10,7 +10,7 @@
       <hr>
   </div>
   <div class="col-lg-12">
-    <div data-alerts="alerts" data-titles="{'warning': '<em>Warning!</em>'}" data-ids="myid" data-fade="3000"></div>
+    <div id="alerts" data-alerts="alerts" data-titles="{'warning': '<em>Warning!</em>'}" data-ids="myid" data-fade="3000"></div>
   </div>
 <div class="filter-container" style="display:none">
    <label><%=t 'users.show'%>: 
@@ -43,6 +43,7 @@
    <script>
    
   $(document).ready(function() { 
+    $("#alerts").bsAlerts({'titles': {'success': ''}});
       $(document).trigger("add-alerts", [
       <% flash.each do |name, msg| %>
       <% if msg.is_a?(String) %>
