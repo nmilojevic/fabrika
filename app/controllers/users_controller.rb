@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update_attributes(membership_updated_at: params[:user][:membership_updated_at].to_date.in_time_zone)
       if @user.membership_updated_at <= (Time.current - 35.days)
-        @user.expire!
+        @user.expired!
       else
         @user.active!
       end
@@ -58,9 +58,9 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(secure_params)
-      render json:{success:true}
+      redirect_to users_path, :notice => "User role and allowed trainings updated."
     else
-      render json:{error:@user.errors.full_messages}
+      redirect_to users_path, :alert => "Unable to update role."
     end 
   end
 
