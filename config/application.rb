@@ -32,6 +32,8 @@ module Projects
       require 'restrict_refinery_to_refinery_users'
     end
 
+    config.time_zone = "Europe/Belgrade"
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
