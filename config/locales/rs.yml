@@ -14,6 +14,7 @@ rs:
   user_membership_renewed: "Član je reaktiviran uspešno."
   user_deleted: "Član je obrisan uspešno."
   user_membership_updated: "Članarina je obnovljena uspešno."
+  user_role_updated:  "Rola i dozvoljeni tipovi treninga su uspešno promenjeni."
   blog:
     email: "Email adresa"
     name: "Ime"
