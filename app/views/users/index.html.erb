@@ -43,7 +43,7 @@
    <script>
    
   $(document).ready(function() { 
-    $("#alerts").bsAlerts({'titles': {'success': ''}});
+    $("#alerts").bsAlerts({'titles': {'success': ''}, 'fade':"3000"});
       $(document).trigger("add-alerts", [
       <% flash.each do |name, msg| %>
       <% if msg.is_a?(String) %>
