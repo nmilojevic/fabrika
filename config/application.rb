@@ -23,7 +23,7 @@ module Projects
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
     config.fabrika_url = ENV['FABRIKA_URL'] || "http://fabrika-crossfit.herokuapp.com/"
-    config.action_controller.asset_host = ENV['FABRIKA_URL'] || "http://fabrika-crossfit.herokuapp.com/"
+    config.action_controller.asset_host = "http://www.factorynis.com"#ENV['FABRIKA_URL'] || "http://fabrika-crossfit.herokuapp.com/"
     config.enabled_long_tasks = ENV['ENABLED_LONG_TASKS'] || "expire_members warn_members"
 
     config.active_job.queue_adapter = :delayed_job
