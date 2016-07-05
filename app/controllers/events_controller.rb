@@ -8,8 +8,8 @@ class EventsController < ApplicationController
    events = Event.all
    event_json = events.map {|event| {
               :id => event.id,
-              :start_date => event.start_date.to_formatted_s(:db),
-              :end_date => event.end_date.to_formatted_s(:db),
+              :start_date => event.start_date.strftime("%Y-%m-%d %H:%M:%S"),
+              :end_date => event.end_date.strftime("%Y-%m-%d %H:%M:%S"),
               :text => event.text,
               :rec_type => event.rec_type,
               :event_type => event.event_type,
@@ -57,7 +57,7 @@ class EventsController < ApplicationController
    id = params['id']
    start_date = params['start_date']
    end_date = params['end_date']
-   
+
    text = params['text']
    rec_type = params['rec_type'] == nil ? "" : params['rec_type']
    max_users = params['max_users']
