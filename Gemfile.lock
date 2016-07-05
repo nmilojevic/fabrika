@@ -104,6 +104,8 @@ GEM
     bootstrap-sass (3.3.6)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
+    bootstrap3-datetimepicker-rails (4.14.30)
+      momentjs-rails (>= 2.8.1)
     bourbon (4.2.7)
       sass (~> 3.4)
       thor (~> 0.19)
@@ -531,6 +533,7 @@ DEPENDENCIES
   ajax-datatables-rails!
   better_errors
   bootstrap-sass
+  bootstrap3-datetimepicker-rails (~> 4.14.30)
   bourbon
   byebug
   capybara
@@ -548,6 +551,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   mail_form
+  momentjs-rails (>= 2.9.0)
   pg
   quiet_assets
   rails (= 4.2.4)

@@ -22,6 +22,7 @@
           <th><%=t 'users.name_header'%><div class="img-sorting"></div></th>
           <th><%=t 'users.role_header'%><div class="img-sorting"></div></th>
           <th><%=t 'users.status_header'%><div class="img-sorting"></div></th>
+          <th><%=t 'users.membership_updated_at_header'%><div class="img-sorting"></div></th>
           <th><%=t 'users.created_at_header'%><div class="img-sorting"></div></th>
           <th><%=t 'users.actions_header', :default => t("helpers.actions") %><div class="img-sorting"></div></th>
         </tr>
@@ -43,6 +44,13 @@
     tableOptions.sDom = "<'admin-page-header clear'<'manage_user-id left'><'right'f>r>t<'row table-footer'<'col-md-4'l><'col-md-3' <'text-center'i>><'col-md-5'p>>",
     
     tableOptions.bStateSave = true;
+     // tableOptions.aoColumns = [  
+     //    { "sClass":"middle"},
+     //    { "sClass":"middle"},
+     //    { "sClass":"middle"},
+     //    { "sClass":"middle"},
+     //    { "sClass":"middle"},
+     //    { "sClass":"middle"} ];
     //Send filter as param to server
     tableOptions.oLanguage =
 
@@ -106,6 +114,15 @@
     filter_container.show();
   
     $('.table').on( 'draw.dt', function () {
+        $('.input-group.date').datetimepicker({
+          locale: 'rs',
+          format: 'DD/MM/YYYY'
+        });
+        $('.input-group.date').on("dp.change", function (e) {
+          var loading = $(this).closest("td").find(".loading");
+          var check = $(this).closest("td").find(".check");
+           update_membership(loading, check, e.date, $(this).find("input").attr("data-user-id"));
+        });
         $("[rel=tooltip]").tooltip({ placement: 'top'});
           $('select.checkbox').multiselect({buttonWidth:200, numberDisplayed: 2, multiple: true, onChange: function(element, checked) {
             var form = $(element).closest("form");
@@ -119,6 +136,7 @@
             // $('.table').DataTable().columns(2).search($(element).val().toLowerCase()).draw();
           }
         });
+        $('.m-wrap.medium').addClass("form-control");
         $('select.breathe').multiselect();
         $('select.role').multiselect( { buttonWidth:80, onChange: function(element, checked) {
             var form = $(element).closest("form"); 
@@ -128,7 +146,24 @@
       });
 
    });
- 
+    
+    function update_membership(loading, check, date, user_id){
+      $(loading).show();
+      jQuery.ajax({
+        type: "POST",
+        dataType: 'json',
+        data: {user:{membership_updated_at: date.format('YYYY-MM-DD')}},
+        url:  "users/" + user_id + "/update_membership",
+        success: function(data) {
+         $(loading).hide();
+          $(check).show();
+        }.bind(this),
+        error: function(error) {
+            alert(error);
+        }.bind(this),
+        timeout: 30000
+      });
+    } 
 
 
     function update_user(form){

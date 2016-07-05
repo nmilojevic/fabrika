@@ -9,12 +9,20 @@
  * compiled file so the styles you add here take precedence over styles defined in any styles
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
- *= require business-casual
  *= require 1st_load_framework
+ *= require business-casual
+ 
  * bootstrap-multiselect
  *= responsive.dataTables.css
  *= responsive.bootstrap.css
+ *= require bootstrap-datetimepicker
  */
+
+
+ .nav>li>a {
+  padding: 15px;
+ }
+
  .check,.loading {
    display:inline-block;
  }
@@ -108,7 +116,9 @@
   padding: 0.375em 1em;
   width: auto;
 }
-
+.admin-table > tbody > tr > td {
+  vertical-align: middle;
+}
 .admin-table .dropdown-menu{
   min-width: 100px;
 }

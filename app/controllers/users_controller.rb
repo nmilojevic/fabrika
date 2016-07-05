@@ -30,6 +30,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def update_membership
+    @user = User.find(params[:id])
+    if @user.update_attributes(membership_updated_at: params[:user][:membership_updated_at].to_date.in_time_zone)
+      redirect_to users_path, :notice => "User membership updated."
+    else
+      redirect_to users_path, :alert => "Unable to update membership subscription."
+    end
+  end
+
   def renew_membership
     @user = User.find(params[:id])
     if @user.update_attributes(membership_updated_at: Time.current)
@@ -65,7 +74,7 @@ class UsersController < ApplicationController
   end
 
   def secure_params
-    params.require(:user).permit(:role, :subscribed_event_types => [])
+    params.require(:user).permit(:role, :membership_updated_at, :subscribed_event_types => [])
   end
 
 end

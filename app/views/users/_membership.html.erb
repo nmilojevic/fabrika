@@ -1,0 +1,12 @@
+<div class="form-group">
+  <div class='input-group date'>
+
+      <input type='text' data-user-id="<%=user.id%>" value="<%=user.membership_updated_at.try(:strftime,'%d/%m/%Y')%>" class="form-control" style="width: 150px" />
+      <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+  </div>
+    <%= image_tag "ajax-loader.gif",  style:"display:none", class:"loading" %>
+    <%= image_tag "check.png", style:"display:none", class:"check" %>
+</div>
+
