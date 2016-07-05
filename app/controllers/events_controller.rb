@@ -20,6 +20,7 @@ class EventsController < ApplicationController
               :reserved => event.reserved_for?(current_user),
               :full => event.full?,
               :past => event.past?,
+              :instructor_name => event.instructor_name,
               :color => event_color(event),
               :reserved_by => current_user.admin? ? event.users.map{|user| "#{user.name.to_s} (#{user.email})"} : [],
               :allowed => current_user.admin? || current_user.subscribed_event_types.try(:include?, event.event_type)
@@ -37,7 +38,7 @@ class EventsController < ApplicationController
     event_length= params['event_length']
     p "recurring_event"
     event = Event.create :start_date => start_date, :end_date => end_date, :text => origin_event.text,
-                          :rec_type => '', :max_users => origin_event.max_users, :event_type => origin_event.event_type, :event_length => event_length, :event_pid => origin_event.id
+                          :rec_type => '', :max_users => origin_event.max_users, :instructor_name => origin_event.instructor_name, :event_type => origin_event.event_type, :event_length => event_length, :event_pid => origin_event.id
   else 
      event = origin_event  
   end
@@ -56,17 +57,19 @@ class EventsController < ApplicationController
    id = params['id']
    start_date = params['start_date']
    end_date = params['end_date']
+   
    text = params['text']
    rec_type = params['rec_type'] == nil ? "" : params['rec_type']
    max_users = params['max_users']
    event_type = params['event_type']
    event_length = params['event_length']
+   instructor_name = params['instructor_name']
    event_pid = params['event_pid']
    tid = id
  
    case mode
      when 'inserted'
-       event = Event.create :start_date => start_date, :end_date => end_date, :text => text,
+       event = Event.create :start_date => start_date, :end_date => end_date, :text => text, :instructor_name => instructor_name,
                             :rec_type => rec_type, :max_users => max_users, :event_type => event_type, :event_length => event_length, :event_pid => event_pid
        tid = event.id
        if rec_type == 'none'
@@ -98,6 +101,7 @@ class EventsController < ApplicationController
        event.text = text
        event.rec_type = rec_type
        event.event_type = event_type
+       event.instructor_name = instructor_name
        event.event_length = event_length
        event.max_users = max_users
        event.event_pid = event_pid

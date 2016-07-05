@@ -41,6 +41,21 @@
         scheduler.attachEvent(events[i], hiding_function);
 })();
   scheduler.config.xml_date="%Y-%m-%d %H:%i";
+  scheduler.form_blocks["my_instructor"] = {
+      render:function(sns){
+          return "<div class='dhx_cal_ltext' style='height:60px;'><input type='text'></div>";
+      },
+      set_value:function(node,value,ev){
+          node.childNodes[0].value=value||"";
+      },
+      get_value:function(node,ev){
+          return node.childNodes[0].value;
+      },
+      focus:function(node){
+          var a=node.childNodes[0]; a.select(); a.focus(); 
+      }
+  };
+
   scheduler.form_blocks["my_editor"] = {
                 render:function(sns) {
                     return "<div class='dhx_cal_ltext' style='height:auto;'><ol class='reserved-by'></ol></div>";
@@ -85,10 +100,15 @@ var opts = [
     {name:"Type", map_to:"event_type", type:"select",options:scheduler.serverList("type")},
     {name:"Max users", map_to:"max_users", type:"select", options:opts},
     {name:"Reserved by", map_to:"reserved_by", type:"my_editor"},
+    {name:"Instruktor", map_to:"instructor_name", type:"my_instructor"},
     {name:"recurring", type:"recurring", map_to:"rec_type", button:"recurring"},
     {name:"time", height:72, type:"time", map_to:"auto"}
     ];
     scheduler.templates.quick_info_title = function(start, end, ev){ return ev.event_type.toUpperCase().replace("_", " ").substr(0,50); };
+
+    scheduler.templates.quick_info_content = function(start, end, ev){ 
+       return (ev.details || ev.text) + (ev.instructor_name ? '<br>Instruktor:' + ev.instructor_name : '');
+    };
     scheduler.attachEvent("onTemplatesReady", function(){
     scheduler.templates.event_text=function(start,end,event){
         if (event.event_pid !== null && event.rec_type == null && event.allowed === true){
@@ -116,7 +136,7 @@ var opts = [
     scheduler.templates.tooltip_text = function(start,end,event) {
         if (this._show_tooltips === true)
     return "<b>"+event.event_type.toUpperCase().replace("_"," ") +":</b><br>"+event.text+"<br/><b>Start date:</b> "+
-    format(start)+"<br/><b>End date:</b> "+format(end);
+    format(start)+"<br/><b>End date:</b> "+format(end) + (event.instructor_name ? "<br>Instruktor:" + event.instructor_name : "") +"</br>";
     else 
         return ""
 }.bind(this);
