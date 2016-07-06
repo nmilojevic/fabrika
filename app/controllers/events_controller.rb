@@ -20,7 +20,7 @@ class EventsController < ApplicationController
               :reserved => event.reserved_for?(current_user),
               :full => event.full?,
               :past => event.past?,
-              :instructor_name => event.instructor_name,
+              :instructor_name => event.instructor_name.present? ? event.instructor_name : "",
               :color => event_color(event),
               :reserved_by => current_user.admin? ? event.users.map{|user| "#{user.name.to_s} (#{user.email})"} : [],
               :allowed => current_user.admin? || current_user.subscribed_event_types.try(:include?, event.event_type)
