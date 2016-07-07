@@ -20,6 +20,7 @@
 //= require bootstrap-multiselect
 //= require jquery.bsAlerts.min
 //= require jquery_ujs
+//= require jquery.fancybox
 //= require bootstrap-dialog.min
  
 

@@ -5,6 +5,7 @@ class PagesController < ApplicationController
   end
 
   def schedule
+    prepare_meta_tags title: "Raspored", description: "Rezervacija treninga"
     render template: "pages/schedule"
   end
 

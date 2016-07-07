@@ -5,6 +5,43 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   after_filter :cors_set_access_control_headers
   skip_before_filter :authenticate_user!, :only => [:route_options]
+  before_action :prepare_meta_tags, if: "request.get?"
+
+  def prepare_meta_tags(options={})
+    site_name   = "Factory Niš"
+    title       = [controller_name, action_name].join(" ")
+    description = "Factory Niš Forging Elite Fitness"
+    image       = options[:image] || "your-default-image-url"
+    current_url = request.url
+
+    # Let's prepare a nice set of defaults
+    defaults = {
+      site:        site_name,
+      title:       title,
+      image:       image,
+      description: description,
+      keywords:    %w[fitness factory trening fitnes teretana fabrikanti joga fabrika bootcamp weightlifting poweryoga healt gym strong intensity],
+      twitter: {
+        site_name: site_name,
+        site: '@fabrika_018',
+        card: 'summary',
+        description: description,
+        image: image
+      },
+      og: {
+        url: current_url,
+        site_name: site_name,
+        title: title,
+        image: image,
+        description: description,
+        type: 'website'
+      }
+    }
+
+    options.reverse_merge!(defaults)
+
+    set_meta_tags options
+  end
 
   def route_options
     cors_preflight_check

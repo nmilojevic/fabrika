@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705213309) do
+ActiveRecord::Schema.define(version: 20160706170811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,15 @@ ActiveRecord::Schema.define(version: 20160705213309) do
   end
 
   add_index "events_users", ["event_id", "user_id"], name: "index_events_users_on_event_id_and_user_id", using: :btree
+
+  create_table "refinery_album_pages", force: :cascade do |t|
+    t.integer "album_id"
+    t.integer "page_id"
+    t.string  "page_type", default: "Refinery::Page"
+  end
+
+  add_index "refinery_album_pages", ["album_id"], name: "index_refinery_album_pages_on_album_id", using: :btree
+  add_index "refinery_album_pages", ["page_id"], name: "index_refinery_album_pages_on_page_id", using: :btree
 
   create_table "refinery_authentication_devise_roles", force: :cascade do |t|
     t.string "title"
@@ -179,6 +188,28 @@ ActiveRecord::Schema.define(version: 20160705213309) do
   add_index "refinery_blog_posts", ["id"], name: "index_refinery_blog_posts_on_id", using: :btree
   add_index "refinery_blog_posts", ["slug"], name: "index_refinery_blog_posts_on_slug", using: :btree
 
+  create_table "refinery_image_page_translations", force: :cascade do |t|
+    t.integer  "refinery_image_page_id", null: false
+    t.string   "locale",                 null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.text     "caption"
+  end
+
+  add_index "refinery_image_page_translations", ["locale"], name: "index_refinery_image_page_translations_on_locale", using: :btree
+  add_index "refinery_image_page_translations", ["refinery_image_page_id"], name: "index_186c9a170a0ab319c675aa80880ce155d8f47244", using: :btree
+
+  create_table "refinery_image_pages", force: :cascade do |t|
+    t.integer "image_id"
+    t.integer "page_id"
+    t.integer "position"
+    t.text    "caption"
+    t.string  "page_type", default: "page"
+  end
+
+  add_index "refinery_image_pages", ["image_id"], name: "index_refinery_image_pages_on_image_id", using: :btree
+  add_index "refinery_image_pages", ["page_id"], name: "index_refinery_image_pages_on_page_id", using: :btree
+
   create_table "refinery_image_translations", force: :cascade do |t|
     t.integer  "refinery_image_id", null: false
     t.string   "locale",            null: false
@@ -295,6 +326,55 @@ ActiveRecord::Schema.define(version: 20160705213309) do
   add_index "refinery_pages", ["lft"], name: "index_refinery_pages_on_lft", using: :btree
   add_index "refinery_pages", ["parent_id"], name: "index_refinery_pages_on_parent_id", using: :btree
   add_index "refinery_pages", ["rgt"], name: "index_refinery_pages_on_rgt", using: :btree
+
+  create_table "refinery_photo_gallery_albums", force: :cascade do |t|
+    t.string   "title",                                 null: false
+    t.text     "description"
+    t.string   "path"
+    t.string   "address"
+    t.decimal  "longitude",   precision: 15, scale: 10
+    t.decimal  "latitude",    precision: 15, scale: 10
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "refinery_photo_gallery_albums", ["id"], name: "index_refinery_photo_gallery_albums_on_id", unique: true, using: :btree
+
+  create_table "refinery_photo_gallery_collection_albums", force: :cascade do |t|
+    t.integer "collection_id"
+    t.integer "album_id"
+  end
+
+  add_index "refinery_photo_gallery_collection_albums", ["album_id"], name: "index_refinery_photo_gallery_collection_albums_on_album_id", using: :btree
+  add_index "refinery_photo_gallery_collection_albums", ["collection_id"], name: "index_refinery_photo_gallery_collection_albums_on_collection_id", using: :btree
+
+  create_table "refinery_photo_gallery_collections", force: :cascade do |t|
+    t.string   "title",       null: false
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "refinery_photo_gallery_collections", ["id"], name: "index_refinery_photo_gallery_collections_on_id", unique: true, using: :btree
+
+  create_table "refinery_photo_gallery_photos", force: :cascade do |t|
+    t.string   "title",                                  null: false
+    t.text     "description"
+    t.string   "path"
+    t.decimal  "longitude",    precision: 15, scale: 10
+    t.decimal  "latitude",     precision: 15, scale: 10
+    t.string   "file"
+    t.integer  "album_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "url"
+    t.string   "css_class"
+    t.string   "preview_type"
+  end
+
+  add_index "refinery_photo_gallery_photos", ["album_id"], name: "index_refinery_photo_gallery_photos_on_album_id", using: :btree
+  add_index "refinery_photo_gallery_photos", ["id"], name: "index_refinery_photo_gallery_photos_on_id", unique: true, using: :btree
 
   create_table "refinery_resource_translations", force: :cascade do |t|
     t.integer  "refinery_resource_id", null: false
