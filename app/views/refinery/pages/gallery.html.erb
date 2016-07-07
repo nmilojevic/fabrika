@@ -10,10 +10,10 @@
                 <hr>
             </div>
             <section id='gallery'>
-              <%= render :partial => "image", :collection => @page.images#.paginate(:page => params[:page], :per_page => 16) %>
-              
+              <%= render :partial => "image", :collection => @page.images %>
+
             </section>
-           <!--  <%= will_paginate @page.images.paginate(:page => params[:page], :per_page => 16)%> -->
+
           </div>
 </div>
 

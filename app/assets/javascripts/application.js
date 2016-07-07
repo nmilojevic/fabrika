@@ -11,8 +11,6 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
-//= require turbolinks
 //= require bootstrap
 //= require moment
 //= require momentjs-rs
@@ -22,6 +20,7 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery.fancybox
+//= require turbolinks
 //= require bootstrap-dialog.min
  
 
