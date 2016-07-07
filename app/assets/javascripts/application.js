@@ -19,6 +19,7 @@
 //= require bootstrap-datetimepicker
 //= require bootstrap-multiselect
 //= require jquery.bsAlerts.min
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery.fancybox
 //= require bootstrap-dialog.min
