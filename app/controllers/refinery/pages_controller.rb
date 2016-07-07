@@ -16,6 +16,7 @@ module Refinery
     def create
       @contact = Contact.new(params[:contact])
       @page = Refinery::Page.friendly.find_by_view_template('contact')
+   
       @contact.request = request
       if @contact.deliver
         flash.now[:notice] = 'Thank you for your message. We will contact you soon!'
@@ -90,6 +91,7 @@ module Refinery
                   end
                   page
                 end
+      prepare_meta_tags title: "#{@page.title}"
       @page || (error_404 if fallback_to_404)
     end
 

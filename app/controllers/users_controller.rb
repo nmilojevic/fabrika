@@ -3,6 +3,8 @@ class UsersController < ApplicationController
   before_action :admin_only, :except => :show
 
   def index
+    prepare_meta_tags title: "Članovi", description: "Ažuriranje članova"
+   
     respond_to do |format|
       format.html
       format.json{ render json: UsersDatatable.new(view_context)}

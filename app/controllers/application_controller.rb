@@ -15,8 +15,8 @@ class ApplicationController < ActionController::Base
     site_name   = "Factory Niš"
     title       = [controller_name, action_name].join(" ")
     description = "Factory Niš Forging Elite Fitness"
-    image       = options[:image] || "your-default-image-url"
-    icon        = '/favicon.png'
+    image       = options[:image] || "#{ActionController::Base.helpers.asset_path('imgs/mali_logo.png')}"
+
     current_url = request.url
 
     # Let's prepare a nice set of defaults
@@ -25,6 +25,13 @@ class ApplicationController < ActionController::Base
       title:       title,
       image:       image,
       description: description,
+      icon: [
+        { href: "#{ActionController::Base.helpers.asset_path('imgs/favicon_16.png')}", sizes: '16x16', type: 'image/png' },
+        { href: "#{ActionController::Base.helpers.asset_path('imgs/favicon.png')}", sizes: '32x32', type: 'image/png' },
+        { href: "#{ActionController::Base.helpers.asset_path('imgs/favicon.ico')}", type: 'image/x-icon' },
+        
+        { href: "#{ActionController::Base.helpers.asset_path('imgs/apple.png')}", rel: 'apple-touch-icon-precomposed', sizes: '32x32', type: 'image/png' },
+      ],
       keywords:    %w[fitness factory trening fitnes teretana fabrikanti joga fabrika bootcamp weightlifting poweryoga healt gym strong intensity],
       twitter: {
         site_name: site_name,
