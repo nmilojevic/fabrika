@@ -7,11 +7,16 @@ class ApplicationController < ActionController::Base
   skip_before_filter :authenticate_user!, :only => [:route_options]
   before_action :prepare_meta_tags, if: "request.get?"
 
+  def after_sign_in_path_for(resource)
+    schedule_path
+  end
+
   def prepare_meta_tags(options={})
     site_name   = "Factory Niš"
     title       = [controller_name, action_name].join(" ")
     description = "Factory Niš Forging Elite Fitness"
     image       = options[:image] || "your-default-image-url"
+    icon        = '/favicon.png'
     current_url = request.url
 
     # Let's prepare a nice set of defaults
