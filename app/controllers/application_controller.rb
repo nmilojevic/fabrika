@@ -13,7 +13,11 @@ class ApplicationController < ActionController::Base
 
   def prepare_meta_tags(options={})
     site_name   = "Factory Niš"
-    title       = [controller_name, action_name].join(" ")
+    if action_name == "home"
+      title = "Programi"
+    else
+      title = [controller_name, action_name].join(" ")
+    end
     description = "Factory Niš Forging Elite Fitness"
     image       = options[:image] || "#{ActionController::Base.helpers.asset_path('imgs/mali_logo.png')}"
 
