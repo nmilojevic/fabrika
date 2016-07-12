@@ -1,16 +1,31 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :admin_only, :except => :show
+  before_action :admin_only
+  respond_to :html, :json, only:[:new, :edit, :update, :create_user]
 
   def index
     prepare_meta_tags title: "Članovi", description: "Ažuriranje članova"
    
+    @user = User.new
     respond_to do |format|
       format.html
       format.json{ render json: UsersDatatable.new(view_context)}
-
-      #@users = User.all.order(:created_at)
     end
+  end
+
+  def new
+    @user = User.new
+    respond_modal_with @user
+  end
+
+  def edit
+    @user = User.find(params[:id])
+    respond_modal_with @user
+  end
+
+  def create_user
+    @user = User.create(secure_params)
+    respond_modal_with @user, location: users_path
   end
 
   def show
@@ -59,10 +74,20 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
+    @user.update_attributes(secure_params)
+    respond_modal_with @user, location: users_path
+    #   render json:{success:true, message:t("user_role_updated")}
+    # else
+    #   render json:{error:@user.errors.full_messages}
+    # end 
+  end
+
+  def update_subscribed_event_types
+    @user = User.find(params[:id])
     if @user.update_attributes(secure_params)
-      render json:{success:true, message:t("user_role_updated")}
+       render json:{success:true, message:t("user_role_updated")}
     else
-      render json:{error:@user.errors.full_messages}
+       render json:{error:@user.errors.full_messages}
     end 
   end
 
@@ -81,7 +106,7 @@ class UsersController < ApplicationController
   end
 
   def secure_params
-    params.require(:user).permit(:role, :membership_updated_at, :subscribed_event_types => [])
+    params.require(:user).permit(:role, :password, :password_confirmation, :name, :email, :membership_updated_at, :subscribed_event_types => [])
   end
 
 end

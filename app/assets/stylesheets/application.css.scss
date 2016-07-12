@@ -18,7 +18,30 @@
  *= require bootstrap-datetimepicker
  *= require bootstrap-dialog.min
  *= require jquery.fancybox
+ *= require bootstrap-switch
  */
+ 
+.col-xs-6 .control-label{
+  font-weight: normal;
+}
+ .image { 
+  float:left;
+  max-height:100px;
+  max-width: none!important;
+ }
+.icon {
+  height:24px;
+  width: 24px;
+ }
+
+ .align-this {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  
+.product-info {
+  padding-left: 10px;
+}
 
  .nav>li>a {
   padding: 15px;

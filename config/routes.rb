@@ -24,6 +24,10 @@ Rails.application.routes.draw do
   match "events/:id/cancel_event", :to => "events#cancel_event", :as => "cancel_event", :via => "post"
   match "users/:id/renew_membership", :to => "users#renew_membership", :as => "renew_membership", :via => "get"
   match "users/:id/update_membership", :to => "users#update_membership", :as => "update_membership", :via => "post"
+  match "users/:id/update_subscribed_event_types", :to => "users#update_subscribed_event_types", :as => "update_subscribed_event_types", :via => "patch"
+  match "users/create_user", :to => "users#create_user", :as => "create_user", :via => "post"
+  
+
   match "users/:id/destroy", :to => "users#destroy", :as => "delete_user", :via => "post"
   
   match "users/:id/approve", :to => "users#approve", :as => "approve_user", :via => "get"

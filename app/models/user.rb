@@ -1,14 +1,28 @@
 class User < ActiveRecord::Base
   enum role: [:user, :admin]
   enum status: [:active, :pending, :expired]
+  validates :email, :presence => true, length: { maximum: 50 }
+  validates :email, :email => true, :uniqueness => true
+  validates :name, :presence => true, length: { maximum: 50 } #, too_long: "First and last name are too long. Maximum combined length is 50 characters." }
+  validates :password, :presence => true, :length => { :in => 6..120 }, :if => :password_required?
+  validates_confirmation_of :password, :if => :password_required?
+
   has_many :plugins,-> { order 'position ASC'}, :class_name => "Refinery::UserPlugin"
   accepts_nested_attributes_for :plugins
   after_initialize :set_default_role, :if => :new_record?
   after_create :send_admin_mail
   has_and_belongs_to_many :events
+
+  def password_required?
+   !persisted? || !password.blank? || !password_confirmation.blank?
+  end
   
   def set_default_role
     self.role ||= :user
+  end
+
+  def reserved_for?(date, event_type)
+    events.where(start_date:date.beginning_of_day..date.end_of_day, event_type:Event.event_types[event_type]).size > 0
   end
 
   def authorized_plugins

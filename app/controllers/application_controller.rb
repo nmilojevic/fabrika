@@ -7,6 +7,12 @@ class ApplicationController < ActionController::Base
   skip_before_filter :authenticate_user!, :only => [:route_options]
   before_action :prepare_meta_tags, if: "request.get?"
 
+  def respond_modal_with(*args, &blk)
+    options = args.extract_options!
+    options[:responder] = ModalResponder
+    respond_with *args, options, &blk
+  end
+
   def after_sign_in_path_for(resource)
     schedule_path
   end

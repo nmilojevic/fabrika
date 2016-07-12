@@ -526,6 +526,9 @@ GEM
     unicorn-rails (2.2.0)
       rack
       unicorn
+    valid_email (0.0.13)
+      activemodel
+      mail (~> 2.6.1)
     warden (1.2.6)
       rack (>= 1.0)
     web-console (2.3.0)
@@ -590,6 +593,7 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   unicorn
   unicorn-rails
+  valid_email
   web-console (~> 2.0)
 
 RUBY VERSION

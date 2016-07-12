@@ -21,7 +21,9 @@
 //= require jquery_ujs
 //= require jquery.fancybox
 //= require turbolinks
+//= require modals
 //= require bootstrap-dialog.min
+//= require bootstrap-switch
  
 
 

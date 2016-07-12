@@ -18,6 +18,7 @@ class EventsController < ApplicationController
               :event_pid => event.event_pid,
               :users => event.users.size,
               :reserved => event.reserved_for?(current_user),
+              :reserved_for_today => current_user.reserved_for?(event.start_date, event.event_type),
               :full => event.full?,
               :past => event.past?,
               :instructor_name => event.instructor_name.present? ? event.instructor_name : "",
@@ -32,18 +33,24 @@ class EventsController < ApplicationController
  def reserve_event
   recurring_event = params['recurring_event']
   origin_event = Event.find(params['id'])
-  if recurring_event == "true"
+  if recurring_event == "true" && origin_event.rec_type != '' 
     start_date = Time.at(params['event_length'].to_i).strftime('%Y-%m-%d %H:%M:%S')
     end_date= start_date.to_datetime + origin_event.event_length.seconds
+    end_date = end_date.strftime("%Y-%m-%d %H:%M:%S")
     event_length= params['event_length']
-    p "recurring_event"
-    event = Event.create :start_date => start_date, :end_date => end_date, :text => origin_event.text,
+    event = Event.find_or_create_by :start_date => start_date, :end_date => end_date, :text => origin_event.text,
                           :rec_type => '', :max_users => origin_event.max_users, :instructor_name => origin_event.instructor_name, :event_type => origin_event.event_type, :event_length => event_length, :event_pid => origin_event.id
   else 
      event = origin_event  
   end
-  event.users << current_user
-  render :json => {"success":true}
+  if event.reserved_for?(current_user)
+    @error = "Već ste rezervisali trening"
+  elsif current_user.reserved_for?(event.start_date, event.event_type)
+    @error = "Već ste rezervisali ovaj tip treninga danas"
+  else
+    event.users << current_user
+  end
+  render :json => {success:@error.blank?, message:@error}
  end
 
  def cancel_event

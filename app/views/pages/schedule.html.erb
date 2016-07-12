@@ -354,6 +354,13 @@ var opts = [
                 });
             } else if (objEvent.reserved === true) {
               scheduler.config.icons_select = ["icon_cancel_event","icon_cancel"];
+            } else if (objEvent.reserved_for_today === true) {
+                scheduler.config.icons_select = ["icon_cancel"];
+                dhtmlx.message({
+                    title: "Obaveštenje",
+                    type: "alert-warning",
+                    text: "<%=t('reserved_today_event')%>"
+                }); 
             } else if (objEvent.full === true) {
                 scheduler.config.icons_select = ["icon_cancel"];
                 dhtmlx.message({

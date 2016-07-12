@@ -18,11 +18,14 @@ private
     p 'recordssize', records.size
     records.map do |user|
       [
-        "#{user.name}<br><small>#{user.email}</small>".html_safe,
+        "<div><div class='align-this'>#{ActionController::Base.helpers.image_tag(user.admin? ? 'imgs/admin1.png' : 'imgs/user.png', class: 'image')}"+
+        "</div><div class='product-info align-this'>" + 
+        "<strong>#{user.name}</strong><br><small>#{user.email}</small>" +
+        "</div></div>".html_safe,
         view.render(:partial => "users/user", :formats => "html", :locals => { :user => user}),
-        I18n.t("users.status.#{user.status}"),
+        ActionController::Base.helpers.image_tag("imgs/#{user.status}.png", class: 'icon'),#I18n.t("users.status.#{user.status}"),
         view.render(:partial => "users/membership", :formats => "html", :locals => { :user => user}),
-        (I18n.l user.created_at.to_date),
+        (I18n.l user.created_at.to_date, format: :short),
         view.render(:partial => "users/links", :formats => "html", :locals => { :user => user})
       ]
     end
@@ -31,7 +34,11 @@ private
   def get_raw_records
     filter_user_status = params["users-filter"]
     if filter_user_status.present?
-      users = User.where(status: User.statuses[filter_user_status])
+      if %w(admin user).include?(filter_user_status)
+        users = User.where(role: User.roles[filter_user_status])
+      else 
+        users = User.where(status: User.statuses[filter_user_status])
+      end
     else 
       users = User.all
     end

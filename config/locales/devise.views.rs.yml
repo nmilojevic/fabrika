@@ -74,14 +74,19 @@ rs:
               too_short: "je previše kratka (minimum je 6 karatkera)"
             email:
               blank : "ne sme biti prazna."
+              invalid: "nije validna"
             name:
-              blank: "ne sme biti prazna."
+              blank: "ne sme biti prazno."
     models:
       user: "Korisnik"
     attributes:
       user:
+        name: "Ime i prezime"
+        role: "Rola"
         email: "Email adresa"
         password: "Lozinka"
         password_confirmation: "Potvrda lozinke"
         current_password: "Trenutna lozinka"
+        membership_updated_at: "Članarina uplaćena"
+        subscribed_event_types: "Pretplaćen na treninge"
         remember_me: "Zapamti me"
