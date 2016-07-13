@@ -38,8 +38,9 @@ class EventsController < ApplicationController
     end_date= start_date.to_datetime + origin_event.event_length.seconds
     end_date = end_date.strftime("%Y-%m-%d %H:%M:%S")
     event_length= params['event_length']
-    event = Event.find_or_create_by :start_date => start_date, :end_date => end_date, :text => origin_event.text,
-                          :rec_type => '', :max_users => origin_event.max_users, :instructor_name => origin_event.instructor_name, :event_type => origin_event.event_type, :event_length => event_length, :event_pid => origin_event.id
+    event = Event.find_or_create_by(:start_date => start_date, :event_pid => origin_event.id)
+    event.update(:end_date => end_date, :text => origin_event.text,
+                          :rec_type => '', :max_users => origin_event.max_users, :instructor_name => origin_event.instructor_name, :event_type => origin_event.event_type, :event_length => event_length)
   else 
      event = origin_event  
   end
