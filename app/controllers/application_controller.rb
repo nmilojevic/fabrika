@@ -7,7 +7,13 @@ class ApplicationController < ActionController::Base
   skip_before_filter :authenticate_user!, :only => [:route_options]
   before_action :prepare_meta_tags, if: "request.get?"
 
+
   def respond_modal_with(*args, &blk)
+    if request.xhr?
+      response.headers['X-Message'] = flash_message
+      response.headers["X-Message-Type"] = flash_type.to_s
+      flash.discard
+    end
     options = args.extract_options!
     options[:responder] = ModalResponder
     respond_with *args, options, &blk
@@ -70,6 +76,19 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def flash_message
+      [:error, :warning, :notice].each do |type|
+          return flash[type] unless flash[type].blank?
+      end
+  end
+
+  def flash_type
+      [:error, :warning, :notice].each do |type|
+          return type unless flash[type].blank?
+      end
+  end
+
 
     def cors_set_access_control_headers
       response.headers['Access-Control-Allow-Origin'] = '*'

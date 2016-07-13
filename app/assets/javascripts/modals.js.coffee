@@ -14,9 +14,18 @@ $ ->
   $(document).on 'ajax:success',
     'form[data-modal]', (event, data, status, xhr)->
       url = xhr.getResponseHeader('Location')
+      msg = xhr.getResponseHeader('X-Message')
+      type = xhr.getResponseHeader('X-Message-Type')
       if url
         # Redirect to url
         #window.location = url
+        $('.modal-backdrop').remove()
+        $(document).trigger("add-alerts", [
+            {
+              'message': msg,
+              'priority': type
+            }
+          ])
         $('.admin-table').DataTable().draw()
       else
         # Remove old modal backdrop

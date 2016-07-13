@@ -25,6 +25,7 @@ class UsersController < ApplicationController
 
   def create_user
     @user = User.create(secure_params)
+    flash[:notice] = 'Novi član je uspešno dodat.'
     respond_modal_with @user, location: users_path
   end
 
@@ -75,6 +76,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @user.update_attributes(secure_params)
+    flash[:notice] = 'Član je uspešno ažuriran.'
     respond_modal_with @user, location: users_path
     #   render json:{success:true, message:t("user_role_updated")}
     # else
