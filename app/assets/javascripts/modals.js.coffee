@@ -22,8 +22,8 @@ $ ->
         $('.modal-backdrop').remove()
         $(document).trigger("add-alerts", [
             {
-              'message': msg,
-              'priority': type
+              'message': decodeURIComponent(escape(msg)),
+              'priority': 'success'
             }
           ])
         $('.admin-table').DataTable().draw()
