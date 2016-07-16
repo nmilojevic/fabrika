@@ -142,6 +142,8 @@ rs:
   time:
     formats:
       default: "%d/%m/%Y %H:%M"
+      long: "%B %d, %Y"
+      short: "%b %d"
   activerecord:
     errors:
       models:

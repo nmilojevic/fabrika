@@ -8,8 +8,6 @@ module RefineryPatch
   end
 
   def current_refinery_user
-    p "Nikola"*100
-    p current_user
     current_user
   end
   

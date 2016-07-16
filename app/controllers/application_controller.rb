@@ -25,6 +25,8 @@ class ApplicationController < ActionController::Base
 
   def prepare_meta_tags(options={})
     site_name   = "Factory Niš"
+    p "aaaaaaaaaa"*100
+    p action_name
     if action_name == "home"
       title = "Programi"
     else

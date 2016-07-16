@@ -5,7 +5,13 @@ class EventsController < ApplicationController
 
 
  def data
-   events = Event.all
+   events = Event.where(start_date:params['from'].to_datetime.beginning_of_day..params['to'].to_datetime.beginning_of_day)
+   map =current_user.events_to_hash
+
+
+  #     ue.start_date.to_s: ue.event_type,
+  # }
+
    event_json = events.map {|event| {
               :id => event.id,
               :start_date => event.start_date.strftime("%Y-%m-%d %H:%M:%S"),
@@ -18,7 +24,7 @@ class EventsController < ApplicationController
               :event_pid => event.event_pid,
               :users => event.users.size,
               :reserved => event.reserved_for?(current_user),
-              :reserved_for_today => current_user.reserved_for?(event.start_date, event.event_type),
+              :reserved_for_today => map[event.start_date.strftime("%Y-%m-%d")] == event.event_type,
               :full => event.full?,
               :past => event.past?,
               :instructor_name => event.instructor_name.present? ? event.instructor_name : "",

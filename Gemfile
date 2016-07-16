@@ -6,7 +6,6 @@ gem 'fog'
 gem 'dragonfly-s3_data_store'
 gem 'refinerycms', '~> 3.0.0'
 gem 'refinerycms-blog', git: 'https://github.com/refinery/refinerycms-blog', branch: 'master'
-gem 'refinerycms-news', git: 'https://github.com/refinery/refinerycms-news', branch: 'master'
 gem 'refinerycms-page-images', git: 'https://github.com/refinery/refinerycms-page-images', branch: 'master'
 gem 'refinerycms-i18n'
 gem 'refinerycms-wymeditor', ['~> 1.0', '>= 1.0.6']
