@@ -19,12 +19,12 @@ class EventsController < ApplicationController
               :event_length => event.event_length,
               :event_pid => event.event_pid,
               :users => event.users.size,
-              :reserved => event.reserved_for?(current_user, map),
+              :reserved => event.reserved_for?(current_user,),
               :reserved_for_today => map[event.start_date.strftime("%Y-%m-%d")] == event.event_type,
               :full => event.full?,
               :past => event.past?,
               :instructor_name => event.instructor_name.present? ? event.instructor_name : "",
-              :color => event_color(event),
+              :color => event_color(event, map),
               :reserved_by => current_user.admin? ? event.users.map{|user| "#{user.name.to_s} (#{user.email})"} : [],
               :allowed => current_user.admin? || current_user.subscribed_event_types.try(:include?, event.event_type)
           }}
