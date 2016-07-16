@@ -25,10 +25,12 @@ class ApplicationController < ActionController::Base
 
   def prepare_meta_tags(options={})
     site_name   = "Factory Niš"
-    p "aaaaaaaaaa"*100
-    p action_name
     if action_name == "home"
       title = "Programi"
+    elsif action_name == "new" && controller_name == "sessions"
+      title = "Prijava/Registracija"
+    elsif controller_name == "registrations" && action_name == "edit"
+      title = "Nalog"
     else
       title = [controller_name, action_name].join(" ")
     end
