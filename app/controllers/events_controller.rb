@@ -19,7 +19,7 @@ class EventsController < ApplicationController
               :event_length => event.event_length,
               :event_pid => event.event_pid,
               :users => event.users.size,
-              :reserved => event.reserved_for?(current_user),
+              :reserved => event.reserved_for?(current_user, map),
               :reserved_for_today => map[event.start_date.strftime("%Y-%m-%d")] == event.event_type,
               :full => event.full?,
               :past => event.past?,
