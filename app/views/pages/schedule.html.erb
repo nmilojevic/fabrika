@@ -349,11 +349,11 @@ var opts = [
                 });
             } else if (objEvent.past === true) {
                 scheduler.config.icons_select = ["icon_cancel"];
-                dhtmlx.message({
-                    title: "Obaveštenje",
-                    type: "alert-warning",
-                    text: "<%=t('past_event')%>"
-                });
+                // dhtmlx.message({
+                //     title: "Obaveštenje",
+                //     type: "alert-warning",
+                //     text: "<%=t('past_event')%>"
+                // });
             } else if (objEvent.reserved === true) {
               scheduler.config.icons_select = ["icon_cancel_event","icon_cancel"];
             } else if (objEvent.reserved_for_today === true) {
