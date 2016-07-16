@@ -8,10 +8,6 @@ class EventsController < ApplicationController
    events = Event.where(start_date:params['from'].to_datetime.beginning_of_day..params['to'].to_datetime.beginning_of_day)
    map =current_user.events_to_hash
 
-
-  #     ue.start_date.to_s: ue.event_type,
-  # }
-
    event_json = events.map {|event| {
               :id => event.id,
               :start_date => event.start_date.strftime("%Y-%m-%d %H:%M:%S"),

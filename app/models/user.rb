@@ -22,9 +22,8 @@ class User < ActiveRecord::Base
   end
 
   def events_to_hash
-    Hash[*User.events.map{|ue| [ue.start_date.strftime("%Y-%m-%d"), ue.event_type]}.flatten]
+    Hash[*events.map{|ue| [ue.start_date.strftime("%Y-%m-%d"), ue.event_type]}.flatten]
   end
-
 
   def authorized_plugins
     plugins.collect { |p| p.name } | ::Refinery::Plugins.always_allowed.names
