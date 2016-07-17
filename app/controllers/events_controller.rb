@@ -5,7 +5,7 @@ class EventsController < ApplicationController
 
 
  def data
-   events = Event.where(start_date:params['from'].to_datetime.beginning_of_day..params['to'].to_datetime.beginning_of_day)+Event.where.not(rec_type:["none",nil, ""])
+   events = Event.all#where(start_date:params['from'].to_datetime.beginning_of_day..params['to'].to_datetime.beginning_of_day)+Event.where.not(rec_type:["none",nil, ""])
    map =current_user.events_to_hash
 
    event_json = events.map {|event| {

@@ -25,6 +25,10 @@ class User < ActiveRecord::Base
     Hash[*events.map{|ue| [ue.start_date.strftime("%Y-%m-%d"), ue.event_type]}.flatten]
   end
 
+  def reserved_for?(date, event_type)
+    events.where(start_date:date.beginning_of_day..date.end_of_day, event_type:Event.event_types[event_type]).size > 0
+  end
+
   def authorized_plugins
     plugins.collect { |p| p.name } | ::Refinery::Plugins.always_allowed.names
   end
