@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   enum role: [:user, :admin]
-  enum status: [:active, :pending, :expired]
+  enum status: [:active, :pending, :expired, :deactivated]
   validates :email, :presence => true, length: { maximum: 50 }
   validates :email, :email => true, :uniqueness => true
   validates :name, :presence => true, length: { maximum: 50 } #, too_long: "First and last name are too long. Maximum combined length is 50 characters." }
@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   after_initialize :set_default_role, :if => :new_record?
   after_create :send_admin_mail
   has_and_belongs_to_many :events
-
+  scope :ready, -> { where.(status:[0,2]) }
   def password_required?
    !persisted? || !password.blank? || !password_confirmation.blank?
   end
@@ -21,8 +21,14 @@ class User < ActiveRecord::Base
     self.role ||= :user
   end
 
-  def events_to_hash
-    Hash[*events.map{|ue| [ue.start_date.strftime("%Y-%m-%d"), ue.event_type]}.flatten]
+  def events_to_hash_per_day(from, to)
+    week_events = events.where(start_date:from.to_datetime.beginning_of_day..to.to_datetime.beginning_of_day)
+    Hash[*week_events.map{|ue| [ue.start_date.strftime("%Y-%m-%d"), ue.event_type]}.flatten]
+  end
+
+  def events_to_hash_per_hour(from, to)
+    week_events = events.where(start_date:from.to_datetime.beginning_of_day..to.to_datetime.beginning_of_day)
+    Hash[*week_events.map{|ue| [ue.start_date.strftime("%Y-%m-%d %H:%M"), ue.event_type]}.flatten]
   end
 
   def reserved_for?(date, event_type)
@@ -71,7 +77,7 @@ class User < ActiveRecord::Base
           :recoverable, :rememberable, :trackable, :validatable
 
   def active_for_authentication? 
-    super && active?
+    super && (active? || expired?)
   end 
 
   def username
@@ -101,7 +107,7 @@ class User < ActiveRecord::Base
   def inactive_message
     if pending? 
       :not_approved 
-    elsif expired?
+    elsif deactivated?
       :membership_expired
     else
       super # Use whatever other message 

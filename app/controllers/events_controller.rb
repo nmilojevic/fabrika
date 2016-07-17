@@ -5,8 +5,9 @@ class EventsController < ApplicationController
 
 
  def data
-   events = Event.where(start_date:params['from'].to_datetime.beginning_of_day..params['to'].to_datetime.beginning_of_day)+Event.where.not(rec_type:["none",nil, ""])
-   map =current_user.events_to_hash
+   events = Event.where(start_date:params['from'].to_datetime.beginning_of_day..params['to'].to_datetime.beginning_of_day).where(rec_type:["none",nil, ""])+Event.where.not(rec_type:["none",nil, ""])
+   map =current_user.events_to_hash_per_day(params['from'], params['to'])
+   map_per_hour =current_user.events_to_hash_per_hour(params['from'], params['to'])
 
    event_json = events.map {|event| {
               :id => event.id,
@@ -19,12 +20,15 @@ class EventsController < ApplicationController
               :event_length => event.event_length,
               :event_pid => event.event_pid,
               :users => event.users.size,
-              :reserved => event.reserved_for?(current_user,),
+              :reserved => event.reserved_for?(current_user),
+              :reserved_map => map,
+              :reserved_hour_map => map_per_hour,
               :reserved_for_today => map[event.start_date.strftime("%Y-%m-%d")] == event.event_type,
+              :reserved_in_same_time => map_per_hour[event.start_date.strftime("%Y-%m-%d %H:%M")].present?,
               :full => event.full?,
               :past => event.past?,
               :instructor_name => event.instructor_name.present? ? event.instructor_name : "",
-              :color => event_color(event, map),
+              :color => event_color(event, map, map_per_hour),
               :reserved_by => current_user.admin? ? event.users.map{|user| "#{user.name.to_s} (#{user.email})"} : [],
               :allowed => current_user.admin? || current_user.subscribed_event_types.try(:include?, event.event_type)
           }}

@@ -5,13 +5,13 @@ class CustomerMailer < ApplicationMailer
   def account_approved_email(user)
     @user = user
     @email = ENV['FABRIKA_CONTACT_EMAIL'] || "fabrika.crossfit@gmail.com"
-    mail(to: @user.email, subject: 'Your account is approved')
+    mail(to: @user.email, subject: 'Vaš nalog je aktiviran.')
   end
 
   def signup_confirmation_email(user)
     @user = user
     @email = ENV['FABRIKA_CONTACT_EMAIL'] || "fabrika.crossfit@gmail.com"
-    mail(to: @user.email, subject: 'Welcome to Fabrika!')
+    mail(to: @user.email, subject: 'Dobrodošli u fabriku!')
   end
 
   def new_web_site_email(user)
@@ -23,13 +23,13 @@ class CustomerMailer < ApplicationMailer
   def membership_expires_soon_email(user)
     @user = user
     @email = ENV['FABRIKA_CONTACT_EMAIL'] || "fabrika.crossfit@gmail.com"
-    mail(to: @user.email, subject: 'Your membership will expire in 5 days')
+    mail(to: @user.email, subject: 'Vaša članarina je istekla, vaš nalog će biti deaktiviran za 5 dana')
   end
 
   def membership_expired_email(user)
     @user = user
     @email = ENV['FABRIKA_CONTACT_EMAIL'] || "fabrika.crossfit@gmail.com"
-    mail(to: @user.email, subject: 'Your membership has expired')
+    mail(to: @user.email, subject: 'Vaš nalog je deaktiviran.')
   end
 
 end

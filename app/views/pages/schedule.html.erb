@@ -114,7 +114,15 @@ var opts = [
     scheduler.attachEvent("onTemplatesReady", function(){
     scheduler.templates.event_text=function(start,end,event){
         if (event.event_pid !== null && event.rec_type == null && event.allowed === true){
-          if (event.start_date < Date.now()){
+          if (event.reserved_map[moment(event.start_date).format('YYYY-MM-DD')] == event.event_type){
+            event.color = "#B3B1B0";
+            event.past = false;
+            event.reserved_for_today = true;
+          } else if (event.reserved_hour_map[moment(event.start_date).format('YYYY-MM-DD HH:mm')]){
+            event.color = "#B3B1B0";
+            event.past = false;
+            event.reserved_in_same_time = true;
+          } else if (event.start_date < Date.now()){
             event.color = "#B3B1B0";
             event.past = true;
           } else {
@@ -362,6 +370,13 @@ var opts = [
                     title: "Obaveštenje",
                     type: "alert-warning",
                     text: "<%=t('reserved_today_event')%>"
+                }); 
+            } else if (objEvent.reserved_in_same_time === true) {
+                scheduler.config.icons_select = ["icon_cancel"];
+                dhtmlx.message({
+                    title: "Obaveštenje",
+                    type: "alert-warning",
+                    text: "<%=t('reserved_same_time_event')%>"
                 }); 
             } else if (objEvent.full === true) {
                 scheduler.config.icons_select = ["icon_cancel"];
