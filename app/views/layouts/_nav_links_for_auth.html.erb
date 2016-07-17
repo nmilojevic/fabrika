@@ -9,7 +9,7 @@
 <% end %>
 <% if user_signed_in? %>
   <% if current_user.try(:admin?) %>
-    <li><%= link_to t('users.title'), main_app.users_path %></li>
+    <li><%= link_to t('users.title'), users_path %></li>
      <li><%= link_to t('cms'), refinery.admin_root_path %></li>
   <% end %>
 <% end %>

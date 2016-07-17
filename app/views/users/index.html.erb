@@ -50,45 +50,6 @@
    <script>
    
   $(document).ready(function() { 
-      $(document).on('click', '#new_person_modal .btn-default', function (e) {
-         $('#new_person_modal form').submit();
-      });
-
-      $(document).on('shown.bs.modal', function (e) {
-      $('#new_person_modal select.checkbox').multiselect({ numberDisplayed: 3, buttonWidth: '100%', multiple: true, nonSelectedText: 'Nije izabran nijedan',
-            nSelectedText: 'izabrana',
-            allSelectedText: 'Svi treninzi'
-        });
-        $('.BSswitch').bootstrapSwitch({size:"small"});
-        $('.BSswitch.role').on('switchChange.bootstrapSwitch', function(event, state) {
-          if (state === true) {
-            $('.BSswitch.training').bootstrapSwitch('state', true);
-            $('.BSswitch.training').bootstrapSwitch('readonly', true);
-          } else {
-            $('.BSswitch.training').bootstrapSwitch('readonly', false);
-          }
-        });
-
-        $('#new_person_modal select.role').multiselect({
-          buttonWidth: '100%',
-        }); 
-
-        $('#new_person_modal .input-group.date').datetimepicker({
-          locale: 'rs',
-          format: 'DD/MM/YYYY'
-        });
-    });
-    $("#alerts").bsAlerts({'titles': {'success': ''}, 'fade':"3000"});
-      $(document).trigger("add-alerts", [
-      <% flash.each do |name, msg| %>
-      <% if msg.is_a?(String) %>
-            {
-              'message': "<%=msg%>",
-              'priority': "<%=name.to_s == 'notice' ? 'success' : 'danger'%>"
-            },
-      <% end %>
-    <% end %>
-          ]);
     var tableOptions = createTableOptions(); 
     tableOptions.sDom = "<'admin-page-header clear'<'manage_user-id left'><'right'f>r>t<'row table-footer'<'col-md-4'l><'col-md-3' <'text-center'i>><'col-md-5'p>>",
     
@@ -173,6 +134,49 @@
     $('.manage_user-id').append(filter_container);
     filter_container.show();
   
+
+   });
+
+    $(document).on('click', '#new_person_modal .btn-default', function (e) {
+         $('#new_person_modal form').submit();
+      });
+
+      $(document).on('shown.bs.modal', function (e) {
+      $('#new_person_modal select.checkbox').multiselect({ numberDisplayed: 3, buttonWidth: '100%', multiple: true, nonSelectedText: 'Nije izabran nijedan',
+            nSelectedText: 'izabrana',
+            allSelectedText: 'Svi treninzi'
+        });
+        $('.BSswitch').bootstrapSwitch({size:"small"});
+        $('.BSswitch.role').on('switchChange.bootstrapSwitch', function(event, state) {
+          if (state === true) {
+            $('.BSswitch.training').bootstrapSwitch('state', true);
+            $('.BSswitch.training').bootstrapSwitch('readonly', true);
+          } else {
+            $('.BSswitch.training').bootstrapSwitch('readonly', false);
+          }
+        });
+
+        $('#new_person_modal select.role').multiselect({
+          buttonWidth: '100%',
+        }); 
+
+        $('#new_person_modal .input-group.date').datetimepicker({
+          locale: 'rs',
+          format: 'DD/MM/YYYY'
+        });
+    });
+    $("#alerts").bsAlerts({'titles': {'success': ''}, 'fade':"3000"});
+      $(document).trigger("add-alerts", [
+      <% flash.each do |name, msg| %>
+      <% if msg.is_a?(String) %>
+            {
+              'message': "<%=msg%>",
+              'priority': "<%=name.to_s == 'notice' ? 'success' : 'danger'%>"
+            },
+      <% end %>
+    <% end %>
+          ]);
+      
     $('.table').on( 'draw.dt', function () {
         $('.input-group.date').datetimepicker({
           locale: 'rs',
@@ -221,8 +225,6 @@
           }
         });
       });
-
-   });
 
 
 
