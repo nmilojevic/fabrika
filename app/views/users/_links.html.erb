@@ -9,6 +9,7 @@
    <li><%= link_to(t('users.approve'), "javascript:;", :data => { user_id: user.id}, class:"approve") if user.pending? %></li>
    <li><%= link_to 'Ažuriraj', edit_user_path(user), 
             data: { modal: true } %></li>
+   <li><%= link_to "Impersoniraj", impersonate_path(user) if (user.active? || user.expired?) && user != current_user %></li>
    <li><%= link_to(t('users.renew'), "javascript:;", :data=>{user_id:user.id}, class:"renew") if (user.expired? || user.deactivated?) %></li>
    <li><%= link_to(t('users.delete'), "javascript:;", :data => { :user_id => user.id }, class:"delete") unless user == current_user %></li>
   </ul>

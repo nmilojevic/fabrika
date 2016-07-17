@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :admin_only
+  before_filter :admin_only, except: [:unimpersonate_user]
   respond_to :html, :json, only:[:new, :edit, :update, :create_user]
 
   def index
@@ -99,9 +99,34 @@ class UsersController < ApplicationController
     render json:{success:true, message:t("user_deleted")}
   end
 
+  def unimpersonate_user
+    p "unimpersonate"
+    if !session[:stack_admins].blank?
+      p "session"
+      new_user = User.find(session[:stack_admins].last)
+      p new_user.name
+      sign_in(new_user, bypass: true)
+      session[:stack_admins].pop
+    end
+    redirect_to users_path
+  end
+
+  def impersonate
+    from_user_id = current_user.id
+    to_user_id = params[:id]
+    session[:stack_admins] = Array.new if session[:stack_admins].blank?
+    session[:stack_admins] << from_user_id
+    to_user = User.find(to_user_id)
+    sign_in(to_user, bypass: true)
+    p "FROM USER: #{User.find(from_user_id).email}", "*" * 100
+    p "STACK ADMINS: #{session[:stack_admins].inspect}"
+    redirect_to schedule_path
+  end
+
   private
 
   def admin_only
+    p "aaaaaa"*100
     unless current_user.admin?
       redirect_to :back, :alert => "Access denied."
     end
