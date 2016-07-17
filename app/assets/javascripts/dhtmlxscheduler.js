@@ -4798,8 +4798,8 @@ scheduler._load = function(url, from, force) {
     from = this.date[this._load_mode + "_start"](new Date(from.valueOf()));
     while (from > this._min_date) from = this.date.add(from, -1, this._load_mode);
     to = from;
-
-    var cache_line = true;
+    if (force !== true)
+      var cache_line = true;
     while (to < this._max_date) {
       to = this.date.add(to, 1, this._load_mode);
       if (this._loaded[lf(from)] && cache_line)
@@ -4812,7 +4812,7 @@ scheduler._load = function(url, from, force) {
       temp_to = this.date.add(to, -1, this._load_mode);
     } while (temp_to > from && this._loaded[lf(temp_to)]);
 
-    if (to <= from && force !== true)
+    if (to <= from)
       return false; //already loaded
     dhtmlxAjax.get(url + "&from=" + lf(from) + "&to=" + lf(to), function(l) {scheduler.on_load(l);});
     while (from < to) {
