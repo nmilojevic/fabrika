@@ -42,7 +42,7 @@
 })();
   scheduler.config.xml_date="%Y-%m-%d %H:%i";
   scheduler.config.show_loading = true;
-  // scheduler.setLoadMode("week");
+  scheduler.setLoadMode("week");
   scheduler.form_blocks["my_instructor"] = {
       render:function(sns){
           return "<div class='dhx_cal_ltext' style='height:60px;'><input type='text'></div>";
@@ -256,7 +256,7 @@ var opts = [
      return true;
     });
     dp.attachEvent("onAfterUpdate", function(){
-      scheduler.load("<%= data_path %>", "json");
+      scheduler.load("<%= data_path %>", "json", false);
     });
 
 
@@ -288,7 +288,7 @@ var opts = [
               url:  "../events/"+id+"/cancel_event",
               success: function(data) {
                 scheduler.hideQuickInfo(true);
-                scheduler.load("<%= data_path %>", "json");
+                scheduler.load("<%= data_path %>", "json", true);
               }.bind(this),
               error: function() {
                   alert(error);
@@ -321,7 +321,7 @@ var opts = [
         url:  "../events/"+id+"/reserve_event",
         success: function(data) {
           scheduler.hideQuickInfo(true);
-          scheduler.load("<%= data_path %>", "json");
+          scheduler.load("<%= data_path %>", "json", true);
         }.bind(this),
         error: function(error) {
             alert(error);
@@ -384,7 +384,7 @@ var opts = [
  //   scheduler.BeforeInit.Add(string.Format("initResponsive({0})", scheduler.Name));
      initResponsive(scheduler);
      scheduler.init("scheduler_here");
-     scheduler.load("<%= data_path %>", "json");
+     scheduler.load("<%= data_path %>", "json", false);
 
 </script>
 <!-- /.container -->

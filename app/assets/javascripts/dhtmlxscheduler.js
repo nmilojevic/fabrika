@@ -4779,7 +4779,7 @@ scheduler.highlightEventPosition = function(event){
   this._append_drag_marker(m);
 };
 scheduler._loaded = {};
-scheduler._load = function(url, from) {
+scheduler._load = function(url, from, force) {
   url = url || this._load_url;
 
   if(!url){
@@ -4812,7 +4812,7 @@ scheduler._load = function(url, from) {
       temp_to = this.date.add(to, -1, this._load_mode);
     } while (temp_to > from && this._loaded[lf(temp_to)]);
 
-    if (to <= from)
+    if (to <= from && force !== true)
       return false; //already loaded
     dhtmlxAjax.get(url + "&from=" + lf(from) + "&to=" + lf(to), function(l) {scheduler.on_load(l);});
     while (from < to) {
@@ -4925,15 +4925,15 @@ scheduler.parse = function(data, type) {
   this._process = type;
   this.on_load({xmlDoc: {responseText: data}});
 };
-scheduler.load = function(url, call) {
+scheduler.load = function(url, call, force) {
   if (typeof call == "string") {
     this._process = call;
-    call = arguments[2];
+    call = arguments[3];
   }
 
   this._load_url = url;
   this._after_call = call;
-  this._load(url, this._date);
+  this._load(url, this._date, force);
 };
 //possible values - day,week,month,year,all
 scheduler.setLoadMode = function(mode) {
