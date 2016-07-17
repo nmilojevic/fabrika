@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   after_initialize :set_default_role, :if => :new_record?
   after_create :send_admin_mail
   has_and_belongs_to_many :events
-  scope :ready, -> { where.(status:[0,2]) }
+  scope :ready, -> { where(status:[0,2]) }
   def password_required?
    !persisted? || !password.blank? || !password_confirmation.blank?
   end
