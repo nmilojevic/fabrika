@@ -3,7 +3,7 @@
  <div class="alert alert-info">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
     <div id="unimpersonate"><span>Impersonirani ste kao <%= "#{current_user.name} (#{current_user.email})" %></span><br>
-  <%= link_to "Povratak na admina", unimpersonate_user_path()%>
+  <%= link_to "Povratak na admina", main_app.unimpersonate_user_path()%>
   </div>
   </div>
   <% end %>

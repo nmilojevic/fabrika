@@ -137,7 +137,7 @@
 
    });
 
-    $(document).on('click', '#new_person_modal .btn-default', function (e) {
+    $("#new_person_modal .btn-default").click(function (e) {
          $('#new_person_modal form').submit();
       });
 
@@ -176,7 +176,7 @@
       <% end %>
     <% end %>
           ]);
-      
+
     $('.table').on( 'draw.dt', function () {
         $('.input-group.date').datetimepicker({
           locale: 'rs',
