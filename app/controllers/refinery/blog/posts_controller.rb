@@ -35,10 +35,10 @@ module Refinery
         @post.increment!(:access_count, 1)
         title = @post.title
         description = ''
-        if post.respond_to?(:custom_teaser) && post.custom_teaser.present?
-         description = strip_tags(post.custom_teaser.html_safe)
+        if @post.respond_to?(:custom_teaser) && @post.custom_teaser.present?
+         description = strip_tags(@post.custom_teaser.html_safe)
         else
-         description = truncate(strip_tags(post.body.html_safe), {
+         description = truncate(strip_tags(@post.body.html_safe), {
            :length => Refinery::Blog.post_teaser_length
           })
         end
