@@ -42,7 +42,8 @@ module Refinery
            :length => Refinery::Blog.post_teaser_length
           })
         end
-        image       = "#{Rails.application.config.fabrika_url}#{@post.image.try(:thumbnail, geometry: "1200x630#c").try(:url)}"
+        image = "#{ActionController::Base.helpers.asset_path('imgs/mali_logo.png')}"
+        image = "#{Rails.application.config.fabrika_url}#{@post.image.try(:thumbnail, geometry: "1200x630#c").try(:url)}" if @post.image.present?
 
         defaults = {
           title: title,
