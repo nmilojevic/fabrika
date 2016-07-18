@@ -49,7 +49,7 @@
 <% content_for :extra_js do %>
    <script>
    
-  $(document).ready(function() { 
+ 
     var tableOptions = createTableOptions(); 
     tableOptions.sDom = "<'admin-page-header clear'<'manage_user-id left'><'right'f>r>t<'row table-footer'<'col-md-4'l><'col-md-3' <'text-center'i>><'col-md-5'p>>",
     
@@ -135,9 +135,9 @@
     filter_container.show();
   
 
-   });
+   $(document).off("click", "#new_person_modal .btn-default");
 
-    $("#new_person_modal .btn-default").click(function (e) {
+    $(document).on("click", "#new_person_modal .btn-default", function (e) {
          $('#new_person_modal form').submit();
       });
 
