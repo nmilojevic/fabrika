@@ -10,7 +10,30 @@ module Refinery
       respond_to :html, :js, :rss
  
       def index
-        prepare_meta_tags title: "Factory Blog"
+         title = "Blog - Factory Niš | Forging Elite Fitness"
+         description = "Blog o funkcionalnom fitnesu, crossfitu, yogi, weightliftingu."
+         image = "#{ActionController::Base.helpers.asset_path('imgs/mali_logo.png')}"
+         image = "#{Rails.application.config.fabrika_url}#{@post.image.try(:thumbnail, geometry: "1200x630#c").try(:url)}" if @post.image.present?
+
+          defaults = {
+            title: title,
+            image: image,
+            description: description,
+            twitter: {
+              site: '@fabrika_018',
+              card: 'summary',
+              description: description,
+              image: image
+            },
+            og: {
+              title: title,
+              image: image,
+              description: description,
+              type: 'website'
+            }
+          }
+
+        set_meta_tags defaults
 
         if request.format.rss?
           @posts = if params["max_results"].present?
