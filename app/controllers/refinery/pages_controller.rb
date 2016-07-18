@@ -1,6 +1,8 @@
 module Refinery
   class PagesController < ::ApplicationController
     include Pages::RenderOptions
+    include ActionView::Helpers::TextHelper
+    include ActionView::Helpers::SanitizeHelper
 
     before_action :find_page, :set_canonical, except:[:create]
     before_action :error_404, :unless => :current_user_can_view_page?
@@ -104,7 +106,6 @@ module Refinery
           defaults = {
             title: title,
             image: image,
-            author: "#{@post.author.try(:username)}",
             description: description,
             twitter: {
               site: '@fabrika_018',
@@ -116,7 +117,6 @@ module Refinery
               title: title,
               image: image,
               description: description,
-              author: "#{@post.author.try(:username)}",
               type: 'website'
             }
           }
