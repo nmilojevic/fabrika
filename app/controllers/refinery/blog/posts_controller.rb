@@ -38,8 +38,9 @@ module Refinery
         image       = "#{config.fabrika_url}#{@post.image.try(:url)}"
 
         defaults = {
-          title:       title,
-          image:       image,
+          title: title,
+          image: image,
+          author: "#{@post.author.try(:username)}",
           description: description,
           twitter: {
             site: '@fabrika_018',
@@ -51,6 +52,7 @@ module Refinery
             title: title,
             image: image,
             description: description,
+            author: "#{@post.author.try(:username)}",
             type: 'website'
           }
         }
