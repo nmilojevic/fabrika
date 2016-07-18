@@ -101,7 +101,9 @@ module Refinery
           description = truncate(strip_tags(@page.content_for(content_el)), {
              :length => 200
             })
-          image  = "#{Rails.application.config.fabrika_url}#{@page.images.first.try(:thumbnail, geometry: "1200x630#c").try(:url)}"
+          image = "#{ActionController::Base.helpers.asset_path('imgs/mali_logo.png')}"
+
+          image  = "#{Rails.application.config.fabrika_url}#{@page.images.first.try(:thumbnail, geometry: "1200x630#c").try(:url)}" if @page.images.first.present?
 
           defaults = {
             title: title,
