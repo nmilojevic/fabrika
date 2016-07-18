@@ -41,6 +41,7 @@ module Refinery
          description = truncate(strip_tags(post.body.html_safe), {
            :length => Refinery::Blog.post_teaser_length
           })
+        end
         image       = "#{config.fabrika_url}#{@post.image.try(:url)}"
 
         defaults = {
