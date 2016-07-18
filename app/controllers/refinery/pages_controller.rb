@@ -101,7 +101,7 @@ module Refinery
           description = truncate(strip_tags(@page.content_for(content_el)), {
              :length => 200
             })
-          image  = "#{Rails.application.config.fabrika_url}#{@page.images.first.try(:url)}"
+          image  = "#{Rails.application.config.fabrika_url}#{@page.images.first.try(:thumbnail, geometry: "400x300#c").try(:url)}"
 
           defaults = {
             title: title,
