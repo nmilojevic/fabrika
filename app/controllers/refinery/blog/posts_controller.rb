@@ -42,13 +42,16 @@ module Refinery
            :length => Refinery::Blog.post_teaser_length
           })
         end
-        image       = "#{Rails.application.config.fabrika_url}#{@post.image.try(:thumbnail, geometry: "400x300#c").try(:url)}"
+        image       = "#{Rails.application.config.fabrika_url}#{@post.image.try(:thumbnail, geometry: "1200x630#c").try(:url)}"
 
         defaults = {
           title: title,
           image: image,
           author: "#{@post.author.try(:username)}",
           description: description,
+          article:{
+            author: "#{@post.author.try(:username)}",
+          },
           twitter: {
             site: '@fabrika_018',
             card: 'summary',
