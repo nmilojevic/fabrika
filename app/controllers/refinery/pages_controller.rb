@@ -81,8 +81,10 @@ module Refinery
     end
 
     def find_page(fallback_to_404 = true)
+      content_el = "body"
       @page ||= case action_name
                 when "home"
+                  content_el = "box1"
                   Refinery::Page.find_by(link_url: '/')
                 when "show"
                   page = Refinery::Page.friendly.find_by_path_or_id(params[:path], params[:id])
@@ -91,7 +93,36 @@ module Refinery
                   end
                   page
                 end
-      prepare_meta_tags title: "#{@page.title}"
+        if @page.present?
+          title = @page.title
+          
+          description = truncate(strip_tags(@page.content_for(content_el)), {
+             :length => 200
+            })
+          image  = "#{Rails.application.config.fabrika_url}#{@page.images.first.try(:url)}"
+
+          defaults = {
+            title: title,
+            image: image,
+            author: "#{@post.author.try(:username)}",
+            description: description,
+            twitter: {
+              site: '@fabrika_018',
+              card: 'summary',
+              description: description,
+              image: image
+            },
+            og: {
+              title: title,
+              image: image,
+              description: description,
+              author: "#{@post.author.try(:username)}",
+              type: 'website'
+            }
+          }
+
+        set_meta_tags defaults
+      end
       @page || (error_404 if fallback_to_404)
     end
 
