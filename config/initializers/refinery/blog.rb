@@ -7,7 +7,7 @@ Refinery::Blog.configure do |config|
 
   # config.post_teaser_length = 250
 
-  # config.share_this_key = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  config.share_this_key = "62a3bd80-4c61-4abf-966b-a59ae6305290"
 
   config.page_url = "/blog"
 

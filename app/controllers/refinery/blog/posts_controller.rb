@@ -1,13 +1,13 @@
 module Refinery
   module Blog
     class PostsController < BlogController
-
+      include Refinery::Blog::PostsHelper
+      include ActionView::Helpers::TextHelper
       before_filter :find_all_blog_posts, :except => [:archive]
       before_filter :find_blog_post, :only => [:show, :comment, :update_nav]
       before_filter :find_tags
-
       respond_to :html, :js, :rss
-
+ 
       def index
         prepare_meta_tags title: "Factory Blog"
 
@@ -32,6 +32,29 @@ module Refinery
         @canonical = refinery.url_for(:locale => Refinery::I18n.current_frontend_locale) if canonical?
 
         @post.increment!(:access_count, 1)
+        title = @post.title
+        description = blog_post_teaser(@post) if blog_post_teaser_enabled?
+        image       = "#{@post.image.try(:url)}"
+
+        defaults = {
+          title:       title,
+          image:       image,
+          description: description,
+          twitter: {
+            site: '@fabrika_018',
+            card: 'summary',
+            description: description,
+            image: image
+          },
+          og: {
+            title: title,
+            image: image,
+            description: description,
+            type: 'website'
+          }
+        }
+
+        set_meta_tags defaults
 
         respond_with (@post) do |format|
           format.html { present(@post) }

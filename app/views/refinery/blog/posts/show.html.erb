@@ -7,9 +7,11 @@
 <%= render "/refinery/content_page", :remove_automatic_sections => true %>
 
 <% content_for :stylesheets, stylesheet_link_tag('refinery/blog/frontend') %>
-<% content_for :javascripts do %>
+<% content_for :extra_js do %>
   <%# enable AJAX'd post nav at your own risk until html5 history API implemented. %>
-  <%#= javascript_include_tag('refinery/blog/frontend') %>
-  <script src="http://w.sharethis.com/button/buttons.js"></script>
-  <script>stLight.options({publisher:'<%= Refinery::Blog.share_this_key %>'});</script>
-<% end if Refinery::Blog::Post::ShareThis.enabled? %>
+  <%# javascript_include_tag('refinery/blog/frontend') %>
+<!--   <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+ -->
+  <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+  <script>stLight.options({publisher:'<%= Refinery::Blog.share_this_key %>', doNotHash: false, doNotCopy: false, hashAddressBar: false});</script> 
+<% end %>

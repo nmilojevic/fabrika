@@ -43,8 +43,15 @@
                 <p class="lead">  <%= @post.body.html_safe %></p>
 
                 <hr>
-
+                 <% if Refinery::Blog::Post::ShareThis.enabled? %>
+                <span class='st_facebook_large' displayText='Facebook'></span>
+                <span class='st_twitter_large' displayText='Tweet'></span>
+                <span class='st_linkedin_large' displayText='LinkedIn'></span>
+                <span class='st_pinterest_large' displayText='Pinterest'></span>
+                <span class='st_googleplus_large' displayText='Google +'></span>
+              <% end %>
                 </div>
+
 
                  <%= render 'comments' %>
 
