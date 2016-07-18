@@ -109,6 +109,7 @@ class UsersController < ApplicationController
       session[:stack_admins].pop
     end
     redirect_to users_path
+
   end
 
   def impersonate

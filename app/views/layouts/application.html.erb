@@ -31,7 +31,7 @@
     <%= display_meta_tags %>
    <%= csrf_meta_tags %>  
   </head>
-  <body>
+  <body <%= "data-no-turbolinks='true'".html_safe if controller_name=="pages" && action_name=="schedule" %>>
       <%= render 'layouts/messages' %>
       <%= render 'layouts/header' %>
       <%= yield %>
