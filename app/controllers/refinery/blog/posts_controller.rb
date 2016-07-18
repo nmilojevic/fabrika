@@ -42,7 +42,7 @@ module Refinery
            :length => Refinery::Blog.post_teaser_length
           })
         end
-        image       = "#{config.fabrika_url}#{@post.image.try(:url)}"
+        image       = "#{Rails.application.config.fabrika_url}#{@post.image.try(:url)}"
 
         defaults = {
           title: title,

@@ -18,7 +18,7 @@
     <% end %>
     </p>
     <% if blog_post_teaser_enabled? || post.custom_teaser.present? %>
-      <%= link_to t('read_more', :scope => 'refinery.blog.shared.posts'), refinery.blog_post_path(post), class: "btn btn-default btn-lg"%>
+      <%= link_to t('read_more', :scope => 'refinery.blog.shared.posts'), refinery.blog_post_path(post), class: "btn btn-default btn-lg", 'data-no-turbolink' => true%>
     <% end %>
     <% if Refinery::Blog::Post.comments_allowed? %>
       <br>
