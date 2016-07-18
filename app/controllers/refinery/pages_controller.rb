@@ -95,6 +95,7 @@ module Refinery
                   end
                   page
                 end
+                p "aaaasasasas"*1000
         if @page.present?
           title = @page.title
           
