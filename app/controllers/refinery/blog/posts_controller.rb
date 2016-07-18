@@ -3,6 +3,7 @@ module Refinery
     class PostsController < BlogController
       include Refinery::Blog::PostsHelper
       include ActionView::Helpers::TextHelper
+      include ActionView::Helpers::SanitizeHelper
       before_filter :find_all_blog_posts, :except => [:archive]
       before_filter :find_blog_post, :only => [:show, :comment, :update_nav]
       before_filter :find_tags
@@ -33,8 +34,8 @@ module Refinery
 
         @post.increment!(:access_count, 1)
         title = @post.title
-        description = blog_post_teaser(@post) if blog_post_teaser_enabled?
-        image       = "#{@post.image.try(:url)}"
+        description = strip_tags(blog_post_teaser(@post)) if blog_post_teaser_enabled?
+        image       = "#{config.fabrika_url}#{@post.image.try(:url)}"
 
         defaults = {
           title:       title,
