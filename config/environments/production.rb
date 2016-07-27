@@ -87,7 +87,7 @@ Rails.application.configure do
       password: ENV['FABRIKA_EMAIL_PASS'] || "gwmdzwtqdkzctjjg"
     }
     # ActionMailer Config
-    config.action_mailer.default_url_options = { :host => ENV['FABRIKA_EMAIL_DOMAIN'] || 'fabrika-crossfit.heroku.com' }
+    config.action_mailer.default_url_options = { :host => ENV['FABRIKA_EMAIL_DOMAIN'] || 'factorynis.com' }
     #config.action_mailer.default_url_options = { :host => Rails.application.secrets.domain_name }
   end
   config.action_mailer.delivery_method = :smtp
