@@ -9,7 +9,7 @@ rs:
         greeting: "Welcome %{recipient}!"
         instruction: "You can confirm your account email through the link below:"
       reset_password_instructions:
-        action: "Promeni moju lozinkud"
+        action: "Promeni moju lozinku"
         greeting: "Dobrodošli %{recipient}!"
         instruction: "Neko je zatražio link za promenu vaše lozinke, i vi je možete promeniti prateći link ispod."
         instruction_2: "Ukoliko niste zatražili promenu lozinke, molim vas da ignorišete ovaj email."
