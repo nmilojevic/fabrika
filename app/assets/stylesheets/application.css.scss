@@ -326,4 +326,14 @@ select.breathe {
   overflow-x: scroll;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
+
+.dhx_cal_qi_content{
+  white-space: pre-wrap;
+  overflow: scroll !important;
+  max-height: 100px;
+}
+
+.dhx_wrap_section:nth-of-type(3), .dhx_wrap_section:nth-of-type(5), .dhx_wrap_section:nth-of-type(7), .dhx_wrap_section:nth-of-type(6){
+ display:none !important;
+}
 }
