@@ -17,7 +17,7 @@ class CustomerMailer < ApplicationMailer
   def new_web_site_email(user)
     @user = user
     @email = ENV['FABRIKA_CONTACT_EMAIL'] || "crossfit.fabrika@gmail.com"
-    mail(to: @user.email, subject: 'Dobrovoljno davanje krvi')
+    mail(to: @user.email, subject: 'Nedelja na Tremu sa Fabrikantima')
   end
 
   def membership_expires_soon_email(user)
