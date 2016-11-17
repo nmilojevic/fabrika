@@ -186,7 +186,7 @@
           approve_user($(this).attr('data-user-id'));
         });
         $('.delete').click(function(){
-          getConfirm('Da li ste sigurni da želite da obrišete korisnika?', function(){
+          getConfirm('Da li ste sigurni da želite da obrišete korisnika?', function(data){
             if (data === true) {
              delete_user($(this).attr('data-user-id'));
             }

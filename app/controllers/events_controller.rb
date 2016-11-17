@@ -96,12 +96,10 @@ class EventsController < ApplicationController
        end
 
        if event_pid != 0 and event_pid != ''
-          p "2"*100
          event = Event.find(id)
          event.rec_type = 'none'
          event.save
        else
-          p "3"*100
          Event.find(id).destroy
        end
 
