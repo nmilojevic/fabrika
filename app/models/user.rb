@@ -84,6 +84,21 @@ class User < ActiveRecord::Base
     name
   end
 
+  def self.send_group_email
+    @users = User.all
+    total = @users.size
+    count = 0
+    @users.each do |user|
+      p "#{count}/#{total}"
+      p "send email to #{user.email}"
+      CustomerMailer.new_web_site_email(user).deliver
+      if (count % 50) == 0
+        p "sleep 30 seconds"
+        sleep(30)
+      end
+    end
+  end
+
   def send_admin_mail
     self.update(membership_updated_at: Time.current)
     CustomerMailer.signup_confirmation_email(self).deliver
