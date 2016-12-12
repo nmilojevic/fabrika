@@ -50,12 +50,16 @@ class EventsController < ApplicationController
   else 
      event = origin_event  
   end
-  if event.users.size >= event.max_users
+  if event.full?
     @error = "Termin je pun. Pokušajte kasnije, u slučaju da neko otkaže."
   elsif event.reserved_for?(current_user)
     @error = "Već ste rezervisali trening"
   elsif current_user.reserved_for?(event.start_date, event.event_type)
     @error = "Već ste rezervisali ovaj tip treninga danas"
+  elsif event.past?
+    @error = "Nije moguće rezervisati trening."
+  elsif !current_user.subscribed_event_types.try(:include?, event.event_type)
+    @error = "Nije moguće rezervisati ovaj tip treninga."
   else
     event.users << current_user
   end

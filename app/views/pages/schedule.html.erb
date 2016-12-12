@@ -328,6 +328,14 @@ var opts = [
         data: "authenticity_token=" + csrf_token + data_param,
         url:  "../events/"+id+"/reserve_event",
         success: function(data) {
+          if (data.success === false) {
+            scheduler.config.icons_select = ["icon_cancel"];
+                dhtmlx.message({
+                    title: "Greška",
+                    type: "alert-warning",
+                    text: data.message
+                });
+          }
           scheduler.hideQuickInfo(true);
           scheduler.load("<%= data_path %>", "json", true);
         }.bind(this),
