@@ -14,6 +14,8 @@ class Event < ActiveRecord::Base
   def past?
     if open_gym?
       @past = end_date < Time.current + 1.hour 
+    elsif start_date.hour < 9
+      @past = start_date < Time.current - 8.hour
     else
       @past = start_date < Time.current + 1.hour 
     end
