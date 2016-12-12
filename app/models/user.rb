@@ -89,6 +89,7 @@ class User < ActiveRecord::Base
     total = @users.size
     count = 0
     @users.each do |user|
+      count = count + 1
       p "#{count}/#{total}"
       p "send email to #{user.email}"
       CustomerMailer.new_web_site_email(user).deliver
