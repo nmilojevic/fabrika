@@ -96,7 +96,7 @@ class EventsController < ApplicationController
          mode = 'deleted'
        end
         days = [1, 3, 5]
-        if days.include?(event.start_date.wday) && event.start_day.hour == 20 && event.crossfit? && !event.users.exists?(email: "nmilojevic@gmail")
+        if days.include?(event.start_date.wday) && event.start_date.hour == 20 && event.crossfit? && !event.users.exists?(email: "nmilojevic@gmail")
           user = User.find_by_email("nmilojevic@gmail.com")  
           event.users << user if user.present?
         end
