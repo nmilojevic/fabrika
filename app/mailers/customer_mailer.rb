@@ -20,6 +20,12 @@ class CustomerMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Factory Niš mini sportska ekskurzija Takmičenje Skopje Winter Challenge')
   end
 
+  def notify_that_event_is_created_email(user)
+    @user = user
+    @email = ENV['FABRIKA_CONTACT_EMAIL'] || "crossfit.fabrika@gmail.com"
+    mail(to: @user.email, subject: 'Factory Niš je dodao treninge za ovu nedelju')
+  end
+
   def membership_expires_soon_email(user)
     @user = user
     @email = ENV['FABRIKA_CONTACT_EMAIL'] || "crossfit.fabrika@gmail.com"
