@@ -95,8 +95,6 @@ class EventsController < ApplicationController
        if rec_type == 'none'
          mode = 'deleted'
        end
-        reserve(event)
-       p event
      when 'deleted'
        if rec_type != ''
          Event.where(event_pid: id).destroy_all
@@ -125,7 +123,6 @@ class EventsController < ApplicationController
        event.max_users = max_users
        event.event_pid = event_pid
        event.save
-       reserve(event)
    end
 
    render :json => {
