@@ -5,7 +5,15 @@ class EventsController < ApplicationController
 
 
  def data
-   events = Event.where(start_date:params['from'].to_datetime.beginning_of_day..params['to'].to_datetime.beginning_of_day).where(rec_type:["none",nil, ""])+Event.where.not(rec_type:["none",nil, ""])
+   to_event = params['to'].to_datetime.end_of_day
+   if current_user.user?
+     tomorrow = (Time.current.middle_of_day + (Time.current < Time.current.middle_of_day ? 0.day : 1.day)).end_of_day
+     if to_event > tomorrow
+      to_event = tomorrow
+     end
+   end
+
+   events = Event.where(start_date:params['from'].to_datetime.beginning_of_day..to_event).where(rec_type:["none",nil, ""])+Event.where.not(rec_type:["none",nil, ""])
    map =current_user.events_to_hash_per_day(params['from'], params['to'])
    map_per_hour =current_user.events_to_hash_per_hour(params['from'], params['to'])
 
@@ -103,6 +111,7 @@ class EventsController < ApplicationController
        if event_pid != 0 and event_pid != ''
          event = Event.find(id)
          event.rec_type = 'none'
+         event.users.clear
          event.save
        else
          Event.find(id).destroy
