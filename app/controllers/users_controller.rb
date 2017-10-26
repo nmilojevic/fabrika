@@ -127,7 +127,6 @@ class UsersController < ApplicationController
   private
 
   def admin_only
-    p "aaaaaa"*100
     unless current_user.admin?
       redirect_to :back, :alert => "Access denied."
     end
