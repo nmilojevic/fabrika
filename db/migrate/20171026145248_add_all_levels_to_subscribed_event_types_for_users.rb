@@ -6,10 +6,11 @@ class AddAllLevelsToSubscribedEventTypesForUsers < ActiveRecord::Migration
       else
         if a.subscribed_event_types.blank?
           a.subscribed_event_types = []
-        end          
-        a.subscribed_event_types << "all_levels"
+        end
+        if !a.subscribed_event_types.include?("all_levels")          
+          a.subscribed_event_types << "all_levels"
+        end
       end
-      a.save
     end
   end
 end

@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  enum event_type: [:crossfit, :bootcamp, :weightlifting, :power_yoga, :open_gym, :all_levels]
+  enum event_type: [:crossfit, :bootcamp, :begginers, :power_yoga, :open_gym, :all_levels]
 
   has_and_belongs_to_many :users
 
