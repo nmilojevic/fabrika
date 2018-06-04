@@ -68,7 +68,7 @@
       <div class="col-xs-6">    
        <% right.each_with_index do |type, index| %>
            <label class='control-label'>
-           <input id='<%="user_subscribed_event_types_#{index}"%>' name="user[subscribed_event_types][]" class="BSswitch training" type="checkbox" data-off-text="Ne" value="<%=type%>" data-on-text="Da" <%=@user.subscribed_event_types.try(:include?,type) || @user.admin?  || (%w(crossfit all_levels open_gym).include?(type) && !@user.persisted?) ? "checked" : "" %> <%=@user.admin? ? " readonly" : ""%>>
+           <input id='<%="user_subscribed_event_types_#{index}"%>' name="user[subscribed_event_types][]" class="BSswitch training" type="checkbox" data-off-text="Ne" value="<%=type%>" data-on-text="Da" <%=@user.subscribed_event_types.try(:include?,type) || @user.admin?  || (%w(crossfit all_levels open_gym weightlifting strongman).include?(type) && !@user.persisted?) ? "checked" : "" %> <%=@user.admin? ? " readonly" : ""%>>
                               <%="#{type.titleize}"%></label><br><br>
         <% end %>
       </div>
