@@ -70,7 +70,7 @@ rs:
     filters: 
       active: "Aktivne"
       pending: "Neodobrene"
-      expired: "Istekle"
+      expired: "Pred istek..."
       deactivated: "Deaktivirane"
       all_users: "Sve"
     title: "Članovi"

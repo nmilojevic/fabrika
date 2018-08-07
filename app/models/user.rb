@@ -79,7 +79,7 @@ class User < ActiveRecord::Base
   def active_for_authentication? 
     super && (active? || expired?)
   end 
-
+ 
   def username
     name
   end

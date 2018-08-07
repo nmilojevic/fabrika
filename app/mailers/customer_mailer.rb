@@ -29,7 +29,7 @@ class CustomerMailer < ApplicationMailer
   def membership_expires_soon_email(user)
     @user = user
     @email = ENV['FABRIKA_CONTACT_EMAIL'] || "crossfit.fabrika@gmail.com"
-    mail(to: @user.email, subject: 'Vaša članarina je istekla, vaš nalog će biti deaktiviran za 5 dana')
+    mail(to: @user.email, subject: 'Vaša članarina uskoro ističe, vaš nalog će biti deaktiviran za 6 dana')
   end
 
   def membership_expired_email(user)
