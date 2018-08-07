@@ -64,7 +64,7 @@ class UsersController < ApplicationController
 
   def renew_membership
     @user = User.find(params[:id])
-    if @user.update_attributes(membership_updated_at: Time.current - 5.days)
+    if @user.update_attributes(membership_updated_at: @user.membership_updated_at + 30.days)
       @user.active!
       CustomerMailer.account_approved_email(@user).deliver
       render json:{success:true, message:t("user_membership_renewed")}
