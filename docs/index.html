@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.9.16
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "README";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="label-GAT+App">GAT App</h1>
+
+<h2 id="label-Pre-requisites">Pre-requisites</h2>
+<ul><li>
+<p>Ruby (v2.3.5)</p>
+</li><li>
+<p>MySQL (main database)</p>
+</li><li>
+<p>PostgreSQL (&gt;= v9.4 <a
+href="https://github.com/GlobalAppTesting/unified-bugs-service">unified
+bugs service</a> database)</p>
+</li><li>
+<p><a
+href="https://github.com/GlobalAppTesting/gat-app#elasticsearch-installation">ElasticSearch</a>
+(v2.3.5)</p>
+</li><li>
+<p><a
+href="https://github.com/teampoltergeist/poltergeist#installing-phantomjs">PhantomJS</a>
+(for Capybara.javascript_driver = :poltergeist)</p>
+</li></ul>
+
+<h2 id="label-Install">Install</h2>
+
+<h3 id="label-Tasks+required+before+creating+mysql+database">Tasks required before creating mysql database</h3>
+
+<p>Right after you have installed MySQL server you should do additional UTF8
+and indexes configuration of MySQL which can be found here:</p>
+
+<p><a
+href="https://github.com/GlobalAppTesting/devbook/blob/master/setups/mysql_charset_setup.md">github.com/GlobalAppTesting/devbook/blob/master/setups/mysql_charset_setup.md</a></p>
+
+<h3 id="label-Tasks+required+before+bundling+gems">Tasks required before bundling gems</h3>
+
+<p>To be able to run the application you need to have nodejs runtime installed
+which you should do straight away because this README assumes you already
+have it installed.</p>
+
+<h4 id="label-Mac+OSX">Mac OSX</h4>
+
+<h5 id="label-nokogiri+gem">nokogiri gem</h5>
+
+<pre class="code ruby"><code class="ruby">brew tap homebrew/dupes
+brew install libxml2 libxslt
+brew install libiconv
+
+bundle config --global build.nokogiri --use-system-libraries  -- --with-xml2-include=/usr/local/Cellar/libxml2/&lt;libxml2-version&gt;/include/libxml2 --with-xml2-lib=/usr/local/Cellar/libxml2/&lt;libxml2-version&gt;/lib
+
+# when the bundling crashes use these exports and bundle again
+export CXX=/usr/bin/clang++
+export CC=/usr/bin/clang</code></pre>
+
+<h4 id="label-macOS+v10.12+-28and+possibly+above-29">macOS v10.12 (and possibly above)</h4>
+
+<h4 id="label-eventmachine+gem">eventmachine gem</h4>
+
+<p>Install <code>openssl</code>:  brew install openssl</p>
+
+<p>If bundling fails, ensure that gem is installed while pointing to
+<code>openssl</code> cppflags:</p>
+
+<pre class="code ruby"><code class="ruby">gem install eventmachine -v &#39;VERSION_SPECIFIED_IN_ERROR_MSG&#39; -- --with-cppflags=-I/usr/local/opt/openssl/include</code></pre>
+
+<h4 id="label-capybara-webkit+gem">capybara-webkit gem</h4>
+
+<p><a
+href="https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#macos-sierra-1012">github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#macos-sierra-1012</a></p>
+
+<h3 id="label-Migrations">Migrations</h3>
+
+<p><strong>Migrations are broken</strong>. In order to run application in
+development environment, databases (MySQL and PostgreSQL) have to be
+firstly loaded from sql <a
+href="https://docs.gatserver.com/bin/view/Tech/Production%20Support/#Dumps">dumps</a>.
+Then:</p>
+
+<pre class="code ruby"><code class="ruby">$ bundle exec rake db:migrate</code></pre>
+
+<h3 id="label-Quickstart">Quickstart</h3>
+
+<p>This is what you need to do after doing all the tasks required before
+bundling gems.</p>
+
+<pre class="code ruby"><code class="ruby">$ git clone git@github.com:GlobalAppTesting/unified-bugs-service.git
+$ cd gat-app
+$ # this will make bundle to always bundle to vendor/bundle after first run
+$ bundle install --path=vendor/bundle -j4
+$ sh server_start.sh</code></pre>
+
+<h2 id="label-Tests">Tests</h2>
+
+<p>[TODO]</p>
+
+<h2 id="label-Deployment">Deployment</h2>
+
+<p><a
+href="https://docs.gatserver.com/bin/view/Tech/%5BWIP%5D%20Deployments%20and%20QA/">docs.gatserver.com/bin/view/Tech/%5BWIP%5D%20Deployments%20and%20QA/</a></p>
+
+<h2 id="label-ElasticSearch+Installation-3A">ElasticSearch Installation:</h2>
+
+<h3 id="label-Version-3A">Version:</h3>
+
+<pre class="code ruby"><code class="ruby">2.3.5</code></pre>
+
+<p>Packages and instructions for different operating systems</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_https'>https</span><span class='symbol'>:/</span><span class='op'>/</span><span class='id identifier rubyid_www'>www</span><span class='period'>.</span><span class='id identifier rubyid_elastic'>elastic</span><span class='period'>.</span><span class='id identifier rubyid_co'>co</span><span class='op'>/</span><span class='id identifier rubyid_downloads'>downloads</span><span class='op'>/</span><span class='id identifier rubyid_elasticsearch'>elasticsearch</span>
+</code></pre>
+
+<h3 id="label-via+APT+-28recomended+for+Debian+based+distributions-29">via APT (recomended for Debian based distributions)</h3>
+
+<p>Download and install the Public Signing Key:</p>
+
+<pre class="code ruby"><code class="ruby">wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -</code></pre>
+
+<p>Save the repository definition to
+/etc/apt/sources.list.d/elasticsearch-2.x.list:</p>
+
+<pre class="code ruby"><code class="ruby">echo &quot;deb https://packages.elastic.co/elasticsearch/2.x/debian stable main&quot; | sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list</code></pre>
+
+<p>Run apt-get update and the repository is ready for use. You can install it
+with:</p>
+
+<pre class="code ruby"><code class="ruby">sudo apt-get update &amp;&amp; sudo apt-get install elasticsearch</code></pre>
+
+<p>Use the following commands to ensure, that elasticsearch starts when the
+system is booted and then start up elasticsearch:</p>
+
+<pre class="code ruby"><code class="ruby">sudo update-rc.d elasticsearch defaults 95 10
+sudo service elasticsearch start</code></pre>
+
+<h3 id="label-via+Package">via Package</h3>
+
+<p>Download package: <a
+href="https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.3.5/elasticsearch-2.3.5.tar.gz">download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.3.5/elasticsearch-2.3.5.tar.gz</a></p>
+
+<p>Unzip it and run it from terminal in the background:</p>
+
+<pre class="code ruby"><code class="ruby">bin/elasticsearch -d</code></pre>
+
+<p>To check if configuration works run from terminal following command:</p>
+
+<pre class="code ruby"><code class="ruby">curl -X GET http://localhost:9200/</code></pre>
+
+<h3 id="label-Run+data+migrations-3A">Run data migrations:</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_bundle'>bundle</span> <span class='id identifier rubyid_exec'>exec</span> <span class='id identifier rubyid_rake'>rake</span> <span class='label'>seed:</span><span class='id identifier rubyid_migrate'>migrate</span>
+</code></pre>
+
+<h3 id="label-Possible+Errors">Possible Errors</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>Elasticsearch</span><span class='op'>::</span><span class='const'>Transport</span><span class='op'>::</span><span class='const'>Transport</span><span class='op'>::</span><span class='const'>Errors</span><span class='op'>::</span><span class='const'>NotFound</span>
+</code></pre>
+
+<p>It can appear when you try to update an object that hasn&#39;t been indexed
+before. Please use <code>ModelName.import</code> to index objects of chosen
+model before trying to update the object again.</p>
+
+<h2 id="label-Customers+API">Customers API</h2>
+
+<h3 id="label-Codebase">Codebase</h3>
+
+<p>Code that deals with <strong>“HTTP part” and serialization</strong> resides
+in <code>app/grape/customers_api</code>, while everything else can be found
+in <code>lib/customers_api</code> directory.</p>
+
+<h3 id="label-Authentication">Authentication</h3>
+
+<p>API uses token based authentication. Authentication is bound to
+<code>Organization</code> model, which holds the token in
+<code>#customers_api_auth_token</code>. Token is generated and assigned on
+<code>Organization</code> creation.</p>
+
+<p>Example: <code>-H &quot;Authorization: Token token=abcd1234&quot;</code></p>
+
+<p>You can find the Authentication token under the Organization settings&#39;
+“API” section, on Organization panel.</p>
+
+<h3 id="label-Endpoints">Endpoints</h3>
+
+<p><strong>Base URL:</strong> <code>{{HOST}}/customers_api/</code></p>
+
+<p>For HTTP part and RESTful support we are using <a
+href="https://github.com/ruby-grape/grape">grape</a> library.</p>
+
+<p><strong>Route list and path helpers</strong></p>
+
+<p>In order to have something similar to <code>path</code> helpers and
+<code>rake routes</code> task for grape API, we are using <a
+href="https://github.com/reprah/grape-route-helpers">grape-route-helpers</a>.</p>
+
+<p>To see all available endpoints and named routes, run: <code>rake
+grape:route_helpers</code></p>
+
+<h3 id="label-Response">Response</h3>
+
+<p>Response content/serialization is based on entities (<a
+href="https://github.com/ruby-grape/grape-entity">grape-entity</a>).
+Entities are namespaced under API versions
+(<code>app/grape/customers_api/v1/entities</code>)</p>
+
+<h3 id="label-Specs">Specs</h3>
+
+<p>When adding request specs you should use <code>type: :customers_api</code>
+which includes some custom helpers and support for grape-specific features.</p>
+
+<p>You can see what&#39;s included in <code>:customers_api</code> type in
+<code>spec/spec_helper.rb</code>. Source files reside in
+<code>specs/support/customers_api</code> directory.</p>
+
+<h3 id="label-Documentation">Documentation</h3>
+
+<p>Documentation structure is defined and automatically generated by using <a
+href="https://github.com/ruby-grape/grape-swagger">grape-swagger</a> and <a
+href="https://github.com/ruby-grape/grape-swagger-entity">grape-swagger-entity</a>
+libraries. To see the documentation JSON structure, start the server and go
+to <a
+href="http://localhost:3000/customers_api/docs">localhost:3000/customers_api/docs</a>.</p>
+
+<h4 id="label-Exploring">Exploring</h4>
+
+<p>Documentation viewing is supported by <a
+href="https://github.com/swagger-api/swagger-ui">Swagger-UI</a>. Swagger-UI
+is a static HTML project and as such, it currently resides in
+<code>public/developers/customers_api</code> directory. To access API
+documentation and test the endpoints, start the server and go to <a
+href="http://localhost:3000/developers/customers_api/">localhost:3000/developers/customers_api/</a>
+page.</p>
+
+<h4 id="label-Setting+the+Authentication+header">Setting the Authentication header</h4>
+
+<p>Before executing any requests from the documentation page you need to set
+the <code>Authentication</code> header. This can be done by clicking
+<code>Authorize</code> in the top right corner, filling in the
+<code>value</code> field with the Auth header value: <code>Token
+token=ORGANIZATION_TOKEN</code> and clicking <code>Authorize</code> on the
+modal window.</p>
+
+<h2 id="label-Monitoring">Monitoring</h2>
+
+<h3 id="label-KPIs+-+Grafana+-2B+Elasticsearch">KPIs - Grafana + Elasticsearch</h3>
+
+<p>In the <code>./lib/data_analytics_system/grafana-dashboards</code> you can
+find a Grafana dashboard that can be imported to it so that you&#39;ll have
+a visibility into monitored KPIs.</p>
+
+<p>Data to the Data Analytics ES can be imported via running: <code> rake
+data_analytics_system:import_all_models </code></p>
+
+<p>This will import all tracked models into ES. Any changes and deletions will
+be synced in real time when the application is running via model callbacks.</p>
+
+<p>If you&#39;re changing fields mappings, which is sometimes needed when you
+modify filters in Grafana, you can push the changes to ES via: <code> rake
+data_analytics_system:update_all_mappings </code></p>
+
+<h2 id="label-Updating+user+permissions+-28config-2Fpolicy_check.yml-29">Updating user permissions (config/policy_check.yml)</h2>
+
+<p>After modification, ensure you don&#39;t keep the old version in cache by
+running: <code> rake cache:clear_operation_authorization_policies_cache
+</code></p>
+
+<h2 id="label-Automatic+build+signing+for+iPhone+apps">Automatic build signing for iPhone apps</h2>
+
+<p>In order to automatic build signing pipeline to work correctly, you need to
+place mobile provisioning profile &amp; signing key-certificate pair in PEM
+format in <code>config/build_signing/ios</code> directory. See
+<code>config/test_runner.yml</code> for names required for these files. See
+also <a
+href="https://docs.gatserver.com/bin/view/Tech/iOS%20Application%20Resigning/">iOS
+Application Resigning</a> article on XWiki which covers how to obtain
+certificates &amp; provisioning profile.</p>
+
+<h2 id="label-Environments">Environments</h2>
+
+<h3 id="label-Sandboxes+-+for+early-stage+testing-3A">Sandboxes - for early-stage testing:</h3>
+<ul><li>
+<p><a href="https://gat-sandbox.gatserver.com">gat-sandbox.gatserver.com</a></p>
+</li><li>
+<p><a href="https://gat-sandbox2.gatserver.com">gat-sandbox2.gatserver.com</a></p>
+</li><li>
+<p><a href="https://gat-sandbox3.gatserver.com">gat-sandbox3.gatserver.com</a></p>
+</li></ul>
+
+<h3 id="label-QA+-28for+features-29+and+staging+-28for+hotfixes-2Ffeatures-29+-+late-stage+testing-3A">QA (for features) and staging (for hotfixes/features) - late-stage testing:</h3>
+<ul><li>
+<p><a href="https://gat-qa.gatserver.com">gat-qa.gatserver.com</a></p>
+</li><li>
+<p><a href="https://gat-staging.gatserver.com">gat-staging.gatserver.com</a></p>
+</li></ul>
+
+<h3 id="label-Production-3A">Production:</h3>
+<ul><li>
+<p><a href="https://gat.gatserver.com">gat.gatserver.com</a></p>
+</li></ul>
+</div></div>
+
+      <div id="footer">
+  Generated on Mon Oct 22 11:19:09 2018 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.16 (ruby-2.3.5).
+</div>
+
+    </div>
+  </body>
+</html>
