@@ -272,3 +272,83 @@ tmp/cache/assets/development/sprockets/d31013d853af7fb0bb74815812c182a7
 tmp/cache/assets/development/sprockets/ef2cebe98ea98f57048aad73d4d2d783
 tmp/cache/assets/development/sprockets/f3f2aa6da4b32c70248905b94ac8d62a
 tmp/cache/assets/development/sprockets/f73db1d3884191815c9068ab0c4c73b6
+# Rails
+.bundle
+db/*.sqlite3
+db/*.sqlite3-journal
+*.log
+tmp
+tmp/**/*
+
+# Documentation
+doc/api
+doc/app
+.yardoc
+.yardopts
+coverage
+
+# Public Uploads
+public/system/*
+public/themes/*
+
+# Public Cache
+public/javascripts/cache
+public/stylesheets/cache
+public/refinery/*
+
+# Vendor Cache
+vendor/cache
+
+# Acts as Indexed
+index/**/*
+
+# Refinery Specific
+*.tmproj
+*.autobackupbyrefinery.*
+refinerycms-*.gem
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# NetBeans
+nbproject
+
+# Eclipse
+.project
+
+# Redcar
+.redcar
+
+# Rubinius
+*.rbc
+
+# Vim
+*.swp
+*.swo
+
+# RubyMine
+.idea
+
+# E-texteditor
+.eprj
+
+# Backup
+*~
+
+# Capybara Bug
+capybara-*html
+
+# sass
+.sass-cache
+.sass-cache/*
+
+#rvm
+.rvmrc
+.rvmrc.*
+
+# vendor/extensions dummy applications.
+vendor/extensions/**/spec/dummy
+

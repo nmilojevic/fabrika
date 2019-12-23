@@ -1,0 +1,14 @@
+  <!-- Comment -->
+  <div class="media">
+      <a class="pull-left" href="#">
+          <%= image_tag avatar_url(comment.email), :alt => comment.name, :class => 'avatar' %>
+      </a>
+      <div class="media-body">
+          <h4 class="media-heading">
+              <small> <%= t('by', :scope => 'refinery.blog.posts.comments', :who => comment.name) %>,
+                  <%= t('time_ago', :scope => 'refinery.blog.posts.comments', :time => time_ago_in_words(comment.created_at)) %>
+              </small>
+          </h4>
+          <%= simple_format auto_link(comment.message.to_s) %>
+      </div>
+  </div>

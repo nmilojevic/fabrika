@@ -1,0 +1,75 @@
+<% flash.each do |key, value| %>
+ <div id='flash' class="flash flash_<%= key %>">
+   <%= value %>
+ </div>
+<% end %>
+
+ <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Blog Post Content Column -->
+            <div class="col-lg-8">
+            <div class="box">
+                <!-- Blog Post -->
+
+                <!-- Title -->
+                 <hr>
+                    <p class="text-center">
+                        <%=@post.title%>
+                    </p>
+                  <hr>
+            
+                <!-- Author -->
+                <p class="lead">
+                  <%= content_tag(:div, "#{t('by', :scope => 'refinery.blog.posts.show')} #{@post.author.username}", :class => "blog_author") if @post.author.present? %>
+                </p>
+
+               
+
+                <!-- Date/Time -->
+                <p><span class="glyphicon glyphicon-time "></span>  <%= t('created_at', :scope => 'refinery.blog.shared.posts', :when => l(@post.published_at.to_date, :format => :short)) %></p>
+
+                
+
+                <!-- Preview Image -->
+                  <% if @post.respond_to?(:image) && @post.image.present?%>
+                    <img class="img-responsive" src="<%=@post.image.url%>" alt="">
+                  <% end %>
+
+
+                <!-- Post Content -->
+                <p class="lead">  <%= @post.body.html_safe %></p>
+
+                <hr>
+                 <% if Refinery::Blog::Post::ShareThis.enabled? %>
+                <span class='st_facebook_large' displayText='Facebook'></span>
+                <span class='st_twitter_large' displayText='Tweet'></span>
+                <span class='st_linkedin_large' displayText='LinkedIn'></span>
+                <span class='st_pinterest_large' displayText='Pinterest'></span>
+                <span class='st_googleplus_large' displayText='Google +'></span>
+              <% end %>
+                </div>
+
+
+                 <%= render 'comments' %>
+
+            </div>
+
+            <!-- Blog Sidebar Widgets Column -->
+            <div class="col-md-4">
+            <%= render '/refinery/blog/shared/body_content_right' %>
+
+
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+
+    </div>
+    <!-- /.container -->
+

@@ -1,10 +1,16 @@
 <%# add navigation links to this file %>
-<li>
-    <%= link_to 'Home', root_path %>
-</li>
-<li>
-    <%= link_to 'About', page_path('about') %>
-</li>
-<li>
-    <%= link_to 'Contact', page_path('contact') %>
-</li>
+<% Refinery::Page.fast_menu.where(:parent_id => nil).each do |page|%>
+  <% subpages = Refinery::Page.fast_menu.where(:parent_id => page.root.id)%>
+  <li class="<%=subpages.size > 0 ? 'dropdown' : ''%>">
+      <%= link_to page.title,refinery.url_for(page.url), data: {toggle: (subpages.size > 0 ? "dropdown" : "")}, class: (subpages.size > 0 ? "dropdown-toggle" : "") %>
+  <% if subpages.size > 0 %>
+  <ul class="dropdown-menu">
+  <%subpages.each do |page|%>
+    <li>
+        <%= link_to page.title, refinery.url_for(page.url) %>
+    </li>
+  <% end %>
+  </ul>
+  <% end %>
+  </li>
+<% end %>

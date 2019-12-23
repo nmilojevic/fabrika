@@ -1,0 +1,80 @@
+<%# Conditionally set remote: true. Also, passing model name as data attribute %>
+<% modal ||= false %>
+<% remote = modal ? true : false %>
+<%= simple_form_for(@user, url:url, remote: request.xhr?, html: { data: { modal: true } }) do |f|%>
+
+<!--   <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+ -->
+
+  <%# Added Bootstrap classes, and help-block container for error messages %>
+  <%= f.input :name, class: 'form-control' %>
+  <%= f.input :email, class: 'form-control' %>
+
+
+  <% if !@user.persisted? %>
+    <div class="row">
+      <div class="col-xs-6">   
+        <%= f.input :password, class: 'form-control' %>
+      </div>
+      <div class="col-xs-6">   
+        <%= f.input :password_confirmation, class: 'form-control' %>
+      </div>
+    </div>
+  <%end%>
+
+  <div class="form-group">
+    <%= f.label :membership_updated_at, class: 'control-label' %><br>
+    <div class="input-group date">
+    <%= f.text_field :membership_updated_at, :value =>(@user.persisted? ? @user.membership_updated_at.try(:strftime,'%d/%m/%Y') : Time.current.strftime('%d/%m/%Y')),class: 'form-control' %>
+       <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+    </div>
+    <span class="help-block"></span>
+  </div>
+  <% if !@user.persisted? %>
+    <input type="hidden" name ="user[status]" value="active">
+  <% end %>
+  <%# Added Bootstrap classes, and help-block container for error messages %>
+  <div class="form-group">
+      <%= f.label :role, class: 'control-label' %><br>
+       <input type="hidden" name ="user[role]" value="user">
+       <input id='<%="user_role"%>' name="user[role]" class="BSswitch role" value="admin" type="checkbox" data-off-text="Član" data-on-text="Administrator" <%=@user.admin? ? "checked" : "" %> <%=current_user.id == @user.id ? " readonly" : ""%>><br><br>
+      <span class="help-block"></span>
+  </div>
+ 
+  <div class="form-group">
+    <%= f.label :subscribed_event_types, class: 'control-label'%><br>
+    <% left,right = Event.event_types.keys.in_groups(2, false)%>
+    <div class="row">
+      <div class="col-xs-6">   
+       <% left.each_with_index do |type, index| %>
+           <label class='control-label'>
+
+           <input id='<%="user_subscribed_event_types_#{index}"%>' name="user[subscribed_event_types][]" class="BSswitch training" type="checkbox" value="<%=type%>" data-off-text="Ne" data-on-text="Da" <%=@user.subscribed_event_types.try(:include?,type) || @user.admin? || !@user.persisted? ? "checked" : "" %> <%=@user.admin? ? " readonly" : ""%>><%="
+                              #{type.titleize}"%></label><br><br>
+        <% end %>
+      </div>
+      <div class="col-xs-6">    
+       <% right.each_with_index do |type, index| %>
+           <label class='control-label'>
+           <input id='<%="user_subscribed_event_types_#{index}"%>' name="user[subscribed_event_types][]" class="BSswitch training" type="checkbox" data-off-text="Ne" value="<%=type%>" data-on-text="Da" <%=@user.subscribed_event_types.try(:include?,type) || @user.admin?  || !@user.persisted? ? "checked" : "" %> <%=@user.admin? ? " readonly" : ""%>>
+                              <%="#{type.titleize}"%></label><br><br>
+        <% end %>
+      </div>
+    </div>
+    <span class="help-block"></span>
+  </div>
+
+
+<% end %>

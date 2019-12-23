@@ -1,0 +1,10 @@
+<div class="form-group">
+  <div class='input-group date'>
+
+      <input type='text' data-user-id="<%=user.id%>" <%=(user.admin? || user.pending?) ? "disabled": ""%> value="<%=user.membership_updated_at.try(:strftime,'%d/%m/%Y')%>" class="form-control" style="width: 150px" />
+      <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+  </div>
+</div>
+

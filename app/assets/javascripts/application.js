@@ -11,7 +11,62 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
-//= require turbolinks
-//= require bootstrap-sprockets
+//= require bootstrap
+//= require moment
+//= require momentjs-rs
+//= require bootstrap-datetimepicker
 //= require bootstrap-multiselect
+//= require jquery.bsAlerts.min
+//= require jquery.turbolinks
+//= require jquery_ujs
+//= require jquery.fancybox
+//= require turbolinks
+//= require modals
+//= require bootstrap-dialog.min
+//= require bootstrap-switch
+ 
+
+
+$(function(){
+
+  /*** CONFIRM MODAL OVERRIDE ***/
+  //override the use of js alert on confirms
+  //requires bootstrap3-dialog from https://github.com/nakupanda/bootstrap3-dialog
+
+    $('ul.dropdown-menu [data-toggle=dropdown]').on('click', function(event) {
+      event.preventDefault(); 
+      event.stopPropagation(); 
+      $(this).parent().siblings().removeClass('open');
+      $(this).parent().toggleClass('open');
+    });
+ 
+
+  $.rails.allowAction = function(link){
+    if( !link.is('[data-confirm]') )
+      return true;
+    BootstrapDialog.show({
+      type: BootstrapDialog.TYPE_DANGER,
+      title: 'Confirm',
+      message: link.attr('data-confirm'),
+      buttons: [{
+        label: 'Accept',
+        cssClass: 'btn-primary',
+        action: function(dialogRef){
+          link.removeAttr('data-confirm');
+          link.trigger('click.rails');
+          dialogRef.close();
+        }
+      }, {
+        label: 'Cancel',
+        action: function(dialogRef){
+          dialogRef.close();
+        }
+      }]
+    });
+    return false; // always stops the action since code runs asynchronously
+  };
+
+  //Other global javascript stuffs
+  //...
+
+});

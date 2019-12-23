@@ -1,0 +1,56 @@
+<div class="container">
+        <div class="box">
+            <div class="col-lg-12">
+                <hr>
+                <p class="text-center">KONTAKTIRAJ FABRIKU
+                </p>
+                <hr>
+            </div>
+            <div class="col-md-8">
+                <!-- Embedded Google Map using an iframe - to select your location find it on Google maps and paste the link as the iframe src. If you want to use the Google Maps API instead then have at it! -->
+
+                 <%= raw @page.content_for(:map) %>
+            </div>
+            <div class="col-md-4">
+
+                 <%= raw @page.content_for(:contact_info) %>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+   
+        <div class="box">
+            <div class="col-lg-12">
+
+                 <%= raw @page.content_for(:contact_form) %>
+
+                 <%= simple_form_for @contact, :url=> main_app.contacts_path(@contact) do |f| %>
+                   <div class="row">
+                        <div class="form-group col-lg-4">
+                          
+                          <%= f.input :name, :required => true,  class: 'form-control'   %>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <%= f.input :email, :required => true  ,class: 'form-control'    %>
+                        </div>
+                         <div class="form-group col-lg-4">
+                          <%= f.input :phone, class: 'form-control'    %>
+                        </div>
+                         <div class="clearfix"></div>
+                        <div class="form-group col-lg-12">
+                            <%= f.input :message, :as => :text, :required => true, class: 'form-control'     %>
+                        </div>
+                        <div class= "hidden">
+                          <%= f.input :nickname, :hint => t("contact.hint") %>
+                        </div>
+                         <div class="form-group col-lg-12">
+                          <%= f.button :submit, t("contact.submit"), :class=> "btn btn-primary" %>
+                          </div>
+                    </div>
+                  <% end %>
+            </div>
+        </div>
+  
+
+</div>
+<!-- /.container -->

@@ -1,12 +1,16 @@
 <div class="btn-group">
-  <button type="button" class="btn btn-danger" <%= user.admin? ? 'disabled' :''%>>Action</button>
-  <button type="button" class="btn btn-danger dropdown-toggle <%= user.admin? ? 'disabled' :''%>" data-toggle="dropdown">
-    <span class="caret"></span>
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
+<!--   <button type="button" class="btn btn-danger" <%= user.admin? ? 'disabled' :''%>><%=t 'users.action'%></button> -->
+  <div role="button" data-toggle="dropdown">
+  <%=image_tag "imgs/setting"%>
+   <!--  <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span> -->
+  </div>
   <ul class="dropdown-menu" role="menu">
-   <li><%= link_to("Approve user", approve_user_path(user)) if user.pending? %></li>
-   <li><%= link_to("Renew membership", renew_membership_path(user)) if user.expired? %></li>
-   <li><%= link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete) unless user == current_user %></li>
+   <li><%= link_to(t('users.approve'), "javascript:;", :data => { user_id: user.id}, class:"approve") if user.pending? %></li>
+   <li><%= link_to 'Ažuriraj', edit_user_path(user), 
+            data: { modal: true } %></li>
+   <li><%= link_to "Impersoniraj", impersonate_path(user) if (user.active? || user.expired?) && user != current_user %></li>
+   <li><%= link_to(t('users.renew'), "javascript:;", :data=>{user_id:user.id}, class:"renew") if (user.expired? || user.deactivated?) %></li>
+   <li><%= link_to(t('users.delete'), "javascript:;", :data => { :user_id => user.id }, class:"delete") unless user == current_user %></li>
   </ul>
 </div>

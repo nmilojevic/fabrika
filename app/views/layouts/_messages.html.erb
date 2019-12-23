@@ -1,9 +1,17 @@
 <%# Rails flash messages styled for Bootstrap 3.0 %>
-<% flash.each do |name, msg| %>
-  <% if msg.is_a?(String) %>
-    <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <%= content_tag :div, msg, :id => "flash_#{name}" %>
-    </div>
+ <% if !session[:stack_admins].blank? %>
+ <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <div id="unimpersonate"><span>Impersonirani ste kao <%= "#{current_user.name} (#{current_user.email})" %></span><br>
+  <%= link_to "Povratak na admina", main_app.unimpersonate_user_path()%>
+  </div>
+  </div>
   <% end %>
-<% end %>
+  <% flash.each do |name, msg| %>
+    <% if msg.is_a?(String) %>
+      <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <%= content_tag :div, msg, :id => "flash_#{name}" %>
+      </div>
+    <% end %>
+  <% end %>

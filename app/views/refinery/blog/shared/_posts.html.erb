@@ -1,0 +1,12 @@
+<% if @posts.many? %>
+  <div class="well">
+    <h4><%= t('.other') %></h4>
+     <ul class="list-unstyled">
+      <% @posts.each do |blog_post| %>
+        <li>
+          <%= link_to blog_post.title, refinery.blog_post_path(blog_post) %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

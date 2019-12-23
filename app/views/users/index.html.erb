@@ -5,25 +5,31 @@
   <div class="col-lg-12">
       <hr>
       <h2 class="intro-text text-center">
-          <strong>Users</strong>
+          <strong><%=t 'users.title'%></strong>
       </h2>
       <hr>
   </div>
+  <div class="col-lg-12">
+    <div id="alerts" data-alerts="alerts" data-titles="{'warning': '<em>Warning!</em>'}" data-ids="myid" data-fade="3000"></div>
+  </div>
 <div class="filter-container" style="display:none">
-   <label>Show: 
-   <%=select_tag("users-filter", options_for_select([["All users", "all"]] + User.statuses.keys.collect {|status| [status.titleize,status]}) {}, html_options = {style:"display:none", class:"filter"})%> users.
+   <label><%=t 'users.show'%>: 
+   <%=select_tag("users-filter", options_for_select([[t("users.filters.all_users"), "all"]] + User.statuses.keys.collect {|status| [t("users.filters.#{status}"),status]} + [["Administratore", "admin"], ["Članove", "user"]]), html_options = {style:"display:none", class:"filter"})%>
   </label>
+  <%= link_to t('create_user'), new_user_path, data: { modal: true }, class:"btn btn-primary" %>
 </div>
+
 
 <div class="table-responsive" style="position: relative; overflow: visible;">
 <table class="admin-table table display responsive no-wrap" data-source="<%= users_path(format: :json) %>" style="display:none">
       <thead>
         <tr>
-          <th>Email<div class="img-sorting"></div></th>
-          <th>Role<div class="img-sorting"></div></th>
-          <th>Status<div class="img-sorting"></div></th>
-          <th>Created at<div class="img-sorting"></div></th>
-          <th><%=t '.actions', :default => t("helpers.actions") %><div class="img-sorting"></div></th>
+          <th data-priority="1"><%=t 'users.name_header'%><div class="img-sorting"></div></th>
+          <th data-priority="3"><%=t 'users.training_header'%><div class="img-sorting"></div></th>
+          <th data-priority="4"><%=t 'users.status_header'%><div class="img-sorting"></div></th>
+          <th data-priority="5"><%=t 'users.membership_updated_at_header'%><div class="img-sorting"></div></th>
+          <th data-priority="6"><%=t 'users.created_at_header'%><div class="img-sorting"></div></th>
+          <th data-priority="2"><%=t 'users.actions_header', :default => t("helpers.actions") %><div class="img-sorting"></div></th>
         </tr>
       </thead>
       <tbody>
@@ -34,17 +40,55 @@
     </div>
   </div>
   </div>
+<%# Added Bootstrap data modal attribute %>
+
+
 </div>
+
+
 <% content_for :extra_js do %>
    <script>
    
-  $(document).ready(function() { 
+ 
     var tableOptions = createTableOptions(); 
-    tableOptions.sDom = "<'admin-page-header clear'<'manage_user-id left'><'right'f>r>t<'row table-footer'<'col-md-4'l><'col-md-4' <'text-center'i>><'col-md-4'p>>",
+    tableOptions.sDom = "<'admin-page-header clear'<'manage_user-id left'><'right'f>r>t<'row table-footer'<'col-md-4'l><'col-md-3' <'text-center'i>><'col-md-5'p>>",
     
     tableOptions.bStateSave = true;
+    // tableOptions.aoColumnDefs = [
+    //         { responsivePriority: 1},
+    //         { responsivePriority: 3},
+    //         { responsivePriority: 4},
+    //         { responsivePriority: 5},
+    //         { responsivePriority: 2}
+    //     ]
+     // tableOptions.aoColumns = [  
+     //    { "sClass":"middle"},
+     //    { "sClass":"middle"},
+     //    { "sClass":"middle"},
+     //    { "sClass":"middle"},
+     //    { "sClass":"middle"},
+     //    { "sClass":"middle"} ];
     //Send filter as param to server
-   
+    tableOptions.oLanguage =
+
+    {
+        sProcessing:   "Procesiranje u toku...",
+        sLengthMenu:   "Prikaži _MENU_ elemenata",
+        sZeroRecords:  "Nije pronađen nijedan rezultat",
+        sInfo:         "Prikaz _START_ do _END_ od ukupno _TOTAL_ elemenata",
+        sInfoEmpty:    "Prikaz 0 do 0 od ukupno 0 elemenata",
+        sInfoFiltered: "(filtrirano od ukupno _MAX_ elemenata)",
+        sInfoPostFix:  "",
+        sSearchPlaceholder:"Pretraga:",
+        sSearch:       "Pretraga:",
+        sUrl:          "",
+        oPaginate: {
+            sFirst:    "Početna",
+            sPrevious: "Prethodna",
+            sNext:     "Sledeća",
+            sLast:     "Poslednja"
+        }
+    }
     tableOptions.fnServerParams = function (aoData) {
       oControls = $('.filter-container').find('.filter');
       oControls.each(function() {
@@ -80,45 +124,221 @@
       return true;
     }
 
+    
+
+
 
     var filter_container = $('.filter-container');
     createDataTable(tableOptions);
+    
     $('.manage_user-id').append(filter_container);
     filter_container.show();
+  
+
+   $(document).off("click", "#new_person_modal .btn-default");
+
+    $(document).on("click", "#new_person_modal .btn-default", function (e) {
+         $('#new_person_modal form').submit();
+      });
+
+      $(document).on('shown.bs.modal', function (e) {
+      $('#new_person_modal select.checkbox').multiselect({ numberDisplayed: 3, buttonWidth: '100%', multiple: true, nonSelectedText: 'Nije izabran nijedan',
+            nSelectedText: 'izabrana',
+            allSelectedText: 'Svi treninzi'
+        });
+        $('.BSswitch').bootstrapSwitch({size:"small"});
+        $('.BSswitch.role').on('switchChange.bootstrapSwitch', function(event, state) {
+          if (state === true) {
+            $('.BSswitch.training').bootstrapSwitch('state', true);
+            $('.BSswitch.training').bootstrapSwitch('readonly', true);
+          } else {
+            $('.BSswitch.training').bootstrapSwitch('readonly', false);
+          }
+        });
+
+        $('#new_person_modal select.role').multiselect({
+          buttonWidth: '100%',
+        }); 
+
+        $('#new_person_modal .input-group.date').datetimepicker({
+          locale: 'rs',
+          format: 'DD/MM/YYYY'
+        });
+    });
+    $("#alerts").bsAlerts({'titles': {'success': ''}, 'fade':"3000"});
+      $(document).trigger("add-alerts", [
+      <% flash.each do |name, msg| %>
+      <% if msg.is_a?(String) %>
+            {
+              'message': "<%=msg%>",
+              'priority': "<%=name.to_s == 'notice' ? 'success' : 'danger'%>"
+            },
+      <% end %>
+    <% end %>
+          ]);
+
     $('.table').on( 'draw.dt', function () {
+        $('.input-group.date').datetimepicker({
+          locale: 'rs',
+          format: 'DD/MM/YYYY'
+        });
+        $('.approve').click(function(){
+          approve_user($(this).attr('data-user-id'));
+        });
+        $('.delete').click(function(){
+          getConfirm('Da li ste sigurni da želite da obrišete korisnika?', function(data){
+            if (data === true) {
+             delete_user($(this).attr('data-user-id'));
+            }
+          }.bind(this));
+        });
+
+        $('.renew').click(function(){
+          renew_user($(this).attr('data-user-id'));
+        });
+
+        $('.input-group.date').on("dp.change", function (e) {
+          getConfirm('Da li st sigurni da želite da izvršite promenu?', function(data){
+            if (data === true) {
+             update_membership(e.date, $(this).find("input").attr("data-user-id"));
+            }
+          }.bind(this));
+        });
         $("[rel=tooltip]").tooltip({ placement: 'top'});
-          $('select.checkbox').multiselect({buttonWidth:200, numberDisplayed: 2, multiple: true, onChange: function(element, checked) {
+          $('select.checkbox').multiselect({buttonWidth:280, numberDisplayed: 3, multiple: true, onChange: function(element, checked) {
             var form = $(element).closest("form");
             update_user(form);
-          }
+          }, nonSelectedText: 'Nije izabran nijedan',
+            nSelectedText: 'izabrana',
+            allSelectedText: 'Svi treninzi'
         });
         $('select#users-filter').multiselect({ onChange: function(element, checked) {
           $('.admin-table').DataTable().draw();
             // $('.table').DataTable().columns(2).search($(element).val().toLowerCase()).draw();
           }
         });
+        $('.m-wrap.medium').addClass("form-control");
         $('select.breathe').multiselect();
-        $('select.role').multiselect( { buttonWidth:80, onChange: function(element, checked) {
+        $('select.role').multiselect( { buttonWidth:60, onChange: function(element, checked) {
             var form = $(element).closest("form"); 
            update_user(form);
           }
         });
       });
 
-   });
- 
+
+
+    function delete_user(user_id){
+      jQuery.ajax({
+        type: "POST",
+        dataType: 'json',
+        url:  "/users/" + user_id + "/destroy",
+        success: function(data) {
+          if (!data.error){
+          $('.admin-table').DataTable().draw();
+           $(document).trigger("add-alerts", [
+            {
+              'message': data.message,
+              'priority': 'success'
+            }
+          ]);
+         }
+        }.bind(this),
+        error: function(error) {
+            alert(error);
+        }.bind(this),
+        timeout: 30000
+      });
+    } 
+
+     function approve_user(user_id){
+      jQuery.ajax({
+        type: "GET",
+        dataType: 'json',
+        url: '/users/' + user_id + "/approve",
+        success: function(data) {
+          if (!data.error){
+          $('.admin-table').DataTable().draw();
+           $(document).trigger("add-alerts", [
+            {
+              'message': data.message,
+              'priority': 'success'
+            }
+          ]);
+         }
+        }.bind(this),
+        error: function(error) {
+            alert(error);
+        }.bind(this),
+        timeout: 30000
+      });
+    } 
+
+    function renew_user(user_id){
+      jQuery.ajax({
+        type: "GET",
+        dataType: 'json',
+        url:  '/users/' +user_id + "/renew_membership",
+        success: function(data) {
+          if (!data.error){
+          $('.admin-table').DataTable().draw();
+           $(document).trigger("add-alerts", [
+            {
+              'message': data.message,
+              'priority': 'success'
+            }
+          ]);
+         }
+        }.bind(this),
+        error: function(error) {
+            alert(error);
+        }.bind(this),
+        timeout: 30000
+      });
+    } 
+
+    function update_membership( date, user_id){
+      jQuery.ajax({
+        type: "POST",
+        dataType: 'json',
+        data: {user:{membership_updated_at: date.format('YYYY-MM-DD')}},
+        url:   '/users/' + user_id + "/update_membership",
+        success: function(data) {
+          if (!data.error){
+          $('.admin-table').DataTable().draw();
+           $(document).trigger("add-alerts", [
+            {
+              'message': data.message,
+              'priority': 'success'
+            }
+          ]);
+         }
+        }.bind(this),
+        error: function(error) {
+            alert(error);
+        }.bind(this),
+        timeout: 30000
+      });
+    } 
 
 
     function update_user(form){
-       $(form).find(".loading").show();
+      $(form).find(".loading").show();
       jQuery.ajax({
         type: "POST",
         dataType: 'json',
         data: $(form).serialize(),
         url:  $(form).attr('action'),
         success: function(data) {
-          $(form).find(".loading").hide();
-          $(form).find(".check").show();
+          if (!data.error){
+          $('.admin-table').DataTable().draw();
+           $(document).trigger("add-alerts", [
+            {
+              'message': data.message,
+              'priority': 'success'
+            }
+          ]);
+         }
         }.bind(this),
         error: function(error) {
             alert(error);
@@ -126,6 +346,30 @@
         timeout: 30000
       });
     }
+
+  function getConfirm(confirmMessage,callback){
+    confirmMessage = confirmMessage || '';
+
+     BootstrapDialog.show({
+      type: BootstrapDialog.TYPE_WARNING,
+      title: 'Da li ste sigurni?',
+      message: confirmMessage,
+      buttons: [{
+        label: 'Da',
+        cssClass: 'btn-primary',
+        action: function(dialogRef){
+          dialogRef.close();
+          if (callback) callback(true);
+        }
+      }, {
+        label: 'Odustani',
+        action: function(dialogRef){
+          dialogRef.close();
+          if (callback) callback(false);
+        }
+      }]
+    });
+   };
 
 </script>
 

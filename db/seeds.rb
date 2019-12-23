@@ -7,3 +7,13 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 user = CreateAdminService.new.call
 puts 'CREATED ADMIN USER: ' << user.email
+
+# Added by Refinery CMS Pages extension
+Refinery::Pages::Engine.load_seed
+
+# Added by Refinery CMS Blog engine
+Refinery::Blog::Engine.load_seed
+
+# Added by Refinery CMS News engine
+Refinery::News::Engine.load_seed
+

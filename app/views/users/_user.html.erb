@@ -1,13 +1,9 @@
-
-  <%= form_for(user) do |f| %>
-    <%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]},{}, html_options = {class:'checkbox', style:"display:none"}) %>
+  <%= simple_form_for(user, url:update_subscribed_event_types_path(user)) do |f| %>
     <% if user.admin? %>
       <%= f.select(:subscribed_event_types, 
      Event.event_types.keys.map {|event| "<option value='#{event}' selected >#{event.titleize}</option>"}.join().html_safe, {}, html_options = {class:'checkbox', multiple:"multiple", disabled:true, style:"display:none"}) %>
     <% else %>
     <%= f.select(:subscribed_event_types, 
     Event.event_types.keys.map {|event| "<option value='#{event}' #{user.subscribed_event_types.to_s.include?(event) ? 'selected' : ''}>#{event.titleize}</option>"}.join().html_safe, {}, html_options = {class:'checkbox', multiple:"multiple", style:"display:none"}) %>
-    <%= image_tag "ajax-loader.gif",  style:"display:none", class:"loading" %>
-    <%= image_tag "check.png", style:"display:none", class:"check" %>
     <% end %>
   <% end %> 

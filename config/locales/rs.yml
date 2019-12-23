@@ -1,0 +1,380 @@
+rs:
+  schedule: "Raspored"
+  edit_account: "Nalog"
+  sign_out: "Izloguj se"
+  create_user: "Dodaj novog člana"
+  sign_in_up: "Prijava/Registracija"
+  forgot_your_password: "Zaboravili ste lozinku?"
+  sign_up: "Registracija"
+  schedule_cancel: "Da li stvarno želite da odustanete od treninga?"
+  no_blog_articles_yet: "Trenutno nema ni jednog artikla."
+  training_not_allowed: "Važeći/izabrani program tvoje mesečne članarine ne uključuje ovu vrstu treninga. Molimo te da, prilikom uplate sledeće članarine, umesto samo jednog izabereš kombinaciju dva ili više programa koje želiš da treniraš. Za više informacija, piši nam na: (crossfit.fabrika@gmail.com)."
+  past_event: "Nije moguće izvršiti rezervaciju. Ovaj termin je prošao."
+  reserved_today_event: "Nije moguće izvršiti rezervaciju. Već ste rezervisali današnji trening."
+  reserved_same_time_event: "Nije moguće izvršiti rezervaciju. Već ste rezervisali trening u ovom terminu."
+  termin_full: "Nije moguće izvršiti rezervaciju. Ovaj termin je pun."
+  user_approved: "Novi član je odobren uspešno"
+  user_membership_renewed: "Član je reaktiviran uspešno."
+  user_deleted: "Član je obrisan uspešno."
+  user_membership_updated: "Članarina je obnovljena uspešno."
+  user_role_updated:  "Dozvoljeni tipovi treninga su uspešno promenjeni."
+  valid_email:
+    validations:
+      email:
+        invalid: "je nevalidna"
+  blog:
+    email: "Email adresa"
+    name: "Ime"
+    message: "Poruka"
+  cms: "CMS"
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: 'pre 1 sat'
+        other: 'pre %{count} sata'
+  mail_form:
+    attributes:
+      contact:
+        name: "Ime"
+        email: "Email adresa"
+        phone: "Telefon"
+        message: "Poruka"
+    errors:
+      models:
+        contact:
+          attributes:
+            name: 
+              blank: "Ime mora biti popunjeno"
+            email:
+              blank:  "Email adresa mora biti popunjena"
+              invalid: "Unesite validnu email adresu"
+            message:
+              blank: "Poruka mora biti popunjena"
+  contact:
+    name: "Ime"
+    message: "Poruka"
+    email: "Email Adresa"
+    phone: "Telefon"
+    submit: "Pošalji"
+  scheduler:
+    copy: "Kopiraj"
+    paste: "Nalepi"
+    cut: "Iseci"
+    delete: "Obriši"
+  users:
+    status:
+      active: "Aktivan"
+      pending: "Na čekanju"
+      expired: "Istekao"
+      deactivated: "Deaktiviran"
+    filters: 
+      active: "Aktivne"
+      pending: "Neodobrene"
+      expired: "Pred istek..."
+      deactivated: "Deaktivirane"
+      all_users: "Sve"
+    title: "Članovi"
+    action: "Akcija"
+    actions_header: "Akcije"
+    membership_updated_at_header: "Članarina plaćena"
+    show: "Filtriraj"
+    filter_users: "korisnike"
+    delete: "Obriši"
+    approve: "Odobri"
+    renew: "Obnovi pretplatu"
+    name_header: "Ime i prezime"
+    status_header: "Status"
+    training_header: "Treninzi"
+    role_header: "Rola"
+    created_at_header: "Kreiran"
+
+  date:
+    abbr_day_names:
+    - Sun
+    - Mon
+    - Tue
+    - Wed
+    - Thu
+    - Fri
+    - Sat
+    abbr_month_names:
+    -
+    - Jan
+    - Feb
+    - Mar
+    - Apr
+    - May
+    - Jun
+    - Jul
+    - Aug
+    - Sep
+    - Oct
+    - Nov
+    - Dec
+    day_names:
+    - Sunday
+    - Monday
+    - Tuesday
+    - Wednesday
+    - Thursday
+    - Friday
+    - Saturday
+    month_names:
+    -
+    - January
+    - February
+    - March
+    - April
+    - May
+    - June
+    - July
+    - August
+    - September
+    - October
+    - November
+    - December
+    order:
+    - :month
+    - :day
+    - :year
+    formats:
+      default: "%d/%m/%Y"
+      long: "%B %d, %Y"
+      short: "%b %d"
+ 
+  time:
+    formats:
+      default: "%d/%m/%Y %H:%M"
+      long: "%B %d, %Y"
+      short: "%b %d"
+  activerecord:
+    errors:
+      models:
+        refinery/blog/comment:
+          attributes:
+            name:
+              blank: "mora biti popunjeno."
+            message:
+              blank: "mora biti popunjena."
+            email:
+              blank: "mora biti popunjen"
+              invalid: "mora imati validan format"
+  refinery:
+    plugins:
+      refinerycms_blog:
+        title: Blog
+      refinerycms_news:
+        title: Novosti
+    blog:
+      admin:
+        categories:
+          category:
+            edit: Edit this category
+            delete: Delete this category forever
+          index:
+            no_items_yet: 'There are no categories yet. Click "%{create}" to add your first category.'
+        comments:
+          approved: 'The comment from "%{author}" has been approved.'
+          comment:
+            view_live_html: 'View this comment live <br/><em>(opens in a new window)</em>'
+            read: Read this comment
+            reject: Reject this comment
+            approve: Approve this comment
+          rejected: 'The comment from "%{author}" has been rejected.'
+          index:
+            no_items_yet: 'There are no %{type} comments.'
+          show:
+            comment: Comment
+            blog_post: Blog Post
+            from: Posted by
+            date: Posted at
+            message: Comment
+            details: Details
+            age: Age
+            actions: Actions
+            back: Back to all comments
+            reject: Reject this comment
+            approve: Approve this comment
+        posts:
+          form:
+            toggle_advanced_options: Click to access meta tag settings and menu options
+            published_at: Publish Date
+            custom_url: Custom Url
+            custom_url_help: Generate the url for the blog post from this text instead of the title.
+            source_url: Source Url
+            source_url_help: Stores the url for the source of the post material.
+            source_url_title: Source Url Title
+            source_url_title_help: Title for the source url for the post.
+            author: Author
+            author_help: Set which user this post will show as the author.
+            copy_body: Copy Post Body to Teaser
+            copy_body_help: Copies the post body to the teaser.  Leave teaser blank to let Refinery automatically make the teaser.
+          index:
+            no_items_yet: 'There are no Blog Posts yet. Click "%{create}" to add your first blog post.'
+          uncategorized:
+            no_items_yet: 'There are no Uncategorized Blog Posts.'
+          post:
+            view_live_html: 'View this blog post live <br/><em>(opens in a new window)</em>'
+            edit: Edit this blog post
+            delete: Remove this blog post forever
+            delete_translation: Remove this translation
+            delete_translation_confirmation: Are you sure you want to remove this translation forever ?
+            delete_translation_success: The translation was successfully removed.
+            draft: Draft
+        settings:
+          notification_recipients:
+            value: Send notifications to
+            explanation: 'Every time someone comments on a blog post, Refinery sends out an email to say there is a new comment.'
+            hint: 'When a new comment is added, Refinery will send an email notification to you.'
+            example: "Enter your email address(es) like: jack@work.com, jill@office.com"
+            updated: 'Notification recipients have been set to "%{recipients}"'
+        submenu:
+          categories:
+            title: Categories
+            manage: Manage
+            new: Create new category
+          comments:
+            title: Comments
+            title_with_count: 'Comments (%{new_count} new)'
+            new: New
+            unmoderated: New
+            approved: Approved
+            rejected: Rejected
+          posts:
+            title: Posts
+            manage: Manage posts
+            new: Create new post
+            uncategorized: Uncategorized posts
+          settings:
+            title: Settings
+            moderation: Moderation
+            update_notified: Update who gets notified
+            comments: Comments
+            teasers: Teasers
+      comment_mailer:
+        notification:
+          greeting: Hi there
+          you_recieved_new_comment: You just received a new comment on your website.
+          comment_starts: --- comment starts ---
+          comment_ends: --- comment ends ---
+          from: From
+          email: Email adresa
+          message: Poruka
+          approve: Odobri
+          or: " or "
+          reject: reject
+          this_comment: " this comment."
+          closing_line: Kind Regards
+          ps: 'P.S. All your comments are stored in the "Blog" section of Refinery under the "Comments" submenu should you ever want to view it there later.'
+      shared:
+        categories:
+          title: Kategorije
+        rss_feed:
+          title: RSS
+          subscribe: Prijavi se
+        posts:
+          other: Najnoviji postovi
+          created_at: 'Posted on %{when}'
+          read_more: Opširnije
+        comments:
+          singular: komentar
+          none: bez komentara
+        archives: Archives
+        tags:
+          title: "Tagovi"
+      categories:
+        show:
+          no_posts: There are no posts here yet.
+      posts:
+        post:
+          filled_in: Sadržana u
+        comment: komentar
+        comments:
+          by: '%{who}'
+          time_ago: '%{time}'
+          thank_you: 'Hvala vam na ostavljenom komentaru.'
+          thank_you_moderated: 'Hvala vam na ostavljenom komentaru. Vaš komentar će se uskoro pojaviti na stranici.'
+        index:
+          no_blog_articles_yet: Trenutno nema nijednog okačenog blog artikala.
+        show:
+          blog_home: Blog
+          comments:
+            title: Komentari
+            add: Ostavi komentar
+          other: Poslednji Blog Artikal
+          filled_in: Nalazi se u 
+          tagged: Tagovani
+          submit: Ostavi komentar
+          name: Ime i prezime
+          email: Email adresa
+          message: Poruka
+          by: ''
+          source: Izvor
+        tagged:
+          no_blog_articles_yet: Trenutno nema nijednog okačenog blog artikala.
+          posts_tagged: Tagovani artikli
+        archive:
+          blog_archive_for: 'Archive for %{date}'
+          no_blog_articles_posted: 'There are no blog articles posted for %{date}. Stay tuned.'
+    activerecord:
+      models:
+        refinery/blog/category: Kategorija
+        refinery/blog/comment: Komentar
+        refinery/blog/post: Blog post
+      attributes:
+        refinery/blog/category:
+          title: Naslov
+        refinery/blog/comment:
+          name: Ime
+          email: Email adresa
+          message: Poruka
+        refinery/blog/post:
+          title: Naslov
+          body: Telo
+          teaser: Tizer
+        plugins:
+      refinerycms_news:
+        title: Novosti
+        description: Provides a simple news section
+    news:
+      admin:
+        items:
+          item:
+            view_live_html: "View this news item live <br/><em>(opens in a new window)</em>"
+            edit: "Edit this news item"
+            delete: "Remove this news item forever"
+            published: Published
+          index:
+            create: "Add News Item"
+            item: News
+            no_items_yet: 'There are no news items yet. Click "Add News Item" to add your first news item.'
+      shared:
+        items:
+          read_more: Read more
+          created_at: 'Created at %{when}'
+        archives: Archives
+      items:
+        show:
+          back_to_index: "Back to all news"
+          published: Published
+          source: Source
+        recent_posts:
+          recent_posts: Recent Posts
+        index:
+          published: Published
+          read_more: Read more
+          no_items_yet: There are no news item entries yet.
+          source: Source
+        archive:
+          news_item_archive_for: 'Archive for %{date}'
+          no_news_item_articles_posted: 'There are no news articles posted for %{date}. Stay tuned.'
+    activerecord:
+      attributes:
+        'refinery/news/item':
+          title: Title
+          body: Body
+          publish_date: Publish date
+          expiration_date: Expiration date
+          source: Source
+      models:
+        'refinery/news/item': News Item
