@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   def password_required?
    !persisted? || !password.blank? || !password_confirmation.blank?
   end
-  
+
   def set_default_role
     self.role ||= :user
   end
@@ -76,10 +76,10 @@ class User < ActiveRecord::Base
    devise :database_authenticatable, :registerable,
           :recoverable, :rememberable, :trackable, :validatable
 
-  def active_for_authentication? 
+  def active_for_authentication?
     super && (active? || expired?)
-  end 
- 
+  end
+
   def username
     name
   end
@@ -121,13 +121,13 @@ class User < ActiveRecord::Base
   end
 
   def inactive_message
-    if pending? 
-      :not_approved 
+    if pending?
+      :not_approved
     elsif deactivated?
       :membership_expired
     else
-      super # Use whatever other message 
-    end 
+      super # Use whatever other message
+    end
   end
 
 end

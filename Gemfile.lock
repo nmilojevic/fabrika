@@ -23,6 +23,18 @@ GIT
       seo_meta (~> 2.0.0.rc.1)
 
 GIT
+  remote: https://github.com/refinery/refinerycms-news.git
+  revision: 20fd75ab85fed9bc368d583fa23a9f0aed04aff5
+  branch: master
+  specs:
+    refinerycms-news (3.0.0)
+      acts_as_indexed (~> 0.8.0)
+      friendly_id (~> 5.1, < 5.3)
+      globalize (>= 4.0.0, < 5.2)
+      refinerycms-core (~> 3.0.0)
+      refinerycms-settings (~> 3.0.0)
+
+GIT
   remote: https://github.com/refinery/refinerycms-page-images
   revision: 4f40c58c492a6eed9a876f10c2c1e06402d294f9
   branch: master
@@ -92,7 +104,7 @@ GEM
     awesome_nested_set (3.0.3)
       activerecord (>= 4.0.0, < 5)
     babosa (1.0.2)
-    bcrypt (3.1.11)
+    bcrypt (3.1.13)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -133,14 +145,16 @@ GEM
     debug_inspector (0.0.2)
     decorators (2.0.1)
       railties (>= 4.0.0, < 5.0.0)
-    devise (3.5.10)
+    devise (4.7.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
-      railties (>= 3.2.6, < 5)
+      railties (>= 4.1.0)
       responders
-      thread_safe (~> 0.1)
       warden (~> 1.2.3)
     devise-i18n-views (0.3.7)
+    devise-jwt (0.5.0)
+      devise (~> 4.0)
+      warden-jwt_auth (~> 0.3.0)
     diff-lcs (1.2.5)
     dragonfly (1.0.12)
       addressable (~> 2.3)
@@ -149,6 +163,13 @@ GEM
     dragonfly-s3_data_store (1.2)
       dragonfly (~> 1.0)
       fog-aws
+    dry-auto_inject (0.5.0)
+      dry-container (>= 0.3.4)
+    dry-configurable (0.6.0)
+      concurrent-ruby (~> 1.0)
+    dry-container (0.6.0)
+      concurrent-ruby (~> 1.0)
+      dry-configurable (~> 0.1, >= 0.1.3)
     erubis (2.7.0)
     excon (0.50.1)
     execjs (2.7.0)
@@ -321,6 +342,7 @@ GEM
     jquery-ui-rails (5.0.5)
       railties (>= 3.2.16)
     json (1.8.3)
+    jwt (2.2.1)
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -445,8 +467,9 @@ GEM
       refinerycms-core (~> 3.0, >= 3.0.0)
     refinerycms-wymeditor (1.0.7)
       refinerycms-core (>= 3.0.0, < 5.0)
-    responders (2.2.0)
-      railties (>= 4.2.0, < 5.1)
+    responders (2.4.1)
+      actionpack (>= 4.2.0, < 6.0)
+      railties (>= 4.2.0, < 6.0)
     routing-filter (0.5.1)
       actionpack (~> 4.2)
       activesupport (~> 4.2)
@@ -520,8 +543,13 @@ GEM
     valid_email (0.0.13)
       activemodel
       mail (~> 2.6.1)
-    warden (1.2.6)
+    warden (1.2.7)
       rack (>= 1.0)
+    warden-jwt_auth (0.3.5)
+      dry-auto_inject (~> 0.4)
+      dry-configurable (~> 0.5)
+      jwt (~> 2.1)
+      warden (~> 1.2)
     web-console (2.3.0)
       activemodel (>= 4.0)
       binding_of_caller (>= 0.7.2)
@@ -548,9 +576,13 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 4.1.0)
   database_cleaner
-  devise
+  devise (~> 4.0)
   devise-i18n-views
+  devise-jwt (= 0.5)
   dragonfly-s3_data_store
+  dry-auto_inject (= 0.5)
+  dry-configurable (= 0.6)
+  dry-container (= 0.6)
   factory_girl_rails
   faker
   fog
@@ -571,6 +603,7 @@ DEPENDENCIES
   refinerycms (~> 3.0.0)
   refinerycms-blog!
   refinerycms-i18n
+  refinerycms-news!
   refinerycms-page-images!
   refinerycms-wymeditor (~> 1.0, >= 1.0.6)
   rspec-rails
