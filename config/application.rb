@@ -10,6 +10,17 @@ module Fabrika
   class Application < Rails::Application
 
     # config.autoload_paths += %W(#{config.root}/lib)
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource(
+            '*',
+            headers: :any,
+            expose: ["Authorization"],
+            methods: [:get, :patch, :put, :delete, :post, :options,               :show]
+        )
+      end
+    end
 
     config.autoload_paths << Rails.root.join('lib')
     config.generators do |g|
@@ -53,7 +64,7 @@ module Fabrika
       after_inclusion do
         ::Refinery::ApplicationController.send :include, ::RefineryPatch
         ::Refinery::Blog::Admin::PostsController.send :include, ::RefineryPatch
-        ::Refinery::AdminController.send :include, ::RefineryPatch   
+        ::Refinery::AdminController.send :include, ::RefineryPatch
         ::Refinery::AdminController.send :include, ::RestrictRefineryToRefineryUsers
         ::Refinery::AdminController.send :before_filter, :restrict_refinery_to_refinery_users
     end

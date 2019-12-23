@@ -269,7 +269,7 @@ Devise.setup do |config|
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   #
   config.jwt do |jwt|
-    jwt.secret = 'fa41b5164027caa0ca61362f0fc1ad6e35bfd1eb8f0aec4b41daf4c99ea0321915c141dc0b12d646d0e97b8afe6dd5d64a03bccc594b7102d9dd0c5d7285a8cc'#ENV['DEVISE_SECRET_KEY']
+    jwt.secret = ENV['DEVISE_SECRET_KEY']
     jwt.dispatch_requests = [
       ['POST', %r{^/api/login$}],
       ['POST', %r{^/api/login.json$}]

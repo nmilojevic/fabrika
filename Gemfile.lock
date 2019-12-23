@@ -379,6 +379,8 @@ GEM
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.10)
+    rack-cors (1.0.6)
+      rack (>= 1.6.0)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.4)
@@ -597,6 +599,7 @@ DEPENDENCIES
   momentjs-rails (>= 2.9.0)
   pg
   quiet_assets
+  rack-cors
   rails (= 4.2.4)
   rails_12factor
   rails_layout
