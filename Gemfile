@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.6.3'
+ruby '2.6.6'
 gem 'rails', '5.1.0'
 gem 'sass-rails', '>= 5.0.6'
 gem 'dragonfly-s3_data_store'

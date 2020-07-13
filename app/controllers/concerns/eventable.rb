@@ -6,7 +6,7 @@ module Eventable
   end
 
   def events_hash
-    EventsFetcher.new(user: current_user, start_date: params['from'], end_date: params['to']).fetch_events
+    ::EventsFetcher.new(user: current_user, start_date: params['from'], end_date: params['to']).fetch_events
   end
 
   def event_types_hash

@@ -1,0 +1,32 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2014-6-25: Created.
+-->
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>
+Created by FontForge 20120731 at Wed Jun 25 15:53:01 2014
+ By Nikola Milojevic
+Created by Nikola Milojevic with FontForge 2.0 (http://fontforge.sf.net)
+</metadata>
+<defs>
+<font id="fontcustom" horiz-adv-x="512" >
+  <font-face 
+    font-family="fontcustom"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="512"
+    panose-1="2 0 6 9 0 0 0 0 0 0"
+    ascent="448"
+    descent="-64"
+    bbox="64 -64 448 115.41"
+    underline-thickness="25.6"
+    underline-position="-51.2"
+    unicode-range="U+F100-F100"
+  />
+    <missing-glyph />
+    <glyph glyph-name="uniF100" unicode="&#xf100;" 
+d="M134.4 107.2c19.1992 11.2002 44.7998 11.2002 75.1992 -1.60059c33.6006 -11.1992 59.2002 -11.1992 92.8008 0c73.5996 28.8008 145.6 -25.5996 145.6 -107.199c0 -52.8008 -28.7998 -62.4004 -192 -62.4004s-192 9.59961 -192 62.4004c0 48 24 84.7998 70.4004 108.8z
+" />
+  </font>
+</defs></svg>

@@ -22,8 +22,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
-
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
@@ -31,8 +30,7 @@ Rails.application.configure do
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
 
-  # Do not compress assets
-  config.assets.compress = false
+  config.assets.compress = true
   
   # Asset digests allow you to set far-future HTTP expiration dates on all assets,
   # yet still be able to expire them through the digest params.
@@ -66,7 +64,6 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   if config.respond_to?(:action_mailer)
-  if config.respond_to?(:action_mailer)
       # config.action_mailer.raise_delivery_errors = false
 
       # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
@@ -90,7 +87,6 @@ Rails.application.configure do
       # ActionMailer Config
       config.action_mailer.default_url_options = { :host => ENV['FABRIKA_EMAIL_DOMAIN'] || 'factorynis.com' }
       #config.action_mailer.default_url_options = { :host => Rails.application.secrets.domain_name }
-  end
   end
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
