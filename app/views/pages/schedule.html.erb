@@ -150,7 +150,14 @@ var opts = [
     else 
         return ""
 }.bind(this);
-     <% if current_user.try(:admin?) %>
+    <% if current_user.try(:coach?) %>
+     scheduler.attachEvent("onClick", function(id) {
+         this._show_tooltips = false;
+         dhtmlXTooltip.hide();
+     }.bind(this));
+     scheduler.config.readonly_form = true;
+     scheduler.config.icons_select = ["icon_details"];
+    <% elsif current_user.try(:admin?) %>
         scheduler.attachEvent("onClick", function(id) {  
             this._show_tooltips = false;
             dhtmlXTooltip.hide();

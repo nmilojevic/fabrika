@@ -15,10 +15,9 @@ class UsersDatatable < AjaxDatatablesRails::Base
 private
 
   def data
-    p 'recordssize', records.size
     records.map do |user|
       [
-        "<div><div class='align-this'>#{ActionController::Base.helpers.image_tag(user.admin? ? 'imgs/admin1.png' : 'imgs/user.png', class: 'image')}"+
+        "<div><div class='align-this'>#{ActionController::Base.helpers.image_tag(thumbnail(user), class: 'image', width: 32, height: 32)}"+
         "</div><div class='product-info align-this'>" + 
         "<strong>#{user.name}</strong><br><small>#{user.email}</small>" +
         "</div></div>".html_safe,
@@ -31,10 +30,20 @@ private
     end
   end
 
+  def thumbnail(user)
+    if user.admin?
+      'imgs/admin1.png'
+    elsif user.coach?
+      'imgs/coach.png'
+    else
+      'imgs/user.png'
+    end
+  end
+
   def get_raw_records
     filter_user_status = params["users-filter"]
     if filter_user_status.present?
-      if %w(admin user).include?(filter_user_status)
+      if %w(admin user coach).include?(filter_user_status)
         users = User.where(role: User.roles[filter_user_status])
       else 
         users = User.where(status: User.statuses[filter_user_status])

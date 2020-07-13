@@ -1,4 +1,4 @@
-class ChangeSubscribedEventTypesForUsers < ActiveRecord::Migration
+class ChangeSubscribedEventTypesForUsers < ActiveRecord::Migration[4.2]
   def change
     User.all.each do |a|
       a.subscribed_event_types = JSON.parse(a.subscribed_event_types).join(', ') if a.subscribed_event_types.present?

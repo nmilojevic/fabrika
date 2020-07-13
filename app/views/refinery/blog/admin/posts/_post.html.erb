@@ -6,7 +6,7 @@
         <%= link_to refinery.edit_blog_admin_post_path(post, :switch_locale => translation.locale),
                     :class => 'locale' do %>
           <div class="locale_icon <%= translation.locale %>">
-            <%= refinery_icon_tag('locale-blue.svg', :size => '24x24') %>
+            <%= refinery_icon_tag('locale-blue.svg', width: '24', height:'24') %>
             <span class="code"><%= translation.locale.upcase %></span>
           </div>
         <% end %>

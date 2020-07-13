@@ -1,5 +1,5 @@
 # This migration comes from refinery_news (originally 20110817203701)
-class CreateNewsItems < ActiveRecord::Migration
+class CreateNewsItems < ActiveRecord::Migration[4.2]
 
   def up
     create_table ::Refinery::News::Item.table_name do |t|

@@ -3,8 +3,8 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
   before_action :set_locale
-  after_filter :cors_set_access_control_headers
-  skip_before_filter :authenticate_user!, :only => [:route_options]
+  after_action :cors_set_access_control_headers
+  skip_before_action :authenticate_user!, :only => [:route_options], raise: false
   before_action :prepare_meta_tags, if: "request.get?"
 
 

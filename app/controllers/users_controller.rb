@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_filter :admin_only, except: [:unimpersonate_user]
+  before_action :maintainer_only, except: [:unimpersonate_user]
   respond_to :html, :json, only:[:new, :edit, :update, :create_user]
 
   def index
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    unless current_user.admin?
+    unless current_user.maintainer?
       unless @user == current_user
         redirect_to :back, :alert => "Access denied."
       end
@@ -100,11 +100,8 @@ class UsersController < ApplicationController
   end
 
   def unimpersonate_user
-    p "unimpersonate"
     if !session[:stack_admins].blank?
-      p "session"
       new_user = User.find(session[:stack_admins].last)
-      p new_user.name
       sign_in(new_user, bypass: true)
       session[:stack_admins].pop
     end
@@ -119,15 +116,14 @@ class UsersController < ApplicationController
     session[:stack_admins] << from_user_id
     to_user = User.find(to_user_id)
     sign_in(to_user, bypass: true)
-    p "FROM USER: #{User.find(from_user_id).email}", "*" * 100
-    p "STACK ADMINS: #{session[:stack_admins].inspect}"
+
     redirect_to schedule_path
   end
 
   private
 
-  def admin_only
-    unless current_user.admin?
+  def maintainer_only
+    unless current_user.maintainer?
       redirect_to :back, :alert => "Access denied."
     end
   end

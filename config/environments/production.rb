@@ -66,29 +66,31 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   if config.respond_to?(:action_mailer)
-    # config.action_mailer.raise_delivery_errors = false
+  if config.respond_to?(:action_mailer)
+      # config.action_mailer.raise_delivery_errors = false
 
-    # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
-    # the I18n.default_locale when a translation cannot be found).
-    config.i18n.fallbacks = true
+      # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
+      # the I18n.default_locale when a translation cannot be found).
+      config.i18n.fallbacks = true
 
 
-    config.assets.raise_production_errors = true
+      config.assets.raise_production_errors = true
 
-    # Send deprecation notices to registered listeners.
-    config.active_support.deprecation = :notify
+      # Send deprecation notices to registered listeners.
+      config.active_support.deprecation = :notify
 
-    config.action_mailer.smtp_settings = {
-      address: "smtp.gmail.com",
-      port: 587,
-      domain: "gmail.com",
-      authentication: "plain",
-      user_name: ENV['FABRIKA_EMAIL'] || "fabrika.crossfit@gmail.com",
-      password: ENV['FABRIKA_EMAIL_PASS'] || "gwmdzwtqdkzctjjg"
-    }
-    # ActionMailer Config
-    config.action_mailer.default_url_options = { :host => ENV['FABRIKA_EMAIL_DOMAIN'] || 'factorynis.com' }
-    #config.action_mailer.default_url_options = { :host => Rails.application.secrets.domain_name }
+      config.action_mailer.smtp_settings = {
+        address: "smtp.gmail.com",
+        port: 587,
+        domain: "gmail.com",
+        authentication: "plain",
+        user_name: ENV['FABRIKA_EMAIL'] || "fabrika.crossfit@gmail.com",
+        password: ENV['FABRIKA_EMAIL_PASS'] || "gwmdzwtqdkzctjjg"
+      }
+      # ActionMailer Config
+      config.action_mailer.default_url_options = { :host => ENV['FABRIKA_EMAIL_DOMAIN'] || 'factorynis.com' }
+      #config.action_mailer.default_url_options = { :host => Rails.application.secrets.domain_name }
+  end
   end
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true

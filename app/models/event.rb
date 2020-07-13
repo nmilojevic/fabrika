@@ -8,7 +8,7 @@ class Event < ActiveRecord::Base
   end
 
   def reserved_for?(user)
-    users.exists?(user)
+    users.exists?(user.id)
   end
 
   def reserve

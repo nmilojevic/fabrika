@@ -1,5 +1,5 @@
 # This migration comes from refinery_news (originally 20110817203704)
-class AddImageIdToNewsItems < ActiveRecord::Migration
+class AddImageIdToNewsItems < ActiveRecord::Migration[4.2]
 
   def up
     unless ::Refinery::News::Item.column_names.map(&:to_sym).include?(:image_id)

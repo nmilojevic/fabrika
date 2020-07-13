@@ -47,8 +47,8 @@ class EventsFetcher
       :full => event.full?,
       :past => event.past?,
       :instructor_name => event.instructor_name.present? ? event.instructor_name : "",
-      :reserved_by => user.admin? ? event.users.map{|event_user| "#{event_user.name.to_s} (#{event_user.email})"} : [],
-      :allowed => user.admin? || user.subscribed_event_types.try(:include?, event.event_type)
+      :reserved_by => user.maintainer? ? event.users.map{|event_user| "#{event_user.name.to_s} (#{event_user.email})"} : [],
+      :allowed => user.maintainer? || user.subscribed_event_types.try(:include?, event.event_type)
     }
     unless user.is_a?(ApiUser)
       hash.merge!(

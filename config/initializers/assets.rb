@@ -20,6 +20,7 @@ Rails.application.config.assets.precompile += %w( locale/recurring/locale_recurr
 Rails.application.config.assets.precompile += %w( locale/locale_en.js )
 Rails.application.config.assets.precompile += %w( locale/recurring/locale_recurring_en.js )
 Rails.application.config.assets.precompile += %w( datatables.js )
+Rails.application.config.assets.precompile += %w( wymeditor/lang/en.js )
 Rails.application.config.assets.precompile << /\.(?:svg|eot|woff|ttf)\z/
 
 

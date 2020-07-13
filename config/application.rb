@@ -58,7 +58,6 @@ module Fabrika
      config.i18n.default_locale = :rs
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
 
     include Refinery::Engine
       after_inclusion do
@@ -66,7 +65,7 @@ module Fabrika
         ::Refinery::Blog::Admin::PostsController.send :include, ::RefineryPatch
         ::Refinery::AdminController.send :include, ::RefineryPatch
         ::Refinery::AdminController.send :include, ::RestrictRefineryToRefineryUsers
-        ::Refinery::AdminController.send :before_filter, :restrict_refinery_to_refinery_users
+        ::Refinery::AdminController.send :before_action, :restrict_refinery_to_refinery_users
     end
   end
 end

@@ -1,4 +1,4 @@
-class AddAllLevelsToSubscribedEventTypesForUsers < ActiveRecord::Migration
+class AddAllLevelsToSubscribedEventTypesForUsers < ActiveRecord::Migration[4.2]
   def change
     User.where.not(status:1).each do |a|
       if a.subscribed_event_types.blank? && a.admin?

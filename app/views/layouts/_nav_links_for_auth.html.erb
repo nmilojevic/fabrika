@@ -8,8 +8,10 @@
   <li><%= link_to t('sign_in_up'), main_app.new_user_session_path %></li>
 <% end %>
 <% if user_signed_in? %>
-  <% if current_user.try(:admin?) %>
+  <% if current_user.try(:maintainer?) %>
     <li><%= link_to t('users.title'), main_app.users_path %></li>
+  <% end %>
+  <% if current_user.try(:admin?) %>
      <li><%= link_to t('cms'), refinery.admin_root_path %></li>
   <% end %>
 <% end %>

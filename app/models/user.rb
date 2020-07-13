@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  enum role: [:user, :admin]
+  enum role: [:user, :admin, :coach]
   enum status: [:active, :pending, :expired, :deactivated]
   validates :email, :presence => true, length: { maximum: 50 }
   validates :email, :email => true, :uniqueness => true
@@ -61,6 +61,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def maintainer?
+    admin? || coach?
+  end
+
   def has_role?(title)
     # raise ::ArgumentError, "Role should be the title of the role not a role object." if title.is_a?(::Refinery::Authentication::Devise::Role)
     admin?
@@ -90,11 +94,8 @@ class User < ActiveRecord::Base
     count = 0
     @users.each do |user|
       count = count + 1
-      p "#{count}/#{total}"
-      p "send email to #{user.email}"
       CustomerMailer.new_web_site_email(user).deliver
       if (count % 50) == 0
-        p "sleep 30 seconds"
         sleep(30)
       end
     end
@@ -128,6 +129,10 @@ class User < ActiveRecord::Base
     else
       super # Use whatever other message
     end
+  end
+
+  def self.roles_mapping
+    { "Član" => :user, "Administrator" => :admin , "Trener" => :coach }
   end
 
 end

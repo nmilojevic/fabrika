@@ -1,5 +1,5 @@
 # This migration comes from refinery_page_images (originally 20110511215016)
-class TranslatePageImageCaptions < ActiveRecord::Migration
+class TranslatePageImageCaptions < ActiveRecord::Migration[4.2]
   def up
     add_column Refinery::ImagePage.table_name, :id, :primary_key
 

@@ -47,10 +47,8 @@
   <% end %>
   <%# Added Bootstrap classes, and help-block container for error messages %>
   <div class="form-group">
-      <%= f.label :role, class: 'control-label' %><br>
-       <input type="hidden" name ="user[role]" value="user">
-       <input id='<%="user_role"%>' name="user[role]" class="BSswitch role" value="admin" type="checkbox" data-off-text="Član" data-on-text="Administrator" <%=@user.admin? ? "checked" : "" %> <%=current_user.id == @user.id ? " readonly" : ""%>><br><br>
-      <span class="help-block"></span>
+    <%= f.input :role, collection: User.roles_mapping, selected: @user.role || User.roles[:user], disabled: !current_user.admin? || current_user.id == @user.id  %>
+    <span class="help-block"></span>
   </div>
  
   <div class="form-group">

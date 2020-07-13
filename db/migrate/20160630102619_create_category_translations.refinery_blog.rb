@@ -1,5 +1,5 @@
 # This migration comes from refinery_blog (originally 20120601151114)
-class CreateCategoryTranslations < ActiveRecord::Migration
+class CreateCategoryTranslations < ActiveRecord::Migration[4.2]
   def up
     Refinery::Blog::Category.create_translation_table!({
       :title => :string,

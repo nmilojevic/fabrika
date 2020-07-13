@@ -1,5 +1,5 @@
 # This migration comes from refinery_news (originally 20110817203703)
-class TranslateNewsItems < ActiveRecord::Migration
+class TranslateNewsItems < ActiveRecord::Migration[4.2]
 
   def up
     ::Refinery::News::Item.reset_column_information

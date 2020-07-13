@@ -1,5 +1,5 @@
 # This migration comes from refinery_blog (originally 20120530102901)
-class CreateBlogTranslations < ActiveRecord::Migration
+class CreateBlogTranslations < ActiveRecord::Migration[4.2]
   def up
     Refinery::Blog::Post.create_translation_table!({
       :body => :text,

@@ -1,5 +1,5 @@
 # This migration comes from refinery_news (originally 20110817203706)
-class RemoveImageIdAndExternalUrlFromNews < ActiveRecord::Migration
+class RemoveImageIdAndExternalUrlFromNews < ActiveRecord::Migration[4.2]
   def up
     if ::Refinery::News::Item.column_names.map(&:to_sym).include?(:external_url)
       remove_column ::Refinery::News::Item.table_name, :external_url

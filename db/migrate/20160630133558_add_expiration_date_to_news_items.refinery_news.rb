@@ -1,5 +1,5 @@
 # This migration comes from refinery_news (originally 20110817203705)
-class AddExpirationDateToNewsItems < ActiveRecord::Migration
+class AddExpirationDateToNewsItems < ActiveRecord::Migration[4.2]
 
   def up
     unless ::Refinery::News::Item.column_names.map(&:to_sym).include?(:expiration_date)

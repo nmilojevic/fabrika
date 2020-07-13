@@ -14,7 +14,7 @@
   </div>
 <div class="filter-container" style="display:none">
    <label><%=t 'users.show'%>: 
-   <%=select_tag("users-filter", options_for_select([[t("users.filters.all_users"), "all"]] + User.statuses.keys.collect {|status| [t("users.filters.#{status}"),status]} + [["Administratore", "admin"], ["Članove", "user"]]), html_options = {style:"display:none", class:"filter"})%>
+   <%=select_tag("users-filter", options_for_select([[t("users.filters.all_users"), "all"]] + User.statuses.keys.collect {|status| [t("users.filters.#{status}"),status]} + [["Administratore", "admin"], ["Trenere", "coach"], ["Članove", "user"]]), html_options = {style:"display:none", class:"filter"})%>
   </label>
   <%= link_to t('create_user'), new_user_path, data: { modal: true }, class:"btn btn-primary" %>
 </div>

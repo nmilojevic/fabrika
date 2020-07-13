@@ -1,5 +1,5 @@
 # This migration comes from refinery_news (originally 20110817203702)
-class AddExternalUrlToNewsItems < ActiveRecord::Migration
+class AddExternalUrlToNewsItems < ActiveRecord::Migration[4.2]
 
   def up
     unless ::Refinery::News::Item.column_names.map(&:to_sym).include?(:external_url)
