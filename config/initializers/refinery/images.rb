@@ -37,6 +37,7 @@ Refinery::Images.configure do |config|
   # config.dragonfly_verify_urls = true
   config.dragonfly_secret = "43e1fdfc784988cc9615d096dc0d353a111b20981a58dc04"
   # config.dragonfly_url_format = "/system/images/:job/:basename.:ext"
+  config.dragonfly_url_format = "/system/images/:job/:basename.:ext"
   # config.dragonfly_url_host = ""
   # config.datastore_root_path = "/Users/nikola/Projects/Fabrika/public/system/refinery/images"
 
