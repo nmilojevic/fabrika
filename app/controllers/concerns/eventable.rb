@@ -46,8 +46,8 @@ module Eventable
 
 
   def cancel_event
-    if @event.users.exists?(current_user)
-      @event.users.delete(current_user)
+    if @event.users.exists?(current_user.id)
+      @event.users.delete(current_user.id)
       render :json => {"success":true, message: nil}
     else
       render :json => {"success":false, message: "Rezervacija ovog treninga nije pronadjena."}
