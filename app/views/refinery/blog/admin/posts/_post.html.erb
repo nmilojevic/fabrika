@@ -6,7 +6,7 @@
         <%= link_to refinery.edit_blog_admin_post_path(post, :switch_locale => translation.locale),
                     :class => 'locale' do %>
           <div class="locale_icon <%= translation.locale %>">
-            <%= refinery_icon_tag('locale-blue.svg', width: '24', height:'24') %>
+            <%= action_icon('locale-blue.svg', width: '24', height:'24') %>
             <span class="code"><%= translation.locale.upcase %></span>
           </div>
         <% end %>
@@ -22,12 +22,12 @@
     </span>
   </span>
   <span class='actions'>
-    <%= link_to refinery_icon_tag("application_go.png"), refinery.blog_post_path(post),
+    <%= link_to action_icon("application_go.png"), refinery.blog_post_path(post),
         :title => t('.view_live_html'),
         :target => "_blank" %>
-    <%= link_to refinery_icon_tag("application_edit.png"), refinery.edit_blog_admin_post_path(post),
+    <%= link_to action_icon("application_edit.png"), refinery.edit_blog_admin_post_path(post),
          :title => t('.edit') %>
-    <%= link_to refinery_icon_tag("delete.png"), refinery.blog_admin_post_path(post),
+    <%= link_to action_icon("delete.png"), refinery.blog_admin_post_path(post),
         :class => "cancel confirm-delete",
         :title => t('.delete'),
         :method => :delete,
