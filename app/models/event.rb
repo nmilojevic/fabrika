@@ -11,8 +11,8 @@ class Event < ActiveRecord::Base
     users.exists?(user.id)
   end
 
-  def reserve
-
+  def after_tomorrow?
+    end_date > tomorrow
   end
 
   def full?
@@ -28,6 +28,12 @@ class Event < ActiveRecord::Base
       @past = start_date < Time.current + 1.hour
     end
     @past
+  end
+
+  private
+
+  def tomorrow
+    @tomorrow ||= (Time.current.middle_of_day + (Time.current < Time.current.middle_of_day ? 0.day : 1.day)).end_of_day
   end
 
 end

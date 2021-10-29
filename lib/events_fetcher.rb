@@ -10,14 +10,8 @@ class EventsFetcher
 
   def fetch_events
     to_event = end_date.to_datetime.end_of_day
-    if user.user?
-      tomorrow = (Time.current.middle_of_day + (Time.current < Time.current.middle_of_day ? 0.day : 1.day)).end_of_day
-      if to_event > tomorrow
-        to_event = tomorrow
-      end
-    end
 
-    events = Event.where(start_date:start_date.to_datetime.beginning_of_day..to_event).where(rec_type:["none",nil, ""])+Event.where.not(rec_type:["none",nil, ""])
+    events = Event.includes(:users).where(start_date:start_date.to_datetime.beginning_of_day..to_event).where(rec_type:["none",nil, ""])+Event.where.not(rec_type:["none",nil, ""])
     events.map {|event| event_to_hash(event)}
   end
 

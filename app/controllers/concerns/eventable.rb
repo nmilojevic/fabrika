@@ -21,9 +21,15 @@ module Eventable
       end_date= start_date.to_datetime + origin_event.event_length.seconds
       end_date = end_date.strftime("%Y-%m-%d %H:%M:%S")
       event_length= params['event_length']
-      event = Event.find_or_create_by(:start_date => start_date, :event_pid => origin_event.id)
-      event.update(:end_date => end_date, :text => origin_event.text,
-                   :rec_type => '', :max_users => origin_event.max_users, :instructor_name => origin_event.instructor_name, :event_type => origin_event.event_type, :event_length => event_length)
+      event = Event.find_or_create_by(:start_date => start_date, :event_pid => origin_event.id) do |e|
+        e.end_date = end_date
+        e.text = origin_event.text
+        e.rec_type = ''
+        e.max_users = origin_event.max_users
+        e.instructor_name = origin_event.instructor_name
+        e.event_type = origin_event.event_type
+        e.event_length = event_length
+      end
     else
       event = origin_event
     end
@@ -35,6 +41,8 @@ module Eventable
       @error = "Već ste rezervisali ovaj tip treninga danas"
     elsif event.past?
       @error = "Nije moguće rezervisati trening."
+    elsif event.after_tomorrow?
+      @error = "Nije još uvek moguće rezervisati ovaj trening."
     elsif !current_user.subscribed_event_types.try(:include?, event.event_type)
       @error = "Nije moguće rezervisati ovaj tip treninga."
     else
